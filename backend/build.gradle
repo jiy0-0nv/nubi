@@ -21,7 +21,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat-runtime'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
