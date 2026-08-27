@@ -1,4 +1,4 @@
-package com.example.nubi;
+package com.nubi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
