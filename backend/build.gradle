@@ -31,6 +31,10 @@ dependencies {
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl' //스프링부트3.0 이상
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    implementation 'org.springframework.security:spring-security-crypto'
 }
 
 tasks.named('test') {
