@@ -1,5 +1,6 @@
 package com.nubi.entity;
 
+import com.nubi.entity.converter.BookingStatusConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class BookingsEntity {
     @Column(name = "guest_count", nullable = false)
     private int guestCount;
 
-   // @Convert(converter = BookingStatusConverter.class)
+    @Convert(converter = BookingStatusConverter.class)
     @Column(nullable = false, length = 20)
     private BookingStatus status = BookingStatus.CONFIRMED;
 
