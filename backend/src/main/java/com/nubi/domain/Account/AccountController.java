@@ -24,7 +24,6 @@ import java.net.URI;
  */
 
 
-
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
