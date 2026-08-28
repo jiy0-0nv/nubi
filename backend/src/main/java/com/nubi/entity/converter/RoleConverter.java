@@ -1,11 +1,11 @@
 package com.nubi.entity.converter;
 
-import com.nubi.entity.UserEntity;
+import com.nubi.entity.UsersEntity;
 import jakarta.persistence.Converter;
 
 @Converter
-public class RoleConverter extends UpperCaseEnumConverter<UserEntity.Role> {
+public class RoleConverter extends UpperCaseEnumConverter<UsersEntity.Role> {
     public RoleConverter() {
-        super(UserEntity.Role.class);
+        super(UsersEntity.Role.class);
     }
 }

@@ -23,7 +23,7 @@ public class BookingsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private UsersEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
@@ -57,7 +57,7 @@ public class BookingsEntity {
     private LocalDateTime cancelledAt;
 
     @Builder
-    public BookingsEntity(UserEntity user, RoomsEntity room, LocalDateTime checkInDate,
+    public BookingsEntity(UsersEntity user, RoomsEntity room, LocalDateTime checkInDate,
                           LocalDateTime checkOutDate, int guestCount, BigDecimal totalPrice) {
         this.user = user;
         this.room = room;

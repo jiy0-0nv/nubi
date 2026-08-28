@@ -24,7 +24,7 @@ public class RoomsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
-    private UserEntity owner;
+    private UsersEntity owner;
 
     @Column(nullable = false, length = 200)
     private String name;
@@ -72,7 +72,7 @@ public class RoomsEntity {
     private LocalDateTime updatedAt;
 
     @Builder
-    public RoomsEntity(UserEntity owner, String name, String description, String country, String city,
+    public RoomsEntity(UsersEntity owner, String name, String description, String country, String city,
                        String street, LocalTime checkinTime, LocalTime checkoutTime,
                        BigDecimal weekendPrice, BigDecimal weekdayPrice, int maxGuests) {
         this.owner = owner;
