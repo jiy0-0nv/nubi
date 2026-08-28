@@ -1,0 +1,39 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+### 변수 설정
+@baseUrl = http://localhost:8080
+
+### 회원가입 테스트
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "1234",
+  "name": "홍길동",
+  "phone": "010-1234-5678"
+}
+
+### 동일 이메일로 재가입 시도 (중복 체크 로직 확인용 - 400 에러 떠야 정상)
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "5678",
+  "name": "다른사람",
+  "phone": "010-9999-8888"
+}
+
+### 필수값 누락 테스트 (email 없이 요청)
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "name": "테스트",
+  "phone": "010-0000-0000"
+}

@@ -1,5 +1,6 @@
 package com.nubi.entity;
 
+import com.nubi.entity.converter.RoomStatusConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,7 +59,7 @@ public class RoomsEntity {
     @Column(name = "max_guests", nullable = false)
     private int maxGuests;
 
-    //@Convert(converter = RoomStatusConverter.class)
+    @Convert(converter = RoomStatusConverter.class)
     @Column(nullable = false, length = 20)
     private RoomStatus status = RoomStatus.ACTIVE;
 

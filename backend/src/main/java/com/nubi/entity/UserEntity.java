@@ -1,5 +1,6 @@
 package com.nubi.entity;
 
+import com.nubi.entity.converter.RoleConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class UserEntity {
     @Column(length = 20)
     private String phone;
 
-    //@Convert(converter = RoleConverter.class)
+    @Convert(converter = RoleConverter.class)
     @Column(nullable = false, length = 10)
     private Role role = Role.USER;
 
