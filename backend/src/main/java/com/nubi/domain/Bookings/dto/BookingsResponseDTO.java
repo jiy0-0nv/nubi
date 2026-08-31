@@ -1,4 +1,4 @@
-package com.nubi.domain.bookings.dto;
+package com.nubi.domain.Bookings.dto;
 
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.RoomsEntity;
