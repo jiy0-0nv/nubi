@@ -26,7 +26,6 @@ public interface BookingsRepository extends JpaRepository<BookingsEntity, Long> 
                                       @Param("checkOutDate") LocalDateTime checkOutDate,
                                       @Param("excludedStatus") BookingsEntity.BookingStatus excludedStatus);
 
-    // BookingsEntity에 세터가 없어 엔티티를 직접 못 바꾸므로 벌크 업데이트로 취소 처리
     @Modifying(clearAutomatically = true)
     @Query("UPDATE BookingsEntity b SET b.status = :status, b.cancelledAt = :cancelledAt WHERE b.id = :bookingId")
     void updateCancelledStatus(@Param("bookingId") Long bookingId,

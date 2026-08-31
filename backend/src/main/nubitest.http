@@ -11,8 +11,8 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "tes123t@example.com",
-  "password": "1234",
+  "email": "tes1234t@example.com",
+  "password": "123456",
   "name": "홍길동12314",
   "phone": "010-1234-5678"
 }
@@ -43,8 +43,8 @@ POST {{baseUrl}}/api/accounts/login
 Content-Type: application/json
 
 {
-  "email": "mys0904@naver.com",
-  "password": "998874"
+  "email": "tes1234t@example.com",
+  "password": "123456"
 }
 
 ### 정보조회 테스트
