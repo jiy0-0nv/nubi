@@ -47,6 +47,10 @@ public class UsersEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    public void changePassword(String newPasswordHash) {
+        this.passwordHash = newPasswordHash;
+    }
+
     @Builder
     public UsersEntity(String email, String passwordHash, String name, String phone, Role role) {
         this.email = email;

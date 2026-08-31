@@ -22,9 +22,9 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "password": "5678",
-  "name": "다른사람",
+  "email": "mys0904@naver.com",
+  "password": "1234",
+  "name": "문유식",
   "phone": "010-9999-8888"
 }
 
@@ -43,6 +43,31 @@ POST {{baseUrl}}/api/accounts/login
 Content-Type: application/json
 
 {
-  "email": "tes123t@example.com",
-  "password": "1234"
+  "email": "mys0904@naver.com",
+  "password": "135582"
+}
+
+### 정보조회 테스트
+GET {{baseUrl}}/api/accounts/1
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzMTIzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc4ODE0MzI0MywiZXhwIjoxNzg4MTQ2ODQzfQ.X98DiGs6yUvKCQwg4OMpO4XK-XSJ4mdIQoQPQHsmtVcsIqSLFlGYc0I8H25-RlYefHUuxYb0nWu6j5PS1qkCDg"
+}
+
+### 아이디(이메일) 찾기 테스트
+POST {{baseUrl}}/api/accounts/find-id
+Content-Type: application/json
+
+{
+  "name": "문유식",
+  "phone": "010-9999-8888"
+}
+
+### 비밀번호 찾기 테스트
+POST {{baseUrl}}/api/accounts/find-password
+Content-Type: application/json
+
+{
+  "email" : "mys0904@naver.com"
 }
