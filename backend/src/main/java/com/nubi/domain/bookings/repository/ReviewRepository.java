@@ -1,4 +1,4 @@
-package com.nubi.domain.bookingsoo.repository;
+package com.nubi.domain.Bookings.repository;
 
 import com.nubi.entity.ReviewEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

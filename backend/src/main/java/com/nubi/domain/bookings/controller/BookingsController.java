@@ -1,11 +1,11 @@
-package com.nubi.domain.bookingsoo.controller;
+package com.nubi.domain.Bookings.controller;
 
-import com.nubi.domain.bookingsoo.dto.BookingCancelRequestDTO;
-import com.nubi.domain.bookingsoo.dto.BookingCreateRequestDTO;
-import com.nubi.domain.bookingsoo.dto.BookingsResponseDTO;
-import com.nubi.domain.bookingsoo.dto.ReviewCreateRequestDTO;
-import com.nubi.domain.bookingsoo.dto.ReviewResponseDTO;
-import com.nubi.domain.bookingsoo.service.BookingsService;
+import com.nubi.domain.Bookings.dto.BookingCancelRequestDTO;
+import com.nubi.domain.Bookings.dto.BookingCreateRequestDTO;
+import com.nubi.domain.Bookings.dto.BookingsResponseDTO;
+import com.nubi.domain.Bookings.dto.ReviewCreateRequestDTO;
+import com.nubi.domain.Bookings.dto.ReviewResponseDTO;
+import com.nubi.domain.Bookings.service.BookingsService;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.global.exception.UnauthenticatedException;
 import lombok.RequiredArgsConstructor;
