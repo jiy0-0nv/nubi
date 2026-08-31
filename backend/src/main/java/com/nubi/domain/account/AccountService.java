@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     //signup() 회원가입
     @Transactional
@@ -25,7 +26,7 @@ public class AccountService {
 
         UsersEntity user = UsersEntity.builder()
                 .email(request.getEmail())
-                .passwordHash(request.getPassword())
+                .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .phone(request.getPhone())
                 .build();
@@ -34,14 +35,13 @@ public class AccountService {
     }
 
 
-    // login() 토큰 발급해서 리턴해줘야함...
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+
 
     @Transactional(readOnly = true)
     public String login(LoginRequest request) {
         UsersEntity user = accountRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다."));
+
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다.");

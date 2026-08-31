@@ -11,9 +11,9 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "tes123t@example.com",
   "password": "1234",
-  "name": "홍길동",
+  "name": "홍길동12314",
   "phone": "010-1234-5678"
 }
 
@@ -36,4 +36,13 @@ Content-Type: application/json
   "password": "1234",
   "name": "테스트",
   "phone": "010-0000-0000"
+}
+
+### 로그인 테스트
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "tes123t@example.com",
+  "password": "1234"
 }
