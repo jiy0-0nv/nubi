@@ -1,16 +1,16 @@
-package com.nubi.domain.Bookings.service;
+package com.nubi.domain.bookings.service;
 
-import com.nubi.domain.Bookings.dto.BookingCancelRequestDTO;
-import com.nubi.domain.Bookings.dto.BookingCreateRequestDTO;
-import com.nubi.domain.Bookings.dto.BookingsResponseDTO;
-import com.nubi.domain.Bookings.dto.ReviewCreateRequestDTO;
-import com.nubi.domain.Bookings.dto.ReviewResponseDTO;
-import com.nubi.domain.Bookings.repository.BookingsRepository;
-import com.nubi.domain.Bookings.repository.ReviewRepository;
+import com.nubi.domain.bookings.dto.BookingCancelRequestDTO;
+import com.nubi.domain.bookings.dto.BookingCreateRequestDTO;
+import com.nubi.domain.bookings.dto.BookingsResponseDTO;
+import com.nubi.domain.bookings.dto.ReviewCreateRequestDTO;
+import com.nubi.domain.bookings.dto.ReviewResponseDTO;
+import com.nubi.domain.bookings.repository.BookingsRepository;
+import com.nubi.domain.bookings.repository.ReviewRepository;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
-import com.nubi.entity.UserEntity;
+import com.nubi.entity.UsersEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -79,7 +79,7 @@ public class BookingsService {
 
         // getReference()는 실제 DB round-trip 없이 FK로만 쓸 프록시를 준다.
         // userId는 인증 단계에서 이미 유효성이 보장된다고 가정(기존 getBookings와 동일한 전제).
-        UserEntity userRef = entityManager.getReference(UserEntity.class, userId);
+        UsersEntity userRef = entityManager.getReference(UsersEntity.class, userId);
 
         BigDecimal totalPrice = calculateTotalPrice(room, request.getCheckInDate(), request.getCheckOutDate());
 

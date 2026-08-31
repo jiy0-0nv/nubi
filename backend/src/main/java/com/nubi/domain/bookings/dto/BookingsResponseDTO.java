@@ -1,4 +1,4 @@
-package com.nubi.domain.bookings;
+package com.nubi.domain.bookings.dto;
 
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.RoomsEntity;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class BookingResponseDTO {
+public class BookingsResponseDTO {
 
     private Long id;
     private RoomSummaryDto room;
@@ -23,7 +23,7 @@ public class BookingResponseDTO {
     private LocalDateTime cancelledAt;
 
     @Builder
-    public BookingResponseDTO(Long id, RoomSummaryDto room, LocalDateTime checkInDate, LocalDateTime checkOutDate,
+    public BookingsResponseDTO(Long id, RoomSummaryDto room, LocalDateTime checkInDate, LocalDateTime checkOutDate,
                                int guestCount, String status, BigDecimal totalprice, LocalDateTime cancelledAt) {
         this.id = id;
         this.room = room;
@@ -35,8 +35,8 @@ public class BookingResponseDTO {
         this.cancelledAt = cancelledAt;
     }
 
-    public static BookingResponseDTO from(BookingsEntity booking) {
-        return BookingResponseDTO.builder()
+    public static BookingsResponseDTO from(BookingsEntity booking) {
+        return BookingsResponseDTO.builder()
                 .id(booking.getId())
                 .room(RoomSummaryDto.from(booking.getRoom()))
                 .checkInDate(booking.getCheckInDate())
