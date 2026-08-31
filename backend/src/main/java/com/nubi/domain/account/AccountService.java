@@ -92,4 +92,10 @@ public class AccountService {
         mailSender.send(message);
         accountRepository.save(user);
     }
+
+    @Transactional
+    public String changePassword(String token, String newPassword){
+
+        return "비밀번호 갱신 완료";
+    }
 }

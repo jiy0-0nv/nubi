@@ -18,7 +18,7 @@ import java.net.URI;
 |oo POST | `/account/signup` | `{ "email": string, "password": string, "name": string, "phone": string }` | 회원가입 |
 |oo POST | `/account/find-id` | `{ "name": string, "phone": string }` | 아이디(이메일) 찾기 |
 |oo POST | `/account/find-password` | `{ "email": string, "name": string, "phone": string }` | 비밀번호 재설정 링크/코드 발송 |
-| PATCH | `/account/reset-password` | `{ "token": string, "new_password": string }` | 발급받은 토큰으로 비밀번호 재설정 |
+| PATCH | `/account/change-password` | `{ "token": string, "new_password": string }` | 발급받은 토큰으로 비밀번호 재설정 |
 |oo GET | `/account/{user-id}` | - | 현재 로그인 유저 정보 + role 반환 (기존 `/account/check`, `/account/check/isadmin` 통합) |
 
  */
@@ -59,4 +59,8 @@ public class AccountController {
         accountService.findPassword(request.getEmail());
     }
 
+    @PatchMapping("/change-password")
+    public String changePassword(@RequestBody UserTokenRequest request){
+        return accountService.changePassword(request.getUserToken(), request.getNewPassword());
+    }
 }
