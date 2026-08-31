@@ -6,6 +6,7 @@ import com.nubi.domain.account.dto.LoginRequest;
 import com.nubi.domain.account.dto.SignupRequest;
 import com.nubi.entity.UsersEntity;
 import com.nubi.security.JwtTokenProvider;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -95,6 +96,17 @@ public class AccountService {
 
     @Transactional
     public String changePassword(String token, String newPassword){
+        Long userId;
+        try {
+            userId = jwtTokenProvider.getUserIdFromResetToken(token);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new IllegalArgumentException("유효하지 않거나 만료된 토큰입니다.");
+        }
+
+        UsersEntity user = accountRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+
+        user.changePassword(passwordEncoder.encode(newPassword));
 
         return "비밀번호 갱신 완료";
     }

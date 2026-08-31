@@ -1,5 +1,6 @@
 package com.nubi.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,5 +34,21 @@ public class JwtTokenProvider {
                 .expiration(expiry)
                 .signWith(key)
                 .compact();
+    }
+
+    private static final long RESET_TOKEN_EXPIRATION_MS = 30 * 60 * 1000; // 30분
+
+    public Long getUserIdFromResetToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        if (!"password-reset".equals(claims.get("purpose", String.class))) {
+            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+        }
+
+        return Long.parseLong(claims.getSubject());
     }
 }
