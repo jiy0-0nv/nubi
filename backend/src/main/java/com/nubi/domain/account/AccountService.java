@@ -95,12 +95,9 @@ public class AccountService {
     }
 
     @Transactional
-    public String changePassword(long userId, String token, String newPassword){
-        if (userId != jwtTokenProvider.getUserIdFromResetToken(token)) {
-            throw new IllegalArgumentException("유효하지 않거나 만료된 토큰입니다.");
-        }
+    public String changePassword(String token, String newPassword){
 
-        UsersEntity user = accountRepository.findById(userId)
+        UsersEntity user = accountRepository.findById(jwtTokenProvider.getUserIdFromToken(token))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
         user.changePassword(passwordEncoder.encode(newPassword));

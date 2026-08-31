@@ -78,7 +78,6 @@ PATCH {{baseUrl}}/api/accounts/change-password
 Content-Type: application/json
 
 {
-  "userId": 23,
   "userToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMyIsImVtYWlsIjoibXlzMDkwNEBuYXZlci5jb20iLCJpYXQiOjE3ODgxNTk4MzksImV4cCI6MTc4ODE2MzQzOX0.pqwfzShOODZDu_0tzEF86VafYoceQuKEVCjpt4V6wA_gSBZYL9JyWc4vm54bNdauvwigRq7U7fWzJmo-zmre8A",
   "newPassword" : "1234"
 }

@@ -61,6 +61,6 @@ public class AccountController {
 
     @PatchMapping("/change-password")
     public String changePassword(@RequestBody UserTokenRequest request){
-        return accountService.changePassword(request.getUserId(), request.getUserToken(), request.getNewPassword());
+        return accountService.changePassword(request.getUserToken(), request.getNewPassword());
     }
 }
