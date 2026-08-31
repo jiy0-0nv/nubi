@@ -5,6 +5,8 @@ import com.nubi.domain.admin.dto.AdminRoomResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomUpdateRequestDTO;
 import com.nubi.domain.admin.service.AdminRoomsService;
 import com.nubi.global.exception.UnauthenticatedException;
+import com.nubi.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminRoomsController {
 
     private final AdminRoomsService adminRoomsService;
+    private final HttpServletRequest request;
 
     @GetMapping
     public Page<AdminRoomResponseDTO> getRooms(@PageableDefault(size = 20) Pageable pageable) {
@@ -56,7 +59,8 @@ public class AdminRoomsController {
     }
 
     private Long getCurrentUserId() {
-        return null; // TODO: SecurityContext 등에서 꺼내오기
+        Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
+        return userId instanceof Long ? (Long) userId : null;
     }
 
     private Long requireUserId() {
