@@ -37,7 +37,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 서명/만료 검증 실패 시 null 반환 — 호출부는 인증 실패로 처리하면 됨
     public Long parseUserId(String token) {
         try {
             Claims claims = Jwts.parser()

@@ -18,7 +18,6 @@ public class GlobalExceptionHandler {
                 .body(Map.of("errorCode", "NEED_SIGNUP"));
     }
 
-    // 같은 방에 락이 몰려 대기 타임아웃이 나는 경우 (동시 예약 시도 충돌)
     @ExceptionHandler(PessimisticLockingFailureException.class)
     public ResponseEntity<Map<String, String>> handleLockConflict() {
         return ResponseEntity
