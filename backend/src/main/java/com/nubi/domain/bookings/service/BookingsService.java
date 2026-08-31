@@ -1,12 +1,12 @@
-package com.nubi.domain.Bookings.service;
+package com.nubi.domain.bookings.service;
 
-import com.nubi.domain.Bookings.dto.BookingCancelRequestDTO;
-import com.nubi.domain.Bookings.dto.BookingCreateRequestDTO;
-import com.nubi.domain.Bookings.dto.BookingsResponseDTO;
-import com.nubi.domain.Bookings.dto.ReviewCreateRequestDTO;
-import com.nubi.domain.Bookings.dto.ReviewResponseDTO;
-import com.nubi.domain.Bookings.repository.BookingsRepository;
-import com.nubi.domain.Bookings.repository.ReviewRepository;
+import com.nubi.domain.bookings.dto.BookingCancelRequestDTO;
+import com.nubi.domain.bookings.dto.BookingCreateRequestDTO;
+import com.nubi.domain.bookings.dto.BookingsResponseDTO;
+import com.nubi.domain.bookings.dto.ReviewCreateRequestDTO;
+import com.nubi.domain.bookings.dto.ReviewResponseDTO;
+import com.nubi.domain.bookings.repository.BookingsRepository;
+import com.nubi.domain.bookings.repository.ReviewRepository;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
