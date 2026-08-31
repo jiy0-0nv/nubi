@@ -1,4 +1,4 @@
-package com.nubi.domain.bookings.dto;
+package com.nubi.domain.bookingsoo.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

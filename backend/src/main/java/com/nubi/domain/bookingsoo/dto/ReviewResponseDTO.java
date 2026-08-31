@@ -1,4 +1,4 @@
-package com.nubi.domain.bookings.dto;
+package com.nubi.domain.bookingsoo.dto;
 
 import com.nubi.entity.ReviewEntity;
 import lombok.Builder;
