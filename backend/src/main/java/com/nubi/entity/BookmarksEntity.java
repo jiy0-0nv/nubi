@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class BookmarksEntity {
 
     @EmbeddedId
-    private BooksmarkId id;
+    private BookmarksId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
@@ -36,6 +36,6 @@ public class BookmarksEntity {
     public BookmarksEntity(UsersEntity user, RoomsEntity room) {
         this.user = user;
         this.room = room;
-        this.id = new BooksmarkId(user.getId(), room.getId());
+        this.id = new BookmarksId(user.getId(), room.getId());
     }
 }
