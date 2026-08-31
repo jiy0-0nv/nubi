@@ -44,7 +44,7 @@ Content-Type: application/json
 
 {
   "email": "mys0904@naver.com",
-  "password": "135582"
+  "password": "998874"
 }
 
 ### 정보조회 테스트
@@ -71,3 +71,7 @@ Content-Type: application/json
 {
   "email" : "mys0904@naver.com"
 }
+
+
+###
+GET {{baseUrl}}/api/accounts/find-password
