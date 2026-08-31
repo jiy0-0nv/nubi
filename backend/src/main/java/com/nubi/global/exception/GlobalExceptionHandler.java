@@ -1,5 +1,6 @@
 package com.nubi.global.exception;
 
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,5 +16,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of("errorCode", "NEED_SIGNUP"));
+    }
+
+    @ExceptionHandler(PessimisticLockingFailureException.class)
+    public ResponseEntity<Map<String, String>> handleLockConflict() {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(Map.of("errorCode", "BOOKING_LOCK_CONFLICT"));
     }
 }
