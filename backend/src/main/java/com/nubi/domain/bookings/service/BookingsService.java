@@ -6,7 +6,7 @@ import com.nubi.domain.bookings.dto.BookingsResponseDTO;
 import com.nubi.domain.bookings.dto.ReviewCreateRequestDTO;
 import com.nubi.domain.bookings.dto.ReviewResponseDTO;
 import com.nubi.domain.bookings.repository.BookingsRepository;
-import com.nubi.domain.bookings.repository.ReviewRepository;
+import com.nubi.domain.rooms.ReviewRepository;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
