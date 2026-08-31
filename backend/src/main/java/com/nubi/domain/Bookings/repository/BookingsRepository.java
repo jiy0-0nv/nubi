@@ -1,4 +1,4 @@
-package com.nubi.domain.Bookings;
+package com.nubi.domain.Bookings.repository;
 
 import com.nubi.entity.BookingsEntity;
 import org.springframework.data.domain.Page;
