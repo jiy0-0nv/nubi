@@ -1,5 +1,7 @@
 package com.nubi.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,5 +35,19 @@ public class JwtTokenProvider {
                 .expiration(expiry)
                 .signWith(key)
                 .compact();
+    }
+
+    // 서명/만료 검증 실패 시 null 반환 — 호출부는 인증 실패로 처리하면 됨
+    public Long parseUserId(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+            return Long.valueOf(claims.getSubject());
+        } catch (JwtException | IllegalArgumentException e) {
+            return null;
+        }
     }
 }
