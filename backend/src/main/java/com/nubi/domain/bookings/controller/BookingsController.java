@@ -8,8 +8,6 @@ import com.nubi.domain.bookings.dto.ReviewResponseDTO;
 import com.nubi.domain.bookings.service.BookingsService;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.global.exception.UnauthenticatedException;
-import com.nubi.security.JwtAuthenticationFilter;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookingsController {
 
     private final BookingsService bookingsService;
-    private final HttpServletRequest request;
 
     @GetMapping
     public Page<BookingsResponseDTO> getBookings(
@@ -54,7 +51,7 @@ public class BookingsController {
 
     @PatchMapping("/{bookingId}/cancel")
     public BookingsResponseDTO cancelBooking(@PathVariable Long bookingId,
-                                              @RequestBody(required = false) BookingCancelRequestDTO request) {
+                                             @RequestBody(required = false) BookingCancelRequestDTO request) {
         Long userId = requireUserId();
         return bookingsService.cancelBooking(userId, bookingId, request);
     }
@@ -66,8 +63,7 @@ public class BookingsController {
     }
 
     private Long getCurrentUserId() {
-        Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
-        return userId instanceof Long ? (Long) userId : null;
+        return null; // TODO: SecurityContext 등에서 꺼내오기
     }
 
     private Long requireUserId() {
