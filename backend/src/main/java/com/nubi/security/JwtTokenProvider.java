@@ -1,6 +1,7 @@
 package com.nubi.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -37,6 +38,25 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    private static final long RESET_TOKEN_EXPIRATION_MS = 30 * 60 * 1000; // 30분
+
+    public Long getUserIdFromToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            throw new IllegalArgumentException("만료된 토큰입니다. 다시 로그인해주세요.");
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+        }
+
+        return Long.parseLong(claims.getSubject());
+    }
+  
     public Long parseUserId(String token) {
         try {
             Claims claims = Jwts.parser()
