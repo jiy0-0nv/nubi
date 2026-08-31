@@ -37,3 +37,12 @@ Content-Type: application/json
   "name": "테스트",
   "phone": "010-0000-0000"
 }
+
+### 로그인 테스트
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "tes123t@example.com",
+  "password": "1234"
+}

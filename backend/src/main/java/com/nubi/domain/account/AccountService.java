@@ -42,6 +42,7 @@ public class AccountService {
         UsersEntity user = accountRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다."));
 
+
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다.");
         }
