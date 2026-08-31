@@ -11,7 +11,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class BooksmarkId implements Serializable {
+public class BookmarksId implements Serializable {
     private Long userId;
     private Long roomId;
 }
