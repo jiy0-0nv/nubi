@@ -95,11 +95,8 @@ public class AccountService {
     }
 
     @Transactional
-    public String changePassword(String token, String newPassword){
-        Long userId;
-        try {
-            userId = jwtTokenProvider.getUserIdFromResetToken(token);
-        } catch (JwtException | IllegalArgumentException e) {
+    public String changePassword(long userId, String token, String newPassword){
+        if (userId != jwtTokenProvider.getUserIdFromResetToken(token)) {
             throw new IllegalArgumentException("유효하지 않거나 만료된 토큰입니다.");
         }
 

@@ -45,10 +45,6 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
 
-        if (!"password-reset".equals(claims.get("purpose", String.class))) {
-            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
-        }
-
         return Long.parseLong(claims.getSubject());
     }
 }
