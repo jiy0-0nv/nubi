@@ -30,8 +30,6 @@ public class BookingsService {
     private final BookingsRepository bookingsRepository;
     private final RoomsRepository roomsRepository;
 
-    // Account 도메인에 아직 정식 조회 경로가 없어서, userId를 FK로만 쓸 프록시는
-    // EntityManager로 직접 참조한다 (DB round-trip 없이 getReference()로 충분).
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -45,23 +43,21 @@ public class BookingsService {
     }
 
     // 2) 예약 생성 (POST /bookings)
-    // 스펙상 "결제 성공 시점에만 row 생성"이므로, 이 메서드 자체가 결제 성공 콜백이
-    // 호출하는 지점이라고 가정한다. 별도 결제 검증 로직은 없음(Payment 도메인이 없음).
     @Transactional
     public BookingsResponseDTO createBooking(Long userId, BookingCreateRequestDTO request) {
-        // 비관적 락으로 room 행을 잠근 채 조회한다. 같은 방에 대한 동시 예약 생성 요청은
-        // 이 트랜잭션이 끝날 때까지 여기서 대기하게 되어, 아래 겹침 체크+저장이 직렬화된다.
+        // 같은 방에 대한 동시 예약 생성 요청은 이 트랜잭션이 끝날 때까지 여기서 대기하게 되어, 아래 겹침 체크+저장이 직렬화된다.
+
         RoomsEntity room = roomsRepository.findByIdForUpdate(request.getRoomId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "room not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "방 존재하지 않음"));
 
         // 인원수는 방 최대 정원을 넘을 수 없음
         if (request.getGuestCount() > room.getMaxGuests()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "guestCount exceeds room's maxGuests");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "예약인원이 방의 최대인원 수 초과");
         }
 
         // 체크아웃이 체크인보다 뒤여야 함
         if (!request.getCheckOutDate().isAfter(request.getCheckInDate())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkOutDate must be after checkInDate");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "체크아웃이 체크인보다 뒤여야 함");
         }
 
         // 같은 방·기간에 취소되지 않은 예약이 이미 있으면 생성 거부
@@ -69,11 +65,10 @@ public class BookingsService {
                 room.getId(), request.getCheckInDate(), request.getCheckOutDate(),
                 BookingsEntity.BookingStatus.CANCELLED);
         if (overlapping) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "room already booked for this period");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 예약된 방");
         }
 
-        // getReference()는 실제 DB round-trip 없이 FK로만 쓸 프록시를 준다.
-        // userId는 인증 단계에서 이미 유효성이 보장된다고 가정(기존 getBookings와 동일한 전제).
+        // getReference()는 실제 DB round-trip 없이 FK
         UsersEntity userRef = entityManager.getReference(UsersEntity.class, userId);
 
         BigDecimal totalPrice = calculateTotalPrice(room, request.getCheckInDate(), request.getCheckOutDate());
@@ -85,13 +80,13 @@ public class BookingsService {
                 .checkOutDate(request.getCheckOutDate())
                 .guestCount(request.getGuestCount())
                 .totalPrice(totalPrice)
-                .build(); // status는 엔티티 생성자에서 기본 CONFIRMED로 설정됨
+                .build();
 
         BookingsEntity saved = bookingsRepository.save(booking);
         return BookingsResponseDTO.from(saved);
     }
 
-    // 1박당 요금 합산. 금/토를 주말 요금으로 간주 — 실제 정책 확정되면 조정 필요.
+    // 1박당 요금 합산. //이거 내일 할거
     private BigDecimal calculateTotalPrice(RoomsEntity room, LocalDateTime checkIn, LocalDateTime checkOut) {
         BigDecimal total = BigDecimal.ZERO;
         LocalDate date = checkIn.toLocalDate();
@@ -120,11 +115,10 @@ public class BookingsService {
 
         // 이미 취소됐거나 완료된 예약은 다시 취소할 수 없음
         if (booking.getStatus() != BookingsEntity.BookingStatus.CONFIRMED) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "only CONFIRMED bookings can be cancelled");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "확정된 예약만 취소 가능");
         }
 
-        // 엔티티에 세터가 없어서 벌크 업데이트로 상태 변경 (clearAutomatically=true라
-        // 아래 findById가 영속성 컨텍스트 캐시가 아니라 DB에서 새로 읽어옴)
+        // 엔티티에 세터가 없어서 벌크 업데이트로 상태 변경
         bookingsRepository.updateCancelledStatus(bookingId, BookingsEntity.BookingStatus.CANCELLED, LocalDateTime.now());
 
         BookingsEntity updated = bookingsRepository.findById(bookingId).orElseThrow();
@@ -134,7 +128,7 @@ public class BookingsService {
     //공통: 예약 조회 + 소유권 검증
     private BookingsEntity getOwnedBookingOrThrow(Long userId, Long bookingId) {
         BookingsEntity booking = bookingsRepository.findById(bookingId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "booking not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "예약 없음"));
 
         if (!booking.getUser().getId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not your booking");
@@ -150,10 +144,10 @@ public class BookingsService {
         BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
 
         if (booking.getStatus() != BookingsEntity.BookingStatus.COMPLETED) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "only COMPLETED bookings can be reviewed");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "확정된 예약만 취소 가능");
         }
         if (reviewRepository.existsByBookingId(bookingId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "review already exists for this booking");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 작성된 리뷰");
         }
 
         ReviewEntity review = ReviewEntity.builder()
