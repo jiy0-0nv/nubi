@@ -51,9 +51,4 @@ public class BookmarksService {
         bookmarksRepository.deleteById(bookmarksId);
     }
 
-    @Transactional(readOnly = true)
-    public Page<BookmarksDTO.ListResponse> getBookmarks(Long userId, Pageable pageable) {
-        Page<BookmarksEntity> bookmarks = bookmarksRepository.findById_UserId(userId, pageable);
-        return bookmarks.map(BookmarksDTO.ListResponse::from);
-    }
 }
