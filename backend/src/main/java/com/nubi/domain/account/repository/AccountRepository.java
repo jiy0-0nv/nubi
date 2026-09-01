@@ -1,4 +1,4 @@
-package com.nubi.domain.account;
+package com.nubi.domain.account.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
