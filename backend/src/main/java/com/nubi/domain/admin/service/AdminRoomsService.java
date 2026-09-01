@@ -25,6 +25,7 @@ public class AdminRoomsService {
 
     private final AdminRoomsRepository adminRoomsRepository;
     private final AdminBookingsRepository adminBookingsRepository;
+    private final RoomImageStorageService roomImageStorageService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -98,6 +99,7 @@ public class AdminRoomsService {
         }
 
         adminRoomsRepository.delete(room);
+        roomImageStorageService.deleteRoomDirectory(roomId);
     }
 
     private RoomsEntity getOwnedRoomOrThrow(Long ownerId, Long roomId) {

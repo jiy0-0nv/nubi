@@ -1,8 +1,10 @@
 package com.nubi.domain.admin.controller;
 
 import com.nubi.domain.admin.dto.AdminRoomCreateRequestDTO;
+import com.nubi.domain.admin.dto.AdminRoomImageResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomUpdateRequestDTO;
+import com.nubi.domain.admin.service.AdminRoomImagesService;
 import com.nubi.domain.admin.service.AdminRoomsService;
 import com.nubi.global.exception.UnauthenticatedException;
 import com.nubi.security.JwtAuthenticationFilter;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/rooms")
@@ -26,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminRoomsController {
 
     private final AdminRoomsService adminRoomsService;
+    private final AdminRoomImagesService adminRoomImagesService;
     private final HttpServletRequest request;
 
     @GetMapping
@@ -58,9 +65,24 @@ public class AdminRoomsController {
         adminRoomsService.deleteRoom(ownerId, roomId);
     }
 
-    //room이미지를 등록하는 기능 필요...
-    //@PostMapping("/upload-roomImage/{roomId}")
+    @GetMapping("/{roomId}/images")
+    public List<AdminRoomImageResponseDTO> getRoomImages(@PathVariable Long roomId) {
+        Long ownerId = requireUserId();
+        return adminRoomImagesService.getImages(ownerId, roomId);
+    }
 
+    @PostMapping("/{roomId}/images")
+    public List<AdminRoomImageResponseDTO> addRoomImages(@PathVariable Long roomId,
+                                                           @RequestParam("images") List<MultipartFile> images) {
+        Long ownerId = requireUserId();
+        return adminRoomImagesService.addImages(ownerId, roomId, images);
+    }
+
+    @DeleteMapping("/{roomId}/images/{imageId}")
+    public void deleteRoomImage(@PathVariable Long roomId, @PathVariable Long imageId) {
+        Long ownerId = requireUserId();
+        adminRoomImagesService.deleteImage(ownerId, roomId, imageId);
+    }
 
     private Long getCurrentUserId() {
         Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
