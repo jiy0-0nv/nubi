@@ -3,6 +3,7 @@ package com.nubi.domain.admin.service;
 import com.nubi.domain.admin.dto.AdminRoomCreateRequestDTO;
 import com.nubi.domain.admin.dto.AdminRoomResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomUpdateRequestDTO;
+import com.nubi.domain.admin.repository.AdminBookingsRepository;
 import com.nubi.domain.admin.repository.AdminRoomsRepository;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
@@ -16,11 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class AdminRoomsService {
 
     private final AdminRoomsRepository adminRoomsRepository;
+    private final AdminBookingsRepository adminBookingsRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,6 +36,8 @@ public class AdminRoomsService {
 
     @Transactional
     public AdminRoomResponseDTO createRoom(Long ownerId, AdminRoomCreateRequestDTO request) {
+        validateCreateRequest(request);
+
         UsersEntity owner = entityManager.getReference(UsersEntity.class, ownerId);
 
         RoomsEntity room = RoomsEntity.builder()
@@ -60,6 +66,8 @@ public class AdminRoomsService {
 
     @Transactional
     public AdminRoomResponseDTO updateRoom(Long ownerId, Long roomId, AdminRoomUpdateRequestDTO request) {
+        validateUpdateRequest(request);
+
         RoomsEntity room = getOwnedRoomOrThrow(ownerId, roomId);
 
         RoomsEntity.RoomStatus status = parseStatus(request.getStatus());
@@ -84,6 +92,11 @@ public class AdminRoomsService {
     @Transactional
     public void deleteRoom(Long ownerId, Long roomId) {
         RoomsEntity room = getOwnedRoomOrThrow(ownerId, roomId);
+
+        if (adminBookingsRepository.existsByRoom_Id(roomId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "room has existing bookings and cannot be deleted");
+        }
+
         adminRoomsRepository.delete(room);
     }
 
@@ -101,5 +114,71 @@ public class AdminRoomsService {
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid status");
         }
+    }
+
+    private void validateCreateRequest(AdminRoomCreateRequestDTO request) {
+        if (isBlank(request.getName())) {
+            throw badRequest("name is required");
+        }
+        if (isBlank(request.getCountry())) {
+            throw badRequest("country is required");
+        }
+        if (isBlank(request.getCity())) {
+            throw badRequest("city is required");
+        }
+        if (isBlank(request.getStreet())) {
+            throw badRequest("street is required");
+        }
+        if (request.getCheckinTime() == null) {
+            throw badRequest("checkinTime is required");
+        }
+        if (request.getCheckoutTime() == null) {
+            throw badRequest("checkoutTime is required");
+        }
+        if (!isPositive(request.getWeekdayPrice())) {
+            throw badRequest("weekdayPrice must be a positive value");
+        }
+        if (!isPositive(request.getWeekendPrice())) {
+            throw badRequest("weekendPrice must be a positive value");
+        }
+        if (request.getMaxGuests() <= 0) {
+            throw badRequest("maxGuests must be a positive value");
+        }
+    }
+
+    private void validateUpdateRequest(AdminRoomUpdateRequestDTO request) {
+        if (request.getName() != null && request.getName().isBlank()) {
+            throw badRequest("name must not be blank");
+        }
+        if (request.getCountry() != null && request.getCountry().isBlank()) {
+            throw badRequest("country must not be blank");
+        }
+        if (request.getCity() != null && request.getCity().isBlank()) {
+            throw badRequest("city must not be blank");
+        }
+        if (request.getStreet() != null && request.getStreet().isBlank()) {
+            throw badRequest("street must not be blank");
+        }
+        if (request.getWeekdayPrice() != null && !isPositive(request.getWeekdayPrice())) {
+            throw badRequest("weekdayPrice must be a positive value");
+        }
+        if (request.getWeekendPrice() != null && !isPositive(request.getWeekendPrice())) {
+            throw badRequest("weekendPrice must be a positive value");
+        }
+        if (request.getMaxGuests() != null && request.getMaxGuests() <= 0) {
+            throw badRequest("maxGuests must be a positive value");
+        }
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
+    }
+
+    private boolean isPositive(BigDecimal value) {
+        return value != null && value.signum() > 0;
+    }
+
+    private ResponseStatusException badRequest(String message) {
+        return new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
     }
 }
