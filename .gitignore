@@ -38,3 +38,6 @@ out/
 
 
 backend/src/main/resources/application.properties
+
+backend/uploads/
+backend/sql/

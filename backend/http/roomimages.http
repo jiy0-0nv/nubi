@@ -1,0 +1,161 @@
+### 변수 설정
+@baseUrl = http://localhost:8080
+
+### ==============================
+### 관리자 - 숙소 사진 관리 (Admin Room Images) E2E 시나리오
+### ==============================
+
+### 0-1. [A] 회원가입
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "imga@example.com",
+  "password": "testpass123",
+  "name": "ImgOwnerA",
+  "phone": "010-1111-1111"
+}
+
+### 0-2. [A] 로그인 (토큰 발급)
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "imga@example.com",
+  "password": "testpass123"
+}
+
+> {%
+    client.global.set("imgAToken", response.body);
+%}
+
+### 0-3. [B] 회원가입
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "imgb@example.com",
+  "password": "testpass123",
+  "name": "ImgOwnerB",
+  "phone": "010-2222-2222"
+}
+
+### 0-4. [B] 로그인 (토큰 발급)
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "imgb@example.com",
+  "password": "testpass123"
+}
+
+> {%
+    client.global.set("imgBToken", response.body);
+%}
+
+### 1. [A] 사진 테스트용 숙소 등록
+POST {{baseUrl}}/api/admin/rooms
+Authorization: Bearer {{imgAToken}}
+Content-Type: application/json
+
+{
+  "name": "사진 테스트용 숙소",
+  "description": "room images API 테스트 전용",
+  "country": "대한민국",
+  "city": "서울",
+  "street": "강남구 테헤란로 1",
+  "checkinTime": "15:00:00",
+  "checkoutTime": "11:00:00",
+  "weekdayPrice": 50000,
+  "weekendPrice": 70000,
+  "maxGuests": 4
+}
+
+> {%
+    client.global.set("imgRoomId", response.body.id);
+%}
+
+### 2. [A] 사진 2장 업로드
+POST {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgAToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="images"; filename="sample1.png"
+Content-Type: image/png
+
+< ./fixtures/sample1.png
+--WebAppBoundary
+Content-Disposition: form-data; name="images"; filename="sample2.png"
+Content-Type: image/png
+
+< ./fixtures/sample2.png
+--WebAppBoundary--
+
+> {%
+    client.global.set("imgFirstImageId", response.body[0].id);
+    client.global.set("imgFirstImageUrl", response.body[0].url);
+    client.global.set("imgSecondImageId", response.body[1].id);
+%}
+
+### 3. [A] 사진 목록 조회
+GET {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgAToken}}
+
+### 4. 업로드된 사진 실제 다운로드 (정적 서빙 확인)
+GET {{baseUrl}}{{imgFirstImageUrl}}
+
+### 5. [A] 지원하지 않는 파일 타입 업로드 시도 (400)
+POST {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgAToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="images"; filename="not-an-image.txt"
+Content-Type: text/plain
+
+이것은 이미지가 아닙니다
+--WebAppBoundary--
+
+### 6. [B] A 소유 숙소의 사진 목록 조회 시도 (Blocked)
+GET {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgBToken}}
+
+### 7. [B] A 소유 숙소에 사진 업로드 시도 (Blocked)
+POST {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgBToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="images"; filename="sample1.png"
+Content-Type: image/png
+
+< ./fixtures/sample1.png
+--WebAppBoundary--
+
+### 8. [B] A 소유 숙소의 사진 삭제 시도 (Blocked)
+DELETE {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images/{{imgFirstImageId}}
+Authorization: Bearer {{imgBToken}}
+
+### 9. 인증 없이 사진 목록 조회 시도 (Blocked)
+GET {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+
+### 10. [A] 사진 1장 삭제
+DELETE {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images/{{imgFirstImageId}}
+Authorization: Bearer {{imgAToken}}
+
+### 11. [A] 삭제 후 목록 재조회
+GET {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgAToken}}
+
+### 12. [A] 이미 삭제된 사진 재삭제 시도 (404)
+DELETE {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images/{{imgFirstImageId}}
+Authorization: Bearer {{imgAToken}}
+
+### 13. [A] 숙소 삭제 (사진도 함께 정리)
+DELETE {{baseUrl}}/api/admin/rooms/{{imgRoomId}}
+Authorization: Bearer {{imgAToken}}
+
+### 14. [A] 삭제된 숙소의 사진 목록 조회 시도 (404)
+GET {{baseUrl}}/api/admin/rooms/{{imgRoomId}}/images
+Authorization: Bearer {{imgAToken}}
