@@ -1,8 +1,6 @@
 package com.nubi.domain.bookings.controller;
 
-import com.nubi.domain.bookings.dto.BookingCancelRequestDTO;
-import com.nubi.domain.bookings.dto.BookingCreateRequestDTO;
-import com.nubi.domain.bookings.dto.BookingsResponseDTO;
+import com.nubi.domain.bookings.dto.*;
 import com.nubi.domain.bookings.service.BookingsService;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.global.exception.UnauthenticatedException;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -82,4 +82,15 @@ public class BookingsController {
         String token = authorization.substring("Bearer ".length());
         return jwtTokenProvider.parseUserId(token);
     }
+
+    @PostMapping("/{bookingId}/review")
+    public ReviewResponseDTO createReview(
+            @RequestHeader(value = "Authorization", required = false) String authorization,
+            @PathVariable Long bookingId,
+            @RequestBody ReviewCreateRequestDTO request
+    ){
+        Long userId = requireUserId(authorization);
+        return bookingsService.createReview(userId, bookingId, request);
+    }
+
 }

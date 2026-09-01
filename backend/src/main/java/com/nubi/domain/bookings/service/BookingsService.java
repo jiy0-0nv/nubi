@@ -1,11 +1,11 @@
 package com.nubi.domain.bookings.service;
 
-import com.nubi.domain.bookings.dto.BookingCancelRequestDTO;
-import com.nubi.domain.bookings.dto.BookingCreateRequestDTO;
-import com.nubi.domain.bookings.dto.BookingsResponseDTO;
+import com.nubi.domain.bookings.dto.*;
 import com.nubi.domain.bookings.repository.BookingsRepository;
+import com.nubi.domain.rooms.ReviewRepository;
 import com.nubi.domain.rooms.RoomsRepository;
 import com.nubi.entity.BookingsEntity;
+import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
 import jakarta.persistence.EntityManager;
@@ -140,5 +140,31 @@ public class BookingsService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not your booking");
         }
         return booking;
+    }
+
+    private final ReviewRepository reviewRepository;
+
+    //리뷰 작성(Post/bookgs/{bookingId}/review)
+    @Transactional
+    public ReviewResponseDTO createReview(Long userId, Long bookingId, ReviewCreateRequestDTO request) {
+        BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
+
+        if (booking.getStatus() != BookingsEntity.BookingStatus.CONFIRMED) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "only CONFIRMED bookings can be created");
+        }
+        if (reviewRepository.existsById(bookingId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "booking already exists");
+        }
+
+        ReviewEntity review = ReviewEntity.builder()
+                .booking(booking)
+                .user(booking.getUser())
+                .room(booking.getRoom())
+                .rating(request.getRating())
+                .content(request.getContent())
+                .build();
+
+        ReviewEntity saved = reviewRepository.save(review);
+        return ReviewResponseDTO.from(saved);
     }
 }
