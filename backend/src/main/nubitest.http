@@ -11,9 +11,9 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "tes123t@example.com",
+  "email": "aksen5240@gmail.com",
   "password": "1234",
-  "name": "홍길동12314",
+  "name": "김태건",
   "phone": "010-1234-5678"
 }
 
@@ -22,7 +22,7 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "mys0904@naver.com",
+  "email": "mys0904@g.skku.edu",
   "password": "1234",
   "name": "문유식",
   "phone": "010-9999-8888"
@@ -43,7 +43,7 @@ POST {{baseUrl}}/api/accounts/login
 Content-Type: application/json
 
 {
-  "email": "mys0904@naver.com",
+  "email": "mys0904@g.skku.edu",
   "password": "998874"
 }
 
@@ -69,7 +69,7 @@ POST {{baseUrl}}/api/accounts/find-password
 Content-Type: application/json
 
 {
-  "email" : "mys0904@naver.com"
+  "email": "mys0904@g.skku.edu"
 }
 
 
