@@ -4,6 +4,7 @@ import com.nubi.entity.RoomsEntity;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,11 @@ public interface RoomsRepository extends JpaRepository<RoomsEntity, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT r FROM RoomsEntity r WHERE r.id = :id")
     Optional<RoomsEntity> findByIdForUpdate(@Param("id") Long id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE RoomsEntity r SET r.ratingAverage = :ratingAverage where r.id = :roomID")
+    void updateRatingAverage(@Param("roomID") Long roomID, @Param("ratingAverage") double ratingAverage);
+
+
+
 }

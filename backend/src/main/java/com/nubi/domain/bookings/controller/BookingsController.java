@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.file.Path;
-
 @RestController
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
@@ -80,7 +78,7 @@ public class BookingsController {
             return null;
         }
         String token = authorization.substring("Bearer ".length());
-        return jwtTokenProvider.parseUserId(token);
+        return jwtTokenProvider.getUserIdFromToken(token);
     }
 
     @PostMapping("/{bookingId}/review")
