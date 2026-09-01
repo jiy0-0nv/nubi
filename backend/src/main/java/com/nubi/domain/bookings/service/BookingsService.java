@@ -149,11 +149,11 @@ public class BookingsService {
     public ReviewResponseDTO createReview(Long userId, Long bookingId, ReviewCreateRequestDTO request) {
         BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
 
-        if (booking.getStatus() != BookingsEntity.BookingStatus.CONFIRMED) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "only CONFIRMED bookings can be created");
+        if (booking.getStatus() != BookingsEntity.BookingStatus.COMPLETED) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "only COMPLETED bookings can be reviewed");
         }
-        if (reviewRepository.existsById(bookingId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "booking already exists");
+        if (reviewRepository.existsByBookingId(bookingId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "review already exists for this booking");
         }
 
         ReviewEntity review = ReviewEntity.builder()
