@@ -31,4 +31,11 @@ public interface BookingsRepository extends JpaRepository<BookingsEntity, Long> 
     void updateCancelledStatus(@Param("bookingId") Long bookingId,
                                 @Param("status") BookingsEntity.BookingStatus status,
                                 @Param("cancelledAt") LocalDateTime cancelledAt);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE BookingsEntity b SET b.status = :completed " +
+    "WHERE b.status = :confirmed AND b.checkOutDate <= :now")
+    int completeBookings(@Param("completed") BookingsEntity.BookingStatus completed,
+                             @Param("confirmed") BookingsEntity.BookingStatus confirmed,
+                             @Param("now") LocalDateTime now);
 }

@@ -35,7 +35,7 @@ public class BookingsService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    // ---------- 1) 목록 조회 (기존과 동일, 변경 없음) ----------
+    //  1) 목록 조회
     public Page<BookingsResponseDTO> getBookings(Long userId, BookingsEntity.BookingStatus status, Pageable pageable) {
         Page<BookingsEntity> bookings = (status == null)
                 ? bookingsRepository.findByUserId(userId, pageable)
@@ -44,7 +44,7 @@ public class BookingsService {
         return bookings.map(BookingsResponseDTO::from);
     }
 
-    // ---------- 2) 예약 생성 (POST /bookings) ----------
+    // 2) 예약 생성 (POST /bookings)
     // 스펙상 "결제 성공 시점에만 row 생성"이므로, 이 메서드 자체가 결제 성공 콜백이
     // 호출하는 지점이라고 가정한다. 별도 결제 검증 로직은 없음(Payment 도메인이 없음).
     @Transactional
@@ -105,13 +105,13 @@ public class BookingsService {
         return total;
     }
 
-    // ---------- 3) 예약 상세 조회 (GET /mypage/bookings/{booking_id}) ----------
+    // 3) 예약 상세 조회 (GET /mypage/bookings/{booking_id})
     public BookingsResponseDTO getBookingDetail(Long userId, Long bookingId) {
         BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
         return BookingsResponseDTO.from(booking);
     }
 
-    // ---------- 4) 예약 취소 (PATCH /mypage/bookings/{booking_id}/cancel) ----------
+    //  4) 예약 취소 (PATCH /mypage/bookings/{booking_id}/cancel)
     // reason은 요청으로 받지만 저장할 컬럼이 없어서 현재는 버림 — 필요해지면
     // BookingsEntity에 컬럼을 추가하고 업데이트 쿼리에 같이 넘기면 됨.
     @Transactional
@@ -131,7 +131,7 @@ public class BookingsService {
         return BookingsResponseDTO.from(updated);
     }
 
-    // ---------- 공통: 예약 조회 + 소유권 검증 ----------
+    //공통: 예약 조회 + 소유권 검증
     private BookingsEntity getOwnedBookingOrThrow(Long userId, Long bookingId) {
         BookingsEntity booking = bookingsRepository.findById(bookingId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "booking not found"));
