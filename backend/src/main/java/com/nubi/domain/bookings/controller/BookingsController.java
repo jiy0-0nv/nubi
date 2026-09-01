@@ -80,6 +80,6 @@ public class BookingsController {
             return null;
         }
         String token = authorization.substring("Bearer ".length());
-        return jwtTokenProvider.parseUserId(token);
+        return jwtTokenProvider.getUserIdFromToken(token);
     }
 }

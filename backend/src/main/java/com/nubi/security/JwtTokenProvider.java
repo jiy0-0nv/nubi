@@ -56,17 +56,4 @@ public class JwtTokenProvider {
 
         return Long.parseLong(claims.getSubject());
     }
-  
-    public Long parseUserId(String token) {
-        try {
-            Claims claims = Jwts.parser()
-                    .verifyWith(key)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-            return Long.valueOf(claims.getSubject());
-        } catch (JwtException | IllegalArgumentException e) {
-            return null;
-        }
-    }
 }
