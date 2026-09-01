@@ -129,3 +129,96 @@ GET {{baseUrl}}/api/admin/rooms
 ### 11. [A] 숙소 삭제
 DELETE {{baseUrl}}/api/admin/rooms/{{roomId}}
 Authorization: Bearer {{adminAToken}}
+
+### ==============================
+### 관리자 - 예약 관리 (Admin Bookings) E2E 시나리오
+### ==============================
+
+### B-1. [A] 예약 테스트용 숙소 등록
+POST {{baseUrl}}/api/admin/rooms
+Authorization: Bearer {{adminAToken}}
+Content-Type: application/json
+
+{
+  "name": "예약 테스트용 숙소 2",
+  "description": "예약 관리 API 테스트 전용",
+  "country": "대한민국",
+  "city": "서울",
+  "street": "강남구 테헤란로 1",
+  "checkinTime": "15:00:00",
+  "checkoutTime": "11:00:00",
+  "weekdayPrice": 54000,
+  "weekendPrice": 72000,
+  "maxGuests": 4
+}
+
+> {%
+    client.global.set("bookingRoomId", response.body.id);
+%}
+
+### B-2. [B] A의 숙소 예약 생성
+POST {{baseUrl}}/api/bookings
+Authorization: Bearer {{adminBToken}}
+Content-Type: application/json
+
+{
+  "roomId": {{bookingRoomId}},
+  "checkInDate": "2026-11-10T15:00:00",
+  "checkOutDate": "2026-11-12T11:00:00",
+  "guestCount": 2
+}
+
+> {%
+    client.global.set("bookingId", response.body.id);
+%}
+
+### B-3. [A] 예약 관리 목록 조회
+GET {{baseUrl}}/api/admin/bookings?page=0&size=10
+Authorization: Bearer {{adminAToken}}
+
+### B-4. [A] room_id로 필터링해서 조회
+GET {{baseUrl}}/api/admin/bookings?room_id={{bookingRoomId}}
+Authorization: Bearer {{adminAToken}}
+
+### B-5. [A] status=CONFIRMED로 필터링해서 조회
+GET {{baseUrl}}/api/admin/bookings?status=CONFIRMED
+Authorization: Bearer {{adminAToken}}
+
+### B-6. [A] 예약 상세 조회
+GET {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminAToken}}
+
+### B-7. [A] 존재하지 않는 예약 조회 (404)
+GET {{baseUrl}}/api/admin/bookings/999999
+Authorization: Bearer {{adminAToken}}
+
+### B-8. [B] A 소유 숙소의 예약 상세 조회 시도 (Blocked)
+GET {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminBToken}}
+
+### B-9. [B] A 소유 숙소의 예약 취소 시도 (Blocked)
+DELETE {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminBToken}}
+
+### B-10. [B] 예약 관리 목록 조회
+GET {{baseUrl}}/api/admin/bookings
+Authorization: Bearer {{adminBToken}}
+
+### B-11. 인증 없이 예약 관리 접근 시도 (Blocked)
+GET {{baseUrl}}/api/admin/bookings
+
+### B-12. [A] 예약 취소 (soft-cancel: status -> CANCELLED, row는 유지)
+DELETE {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminAToken}}
+
+### B-13. [A] 취소 후 상세 조회 (status: CANCELLED)
+GET {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminAToken}}
+
+### B-14. [A] 이미 취소된 예약 재취소 시도 (CONFLICT)
+DELETE {{baseUrl}}/api/admin/bookings/{{bookingId}}
+Authorization: Bearer {{adminAToken}}
+
+### B-15. [A] status=CANCELLED로 필터링 (취소한 예약 조회)
+GET {{baseUrl}}/api/admin/bookings?status=CANCELLED
+Authorization: Bearer {{adminAToken}}
