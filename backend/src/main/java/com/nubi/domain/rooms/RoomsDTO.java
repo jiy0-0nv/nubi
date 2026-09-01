@@ -2,7 +2,9 @@ package com.nubi.domain.rooms;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import com.nubi.entity.ReviewEntity;
+import com.nubi.entity.RoomImagesEntity;
 import com.nubi.entity.RoomsEntity;
 
 import lombok.Builder;
@@ -20,8 +22,9 @@ public class RoomsDTO {
         private BigDecimal weekdayPrice;
         private BigDecimal weekendPrice;
         private double ratingAverage;
+        private String thumbnailUrl;
 
-        public static ListResponse from(RoomsEntity room){
+        public static ListResponse from(RoomsEntity room, String thumbnailUrl){
             return ListResponse.builder()
                 .id(room.getId())
                 .name(room.getName())
@@ -30,6 +33,7 @@ public class RoomsDTO {
                 .weekdayPrice(room.getWeekdayPrice())
                 .weekendPrice(room.getWeekendPrice())
                 .ratingAverage(room.getRatingAverage())
+                .thumbnailUrl(thumbnailUrl)
                 .build();
         }
     }
@@ -52,8 +56,9 @@ public class RoomsDTO {
         private BigDecimal weekdayPrice;
         private int maxGuests;
         private String status;
+        private List<ImageResponse> images;
 
-        public static DetailResponse from(RoomsEntity room) {
+        public static DetailResponse from(RoomsEntity room, List<RoomImagesEntity> images) {
             return DetailResponse.builder()
                 .id(room.getId())
                 .ownerName(room.getOwner().getName())
@@ -69,6 +74,24 @@ public class RoomsDTO {
                 .weekdayPrice(room.getWeekdayPrice())
                 .maxGuests(room.getMaxGuests())
                 .status(room.getStatus().name())
+                .images(images.stream().map(ImageResponse::from).toList())
+                .build();
+        }
+    }
+
+    // 숙소 사진
+    @Getter
+    @Builder
+    public static class ImageResponse {
+        private Long id;
+        private String url;
+        private boolean thumbnail;
+
+        public static ImageResponse from(RoomImagesEntity image) {
+            return ImageResponse.builder()
+                .id(image.getId())
+                .url(image.getUrl())
+                .thumbnail(image.isThumbnail())
                 .build();
         }
     }
