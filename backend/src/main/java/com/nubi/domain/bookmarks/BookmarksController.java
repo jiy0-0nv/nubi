@@ -45,17 +45,7 @@ public class BookmarksController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping("/mypage/bookmarks")
-    public ResponseEntity<Page<BookmarksDTO.ListResponse>> getBookmarks(
-        @RequestHeader(value = "Authorization", required = false) String authHeader,
-        Pageable pageable){
-            Long userId = extractUserId(authHeader);
-            Page<BookmarksDTO.ListResponse> bookmarks = bookmarksService.getBookmarks(userId, pageable);
-            return ResponseEntity.ok(bookmarks);
-    }
-
-
+    
     // 헤더 누락/형식 오류/토큰 무효 - 전부 인증 실패(401)로 통일해서 응답한다.
     // GlobalExceptionHandler는 건드리지 않고 이 도메인 안에서만 처리.
     private Long extractUserId(String authHeader) {
