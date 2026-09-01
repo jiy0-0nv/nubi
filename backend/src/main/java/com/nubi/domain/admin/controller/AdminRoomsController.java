@@ -58,6 +58,10 @@ public class AdminRoomsController {
         adminRoomsService.deleteRoom(ownerId, roomId);
     }
 
+    //room이미지를 등록하는 기능 필요...
+    //@PostMapping("/upload-roomImage/{roomId}")
+
+
     private Long getCurrentUserId() {
         Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
         return userId instanceof Long ? (Long) userId : null;

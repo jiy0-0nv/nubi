@@ -1,7 +1,7 @@
 package com.nubi.domain.bookmarks;
 
 import com.nubi.domain.rooms.RoomsRepository;
-import com.nubi.domain.account.AccountRepository;
+import com.nubi.domain.account.repository.AccountRepository;
 import com.nubi.entity.BookmarksEntity;
 import com.nubi.entity.BookmarksId;
 import com.nubi.entity.RoomsEntity;
