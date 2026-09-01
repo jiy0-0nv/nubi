@@ -3,12 +3,9 @@ package com.nubi.domain.bookings.service;
 import com.nubi.domain.bookings.dto.BookingCancelRequestDTO;
 import com.nubi.domain.bookings.dto.BookingCreateRequestDTO;
 import com.nubi.domain.bookings.dto.BookingsResponseDTO;
-import com.nubi.domain.bookings.dto.ReviewCreateRequestDTO;
-import com.nubi.domain.bookings.dto.ReviewResponseDTO;
 import com.nubi.domain.bookings.repository.BookingsRepository;
-import com.nubi.domain.rooms.ReviewRepository;
+import com.nubi.domain.rooms.RoomsRepository;
 import com.nubi.entity.BookingsEntity;
-import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
 import jakarta.persistence.EntityManager;
@@ -31,10 +28,10 @@ import java.time.LocalDateTime;
 public class BookingsService {
 
     private final BookingsRepository bookingsRepository;
-    private final ReviewRepository reviewRepository;
+    private final RoomsRepository roomsRepository;
 
-    // Rooms/Account 도메인에 아직 제대로 된 Repository가 없어서(빈 스텁 클래스),
-    // 이번 작업을 Bookings 폴더 안으로만 한정하기 위해 EntityManager로 직접 조회/참조한다.
+    // Account 도메인에 아직 정식 조회 경로가 없어서, userId를 FK로만 쓸 프록시는
+    // EntityManager로 직접 참조한다 (DB round-trip 없이 getReference()로 충분).
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -52,12 +49,10 @@ public class BookingsService {
     // 호출하는 지점이라고 가정한다. 별도 결제 검증 로직은 없음(Payment 도메인이 없음).
     @Transactional
     public BookingsResponseDTO createBooking(Long userId, BookingCreateRequestDTO request) {
-        // 방이 실제로 존재하는지 확인. find()는 실제 SELECT를 날려서 null 또는 엔티티를 준다
-        // (getMaxGuests/가격 계산에 실값이 필요해서 프록시가 아니라 진짜 조회가 필요함).
-        RoomsEntity room = entityManager.find(RoomsEntity.class, request.getRoomId());
-        if (room == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "room not found");
-        }
+        // 비관적 락으로 room 행을 잠근 채 조회한다. 같은 방에 대한 동시 예약 생성 요청은
+        // 이 트랜잭션이 끝날 때까지 여기서 대기하게 되어, 아래 겹침 체크+저장이 직렬화된다.
+        RoomsEntity room = roomsRepository.findByIdForUpdate(request.getRoomId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "room not found"));
 
         // 인원수는 방 최대 정원을 넘을 수 없음
         if (request.getGuestCount() > room.getMaxGuests()) {
@@ -134,35 +129,6 @@ public class BookingsService {
 
         BookingsEntity updated = bookingsRepository.findById(bookingId).orElseThrow();
         return BookingsResponseDTO.from(updated);
-    }
-
-    // ---------- 5) 리뷰 작성 (POST /mypage/bookings/{booking_id}/review) ----------
-    @Transactional
-    public ReviewResponseDTO createReview(Long userId, Long bookingId, ReviewCreateRequestDTO request) {
-        BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
-
-        // 완료된 예약에만 리뷰를 쓸 수 있음
-        if (booking.getStatus() != BookingsEntity.BookingStatus.COMPLETED) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "only COMPLETED bookings can be reviewed");
-        }
-
-        // 예약당 리뷰 1개만 허용 (ReviewEntity.booking이 unique 컬럼이라 DB에서도 막히지만,
-        // 미리 체크해서 더 명확한 에러 메시지를 준다)
-        if (reviewRepository.existsByBookingId(bookingId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "review already exists for this booking");
-        }
-
-        // user/room은 booking에 이미 로딩된 연관관계를 재사용 (추가 조회 불필요)
-        ReviewEntity review = ReviewEntity.builder()
-                .booking(booking)
-                .user(booking.getUser())
-                .room(booking.getRoom())
-                .rating(request.getRating()) // 1~5 범위 검증은 ReviewEntity 생성자 내부에서 이미 함
-                .content(request.getContent())
-                .build();
-
-        ReviewEntity saved = reviewRepository.save(review);
-        return ReviewResponseDTO.from(saved);
     }
 
     // ---------- 공통: 예약 조회 + 소유권 검증 ----------

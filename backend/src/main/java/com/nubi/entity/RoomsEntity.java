@@ -90,6 +90,23 @@ public class RoomsEntity {
         this.status = RoomStatus.ACTIVE;
     }
 
+    public void update(String name, String description, String country, String city, String street,
+                        LocalTime checkinTime, LocalTime checkoutTime,
+                        BigDecimal weekendPrice, BigDecimal weekdayPrice,
+                        Integer maxGuests, RoomStatus status) {
+        if (name != null) this.name = name;
+        if (description != null) this.description = description;
+        if (country != null) this.country = country;
+        if (city != null) this.city = city;
+        if (street != null) this.street = street;
+        if (checkinTime != null) this.checkinTime = checkinTime;
+        if (checkoutTime != null) this.checkoutTime = checkoutTime;
+        if (weekendPrice != null) this.weekendPrice = weekendPrice;
+        if (weekdayPrice != null) this.weekdayPrice = weekdayPrice;
+        if (maxGuests != null) this.maxGuests = maxGuests;
+        if (status != null) this.status = status;
+    }
+
     public enum RoomStatus {
         ACTIVE, INACTIVE
     }

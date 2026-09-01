@@ -1,12 +1,12 @@
-package com.nubi.domain.account;
+package com.nubi.domain.account.service;
 
 import com.nubi.domain.account.dto.AccountResponseDTO;
 import com.nubi.domain.account.dto.FindIdRequest;
 import com.nubi.domain.account.dto.LoginRequest;
 import com.nubi.domain.account.dto.SignupRequest;
+import com.nubi.domain.account.repository.AccountRepository;
 import com.nubi.entity.UsersEntity;
 import com.nubi.security.JwtTokenProvider;
-import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

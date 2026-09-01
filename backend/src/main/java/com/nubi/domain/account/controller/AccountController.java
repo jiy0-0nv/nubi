@@ -1,5 +1,6 @@
-package com.nubi.domain.account;
+package com.nubi.domain.account.controller;
 
+import com.nubi.domain.account.service.AccountService;
 import com.nubi.domain.account.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
