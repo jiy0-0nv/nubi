@@ -165,6 +165,10 @@ public class BookingsService {
                 .build();
 
         ReviewEntity saved = reviewRepository.save(review);
+
+        Double average = reviewRepository.findAvgRatingForRoom(booking.getRoom().getId());
+        roomsRepository.updateRatingAverage(booking.getRoom().getId(), average != null ? average : 0.0);
+
         return ReviewResponseDTO.from(saved);
     }
 }

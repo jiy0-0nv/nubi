@@ -7,6 +7,8 @@ import com.nubi.entity.BookmarksId;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,5 +49,11 @@ public class BookmarksService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "북마크를 찾을 수 없습니다.");
         }
         bookmarksRepository.deleteById(bookmarksId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BookmarksDTO.ListResponse> getBookmarks(Long userId, Pageable pageable) {
+        Page<BookmarksEntity> bookmarks = bookmarksRepository.findById_UserId(userId, pageable);
+        return bookmarks.map(BookmarksDTO.ListResponse::from);
     }
 }
