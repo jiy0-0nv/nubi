@@ -1,25 +1,25 @@
 package com.nubi.domain.mypage.dto;
 
 import com.nubi.domain.account.dto.AccountResponseDTO;
-import com.nubi.domain.bookings.dto.BookingsResponseDTO;
-import com.nubi.domain.bookings.service.BookingsService;
+import com.nubi.domain.bookings.dto.ReviewResponseDTO;
 import lombok.Builder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class MypageResponseDTO {
 
     private AccountResponseDTO profile;
     private List<BookingsSummaryDTO> bookings;
     private List<BookmarkSummaryDTO> bookmarks;
-    private List<ReviewSummaryDTO> reviews;
+    private List<ReviewResponseDTO> reviews;
 
     @Builder
     public MypageResponseDTO(AccountResponseDTO profile, List<BookingsSummaryDTO> bookings,
-                             List<BookmarkSummaryDTO> bookmarks, List<ReviewSummaryDTO> reviews) {
+                             List<BookmarkSummaryDTO> bookmarks, List<ReviewResponseDTO> reviews) {
         this.profile = profile;
         this.bookings = bookings;
         this.bookmarks = bookmarks;

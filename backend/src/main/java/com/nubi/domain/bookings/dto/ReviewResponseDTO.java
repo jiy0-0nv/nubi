@@ -3,9 +3,13 @@ package com.nubi.domain.bookings.dto;
 import com.nubi.domain.rooms.RoomsDTO;
 import com.nubi.entity.ReviewEntity;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor
 public class ReviewResponseDTO {
     private Long id;
     private Long bookingId;

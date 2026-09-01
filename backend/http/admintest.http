@@ -222,3 +222,7 @@ Authorization: Bearer {{adminAToken}}
 ### B-15. [A] status=CANCELLED로 필터링 (취소한 예약 조회)
 GET {{baseUrl}}/api/admin/bookings?status=CANCELLED
 Authorization: Bearer {{adminAToken}}
+
+### B-15. [A]
+GET {{baseUrl}}/mypage
+Authorization: Bearer {{adminAToken}}
