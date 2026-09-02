@@ -2,6 +2,7 @@ package com.nubi.domain.account.controller;
 
 import com.nubi.domain.account.service.AccountService;
 import com.nubi.domain.account.dto.*;
+import com.nubi.entity.UsersEntity;
 import com.nubi.global.exception.UnauthenticatedException;
 import com.nubi.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -83,6 +84,31 @@ public class AccountController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 탈퇴할 수 있습니다.");
         }
         accountService.withdraw(userId);
+    }
+
+    // 1. 유저 -> 관리자 권한 부여
+    // 지금은 로그인만 했으면 누구나 아무 계정의 role이나 바꿀 수 있음 (의도적으로 열어둔 상태 —
+    // ADMIN이 아직 한 명도 없어서 부트스트랩 목적. 실서비스 전엔 반드시 호출 권한을 제한해야 함).
+    @PatchMapping("/{userId}/role")
+    public void updateRole(@PathVariable Long userId, @RequestBody AccountRoleUpdateRequest request) {
+        requireUserId();
+        UsersEntity.Role role;
+        try {
+            role = UsersEntity.Role.valueOf(request.getRole());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "role must be USER or ADMIN");
+        }
+        accountService.updateRole(userId, role);
+    }
+
+    // 2. 관리자 여부 체크 (본인 계정만)
+    @GetMapping("/{userId}/is-admin")
+    public AccountAdminStatusResponse isAdmin(@PathVariable Long userId) {
+        Long currentUserId = requireUserId();
+        if (!currentUserId.equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 조회할 수 있습니다.");
+        }
+        return new AccountAdminStatusResponse(accountService.isAdmin(userId));
     }
 
     private Long getCurrentUserId() {
