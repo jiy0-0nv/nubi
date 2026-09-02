@@ -23,6 +23,8 @@ public class RoomsDTO {
         private BigDecimal weekendPrice;
         private double ratingAverage;
         private String thumbnailUrl;
+        private String checkinTime;
+        private String status;
 
         public static ListResponse from(RoomsEntity room, String thumbnailUrl){
             return ListResponse.builder()
@@ -34,6 +36,8 @@ public class RoomsDTO {
                 .weekendPrice(room.getWeekendPrice())
                 .ratingAverage(room.getRatingAverage())
                 .thumbnailUrl(thumbnailUrl)
+                .checkinTime(room.getCheckinTime().toString())
+                .status(room.getStatus().name())
                 .build();
         }
     }
