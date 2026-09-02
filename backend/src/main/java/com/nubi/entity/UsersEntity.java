@@ -55,6 +55,10 @@ public class UsersEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
+    public void changeRole(Role role) {
+        this.role = role;
+    }
+
     @Builder
     public UsersEntity(String email, String passwordHash, String name, String phone, Role role) {
         this.email = email;
