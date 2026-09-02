@@ -2,8 +2,9 @@
  * NUBI — 무덤 위에 세운 산장
  * 디자인 시스템 (순수 CSS)
  *
- * 컨셉: 칠흑 같은 어둠 위에 핏빛 적색 하나로 긴장을 만드는 호러 포스터 톤.
- *       뿌리/균열 모티프, 명조 계열 제목, 넓은 자간의 대문자 라벨.
+ * 컨셉: 심야 케이블 방송 채널 톤 — 어두운 청록 화면에 민트 하나로
+ *       신호를 밝히는 브라운관 방송실 무드. 스캔라인/그레인 텍스처,
+ *       명조 계열 제목 + 모노스페이스 방송 라벨, 넓은 자간의 대문자.
  *
  * 구성: 1) 토큰  2) 리셋/기본  3) 레이아웃  4) 타이포  5) 버튼
  *       6) 폼  7) 카드/리스트  8) 배지/상태  9) 유틸  10) 화면별
@@ -12,47 +13,47 @@
 /* ---------------------------- 1) 토큰 ---------------------------- */
 :root {
   /* 어둠 */
-  --void: #050406;
-  --soil: #0b090c;
-  --stone: #131015;
-  --stone-2: #1a161c;
-  --grave: #211c24;
+  --void: #071211;
+  --soil: #0a1c19;
+  --stone: #0d2320;
+  --stone-2: #10201d;
+  --grave: #14352f;
 
-  /* 핏빛 */
-  --blood: #a3000c;
-  --blood-bright: #d81e26;
-  --blood-glow: rgba(216, 30, 38, 0.35);
-  --rust: #6b1218;
+  /* 신호(민트) */
+  --blood: #1f8f77;
+  --blood-bright: #7cf5d5;
+  --blood-glow: rgba(124, 245, 213, 0.35);
+  --rust: #2f6b5c;
 
-  /* 뼈/재 */
-  --bone: #ece5da;
-  --ash: #a2988e;
-  --ash-dim: #6d655e;
+  /* 화면/텍스트 */
+  --bone: #eafff8;
+  --ash: #a9ccc4;
+  --ash-dim: #5d8d84;
 
   /* 선 */
-  --hair: rgba(236, 229, 218, 0.09);
-  --hair-strong: rgba(236, 229, 218, 0.18);
-  --hair-blood: rgba(216, 30, 38, 0.28);
+  --hair: rgba(124, 245, 213, 0.1);
+  --hair-strong: rgba(124, 245, 213, 0.22);
+  --hair-blood: rgba(124, 245, 213, 0.42);
 
   /* 상태 */
-  --ok: #4a7c59;
+  --ok: #3f8f6a;
   --ok-text: #8fd0a3;
   --warn: #7a5c1f;
-  --warn-text: #d9b45f;
-  --dead: #4a2226;
-  --dead-text: #e0808a;
+  --warn-text: #ffcf6b;
+  --dead: #4a1620;
+  --dead-text: #ff6b82;
 
   /* 형태 */
   --r-sm: 2px;
   --r-md: 4px;
   --r-lg: 8px;
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
-  --shadow-blood: 0 0 0 1px var(--hair-blood), 0 18px 50px rgba(163, 0, 12, 0.18);
+  --shadow-blood: 0 0 0 1px var(--hair-blood), 0 18px 50px rgba(124, 245, 213, 0.18);
 
   /* 서체 */
-  --font-display: 'Nanum Myeongjo', 'Gowun Batang', 'Apple SD Gothic Neo', 'Batang', serif;
-  --font-body: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, -apple-system, sans-serif;
-  --font-mono: 'D2Coding', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-display: 'Hahmlet', 'Nanum Myeongjo', 'Apple SD Gothic Neo', 'Batang', serif;
+  --font-body: 'IBM Plex Sans KR', 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, -apple-system, sans-serif;
+  --font-mono: 'VT323', 'D2Coding', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --header-h: 68px;
   color-scheme: dark;
@@ -75,14 +76,24 @@ body {
   margin: 0;
   background-color: var(--void);
   background-image:
-    radial-gradient(120% 70% at 50% -10%, rgba(163, 0, 12, 0.26) 0%, rgba(163, 0, 12, 0.05) 40%, transparent 72%),
-    radial-gradient(90% 60% at 50% 108%, rgba(163, 0, 12, 0.12) 0%, transparent 70%);
+    radial-gradient(120% 70% at 50% -10%, rgba(124, 245, 213, 0.16) 0%, rgba(124, 245, 213, 0.03) 40%, transparent 72%),
+    radial-gradient(90% 60% at 50% 108%, rgba(124, 245, 213, 0.08) 0%, transparent 70%);
   background-attachment: fixed;
   color: var(--bone);
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+}
+
+/* 브라운관 스캔라인 — 화면 전체를 가로지르는 방송 텍스처 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background-image: repeating-linear-gradient(rgba(0, 0, 0, 0.16) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
 }
 
 /* 필름 그레인 — 화면 전체에 얹히는 아주 미세한 노이즈 */
@@ -92,7 +103,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.05;
+  opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -199,7 +210,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.01em;
   margin: 0;
   line-height: 1.25;
@@ -220,11 +231,12 @@ p {
 }
 
 .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.42em;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--blood-bright);
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 12px;
 }
 
@@ -311,8 +323,8 @@ p {
 
 .btn-primary {
   background: linear-gradient(180deg, var(--blood-bright), var(--blood));
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.12);
+  color: #04120f;
+  border-color: rgba(4, 18, 15, 0.22);
   box-shadow: 0 0 24px var(--blood-glow);
 }
 
@@ -342,12 +354,12 @@ p {
 }
 
 .btn-danger {
-  border-color: rgba(216, 30, 38, 0.45);
+  border-color: rgba(255, 107, 130, 0.45);
   color: var(--dead-text);
 }
 
 .btn-danger:not(:disabled):hover {
-  background: rgba(216, 30, 38, 0.12);
+  background: rgba(255, 107, 130, 0.12);
   color: #fff;
 }
 
@@ -387,11 +399,12 @@ p {
 
 .field > label,
 .label {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ash-dim);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .field input,
@@ -418,7 +431,7 @@ p {
 .input:focus {
   outline: none;
   border-color: var(--blood);
-  box-shadow: 0 0 0 3px rgba(163, 0, 12, 0.16);
+  box-shadow: 0 0 0 3px rgba(124, 245, 213, 0.16);
   background: var(--stone);
 }
 
@@ -442,7 +455,7 @@ p {
 /* 날짜/시간 입력의 기본 아이콘을 어두운 배경에 맞춰 반전 */
 input[type='date']::-webkit-calendar-picker-indicator,
 input[type='time']::-webkit-calendar-picker-indicator {
-  filter: invert(0.7) sepia(1) saturate(4) hue-rotate(-30deg);
+  filter: invert(0.85) sepia(1) saturate(6) hue-rotate(115deg) brightness(1.05);
   cursor: pointer;
 }
 
@@ -504,7 +517,7 @@ a.card:hover,
   display: grid;
   place-items: center;
   background:
-    radial-gradient(70% 60% at 50% 0%, rgba(163, 0, 12, 0.22), transparent 70%),
+    radial-gradient(70% 60% at 50% 0%, rgba(124, 245, 213, 0.16), transparent 70%),
     linear-gradient(180deg, var(--grave), var(--void));
   color: var(--ash-dim);
   font-size: 34px;
@@ -516,7 +529,9 @@ a.card:hover,
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgba(5, 4, 6, 0.85) 100%);
+  background-image:
+    repeating-linear-gradient(rgba(0, 0, 0, 0.18) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
+    linear-gradient(180deg, transparent 45%, rgba(7, 18, 17, 0.85) 100%);
   pointer-events: none;
 }
 
@@ -658,7 +673,7 @@ a.list-row:hover,
 .badge-blood {
   border-color: var(--hair-blood);
   color: var(--blood-bright);
-  background: rgba(163, 0, 12, 0.14);
+  background: rgba(124, 245, 213, 0.14);
 }
 
 /* 알림 */
@@ -674,9 +689,9 @@ a.list-row:hover,
 }
 
 .alert-error {
-  border-color: rgba(216, 30, 38, 0.4);
-  background: rgba(163, 0, 12, 0.12);
-  color: #f0b4b9;
+  border-color: rgba(255, 107, 130, 0.4);
+  background: rgba(74, 22, 32, 0.4);
+  color: #ffb3c0;
 }
 
 .alert-success {
@@ -773,8 +788,9 @@ a.list-row:hover,
 }
 
 .spinner-text {
-  font-size: 12px;
-  letter-spacing: 0.3em;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ash-dim);
 }
@@ -819,7 +835,7 @@ a.list-row:hover,
   height: var(--header-h);
   display: flex;
   align-items: center;
-  background: rgba(5, 4, 6, 0.82);
+  background: rgba(7, 18, 17, 0.82);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--hair);
 }
@@ -845,10 +861,11 @@ a.list-row:hover,
 }
 
 .brand-sub {
-  font-size: 9px;
-  letter-spacing: 0.32em;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
   color: var(--ash-dim);
-  margin-top: 5px;
+  margin-top: 3px;
   text-transform: uppercase;
 }
 
@@ -870,7 +887,7 @@ a.list-row:hover,
 
 .nav-link:hover {
   color: var(--bone);
-  background: rgba(236, 229, 218, 0.05);
+  background: rgba(124, 245, 213, 0.06);
 }
 
 .nav-link.active {
@@ -894,8 +911,8 @@ a.list-row:hover,
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 45% at 50% 22%, rgba(216, 30, 38, 0.32), transparent 68%),
-    radial-gradient(100% 60% at 50% 100%, rgba(5, 4, 6, 0.95), transparent);
+    radial-gradient(60% 45% at 50% 22%, rgba(124, 245, 213, 0.26), transparent 68%),
+    radial-gradient(100% 60% at 50% 100%, rgba(7, 18, 17, 0.95), transparent);
   pointer-events: none;
 }
 
@@ -917,8 +934,9 @@ a.list-row:hover,
 }
 
 .hero-credit {
-  font-size: 10px;
-  letter-spacing: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.4em;
   color: var(--ash-dim);
   text-transform: uppercase;
   margin-bottom: 26px;
@@ -927,18 +945,18 @@ a.list-row:hover,
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(52px, 11vw, 116px);
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 900;
+  letter-spacing: 0.02em;
   line-height: 1;
   color: var(--bone);
-  text-shadow: 0 0 60px rgba(216, 30, 38, 0.55), 0 0 6px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 60px rgba(124, 245, 213, 0.45), 0 0 6px rgba(0, 0, 0, 0.8);
   margin-bottom: 22px;
 }
 
 .hero-tagline {
-  font-family: var(--font-display);
-  font-size: clamp(15px, 2.4vw, 19px);
-  letter-spacing: 0.24em;
+  font-family: var(--font-mono);
+  font-size: clamp(17px, 2.6vw, 21px);
+  letter-spacing: 0.2em;
   color: var(--blood-bright);
   margin-bottom: 12px;
 }
@@ -1000,7 +1018,9 @@ a.list-row:hover,
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(5, 4, 6, 0.25) 0%, transparent 40%, rgba(5, 4, 6, 0.92) 100%);
+  background-image:
+    repeating-linear-gradient(rgba(0, 0, 0, 0.16) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
+    linear-gradient(180deg, rgba(7, 18, 17, 0.25) 0%, transparent 40%, rgba(7, 18, 17, 0.92) 100%);
 }
 
 .detail-hero-caption {
@@ -1099,8 +1119,9 @@ a.list-row:hover,
 }
 
 .spec-label {
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ash-dim);
   margin-bottom: 6px;
@@ -1232,8 +1253,9 @@ a.list-row:hover,
 }
 
 .tile-label {
-  font-size: 12px;
-  letter-spacing: 0.16em;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ash-dim);
 }
@@ -1247,7 +1269,7 @@ a.list-row:hover,
   place-items: center;
   border-radius: 50%;
   border: 1px solid var(--hair-blood);
-  background: radial-gradient(circle, rgba(163, 0, 12, 0.28), transparent 70%);
+  background: radial-gradient(circle, rgba(124, 245, 213, 0.24), transparent 70%);
   font-family: var(--font-display);
   font-size: 34px;
   color: var(--blood-bright);
@@ -1259,12 +1281,12 @@ a.list-row:hover,
   display: grid;
   grid-template-columns: 250px 1fr;
   min-height: 100vh;
-  background: #060507;
+  background: #050d0c;
 }
 
 .admin-side {
   border-right: 1px solid var(--hair);
-  background: linear-gradient(180deg, #0c0a0d, #060507);
+  background: linear-gradient(180deg, #0a1a17, #050d0c);
   padding: 26px 18px;
   display: flex;
   flex-direction: column;
@@ -1289,8 +1311,9 @@ a.list-row:hover,
 .admin-brand-tag {
   margin-top: 8px;
   display: inline-block;
-  font-size: 9.5px;
-  letter-spacing: 0.28em;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--blood-bright);
   border: 1px solid var(--hair-blood);
@@ -1317,12 +1340,12 @@ a.list-row:hover,
 }
 
 .admin-nav-link:hover {
-  background: rgba(236, 229, 218, 0.04);
+  background: rgba(124, 245, 213, 0.05);
   color: var(--bone);
 }
 
 .admin-nav-link.active {
-  background: rgba(163, 0, 12, 0.14);
+  background: rgba(124, 245, 213, 0.12);
   border-left-color: var(--blood-bright);
   color: var(--bone);
   font-weight: 600;
@@ -1360,8 +1383,9 @@ a.list-row:hover,
 }
 
 .stat-label {
-  font-size: 10.5px;
-  letter-spacing: 0.22em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ash-dim);
   margin-bottom: 10px;
@@ -1396,11 +1420,12 @@ table.table {
 .table thead th {
   text-align: left;
   padding: 13px 16px;
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ash-dim);
-  font-weight: 700;
+  font-weight: 400;
   background: var(--stone);
   border-bottom: 1px solid var(--hair);
   white-space: nowrap;
@@ -1417,7 +1442,7 @@ table.table {
 }
 
 .table tbody tr:hover {
-  background: rgba(236, 229, 218, 0.025);
+  background: rgba(124, 245, 213, 0.035);
 }
 
 .table .cell-strong {
@@ -1461,8 +1486,8 @@ table.table {
   padding: 5px 10px;
   font-size: 11px;
   border-radius: var(--r-sm);
-  border: 1px solid rgba(216, 30, 38, 0.5);
-  background: rgba(5, 4, 6, 0.82);
+  border: 1px solid rgba(255, 107, 130, 0.5);
+  background: rgba(7, 18, 17, 0.82);
   color: var(--dead-text);
   cursor: pointer;
 }
@@ -1484,7 +1509,7 @@ table.table {
 
 .dropzone:hover {
   border-color: var(--blood);
-  background: rgba(163, 0, 12, 0.06);
+  background: rgba(124, 245, 213, 0.06);
 }
 
 /* 접근 차단 화면 */
@@ -1499,9 +1524,9 @@ table.table {
 .denied-mark {
   font-family: var(--font-display);
   font-size: 76px;
-  color: var(--blood);
+  color: var(--dead-text);
   letter-spacing: 0.2em;
-  text-shadow: 0 0 50px var(--blood-glow);
+  text-shadow: 0 0 50px rgba(255, 107, 130, 0.5);
   margin-bottom: 18px;
 }
 
