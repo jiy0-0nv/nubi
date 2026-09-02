@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-// @RequestMapping("/bookmarks")    -> 개별 경로로
 public class BookmarksController {
 
     private final BookmarksService bookmarksService;
