@@ -2,9 +2,14 @@ package com.nubi.domain.account.controller;
 
 import com.nubi.domain.account.service.AccountService;
 import com.nubi.domain.account.dto.*;
+import com.nubi.global.exception.UnauthenticatedException;
+import com.nubi.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 
@@ -30,6 +35,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final HttpServletRequest request;
 
     @PostMapping("/signup")
     public ResponseEntity<Long> signup(@RequestBody SignupRequest request) {
@@ -51,6 +57,10 @@ public class AccountController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long userId) {
+        Long currentUserId = requireUserId();
+        if (!currentUserId.equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 조회할 수 있습니다.");
+        }
         AccountResponseDTO response = accountService.getAccount(userId);
         return ResponseEntity.ok(response);
     }
@@ -63,5 +73,18 @@ public class AccountController {
     @PatchMapping("/change-password")
     public String changePassword(@RequestBody UserTokenRequest request){
         return accountService.changePassword(request.getUserToken(), request.getNewPassword());
+    }
+
+    private Long getCurrentUserId() {
+        Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
+        return userId instanceof Long ? (Long) userId : null;
+    }
+
+    private Long requireUserId() {
+        Long userId = getCurrentUserId();
+        if (userId == null) {
+            throw new UnauthenticatedException();
+        }
+        return userId;
     }
 }
