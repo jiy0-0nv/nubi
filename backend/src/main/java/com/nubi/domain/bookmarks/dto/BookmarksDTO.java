@@ -6,6 +6,8 @@ import com.nubi.entity.BookmarksEntity;
 public class BookmarksDTO {
     public record CreateRequest(Long roomId) {}
 
+    public record StatusResponse(boolean bookmarked) {}
+
     public record ListResponse(
         Long roomId,
         String roomName,
