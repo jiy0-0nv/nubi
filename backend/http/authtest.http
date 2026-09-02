@@ -1,0 +1,222 @@
+### 변수 설정
+@baseUrl = http://localhost:8080
+
+### ==============================
+### 인증(JWT) 통합 테스트 시나리오
+###
+### 모든 보호된 도메인은 이제 JwtAuthenticationFilter 기반으로 통일되어 있습니다:
+### - 토큰 없음        -> 401 {"errorCode":"NEED_SIGNUP"}
+### - 깨진/만료된 토큰  -> 401 {"errorCode":"NEED_SIGNUP"} (예전엔 BookingsController가 500,
+###                        BookmarksController가 다른 모양의 401 바디를 냈음 - 아래에서 회귀 확인)
+### - 유효한 토큰       -> 정상 동작
+###
+### GET /api/accounts/{userId}도 이제 본인 계정만 조회 가능하도록 인증이 붙었습니다:
+### - 토큰 없음/깨진 토큰 -> 401
+### - 남의 id 조회 시도   -> 403
+### - 본인 id 조회        -> 200
+### ==============================
+
+### 0-1. [A] 회원가입
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "authtest-a2@example.com",
+  "password": "testpass123",
+  "name": "AuthTestA",
+  "phone": "010-1111-1111"
+}
+
+> {%
+    client.global.set("authUserAId", response.body);
+%}
+
+### 0-2. [A] 로그인 (토큰 발급)
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "authtest-a2@example.com",
+  "password": "testpass123"
+}
+
+> {%
+    client.global.set("authTokenA", response.body);
+%}
+
+### 0-3. [B] 회원가입
+POST {{baseUrl}}/api/accounts/signup
+Content-Type: application/json
+
+{
+  "email": "authtest-b@example.com",
+  "password": "testpass123",
+  "name": "AuthTestB",
+  "phone": "010-2222-2222"
+}
+
+> {%
+    client.global.set("authUserBId", response.body);
+%}
+
+### 0-4. [B] 로그인 (토큰 발급)
+POST {{baseUrl}}/api/accounts/login
+Content-Type: application/json
+
+{
+  "email": "authtest-b@example.com",
+  "password": "testpass123"
+}
+
+> {%
+    client.global.set("authTokenB", response.body);
+%}
+
+### 0-5. [A] 이후 시나리오(북마크 등)에서 쓸 방 등록
+POST {{baseUrl}}/api/admin/rooms
+Authorization: Bearer {{authTokenA}}
+Content-Type: application/json
+
+{
+  "name": "인증 테스트용 숙소",
+  "country": "대한민국",
+  "city": "서울",
+  "street": "강남구 테헤란로 1",
+  "checkinTime": "15:00:00",
+  "checkoutTime": "11:00:00",
+  "weekdayPrice": 50000,
+  "weekendPrice": 70000,
+  "maxGuests": 4
+}
+
+> {%
+    client.global.set("authRoomId", response.body.id);
+%}
+
+### ==============================
+### 1. 공개 API - 토큰이 없어도 정상 동작
+### ==============================
+
+### 1-1. GET /rooms (토큰 없음, 200)
+GET {{baseUrl}}/rooms
+
+### ==============================
+### 2. Admin Rooms (/api/admin/rooms)
+### ==============================
+
+### 2-1. 토큰 없음 (401)
+GET {{baseUrl}}/api/admin/rooms
+
+### 2-2. 깨진 토큰 (401)
+GET {{baseUrl}}/api/admin/rooms
+Authorization: Bearer broken-token
+
+### 2-3. 정상 토큰 (200)
+GET {{baseUrl}}/api/admin/rooms
+Authorization: Bearer {{authTokenA}}
+
+### ==============================
+### 3. Admin Bookings (/api/admin/bookings)
+### ==============================
+
+### 3-1. 토큰 없음 (401)
+GET {{baseUrl}}/api/admin/bookings
+
+### 3-2. 깨진 토큰 (401)
+GET {{baseUrl}}/api/admin/bookings
+Authorization: Bearer broken-token
+
+### 3-3. 정상 토큰 (200)
+GET {{baseUrl}}/api/admin/bookings
+Authorization: Bearer {{authTokenA}}
+
+### ==============================
+### 4. Bookings (/api/bookings)
+### ==============================
+
+### 4-1. 토큰 없음 (401)
+GET {{baseUrl}}/api/bookings
+
+### 4-2. 깨진 토큰 (401)
+GET {{baseUrl}}/api/bookings
+Authorization: Bearer broken-token
+
+### 4-3. 정상 토큰 (200)
+GET {{baseUrl}}/api/bookings
+Authorization: Bearer {{authTokenB}}
+
+### ==============================
+### 5. Bookmarks (/bookmarks)
+### ==============================
+
+### 5-1. 토큰 없음 (401)
+POST {{baseUrl}}/bookmarks
+Content-Type: application/json
+
+{
+  "roomId": {{authRoomId}}
+}
+
+### 5-2. 깨진 토큰 (401)
+POST {{baseUrl}}/bookmarks
+Authorization: Bearer broken-token
+Content-Type: application/json
+
+{
+  "roomId": {{authRoomId}}
+}
+
+### 5-3. 정상 토큰으로 북마크 추가 (201)
+POST {{baseUrl}}/bookmarks
+Authorization: Bearer {{authTokenB}}
+Content-Type: application/json
+
+{
+  "roomId": {{authRoomId}}
+}
+
+### 5-4. 정상 토큰으로 북마크 삭제 (204)
+DELETE {{baseUrl}}/bookmarks/{{authRoomId}}
+Authorization: Bearer {{authTokenB}}
+
+### ==============================
+### 6. Mypage (/api/mypage)
+### ==============================
+
+### 6-1. 토큰 없음 (401)
+POST {{baseUrl}}/api/mypage
+
+### 6-2. 깨진 토큰 (401)
+POST {{baseUrl}}/api/mypage
+Authorization: Bearer broken-token
+
+### 6-3. 정상 토큰 (200)
+POST {{baseUrl}}/api/mypage
+Authorization: Bearer {{authTokenB}}
+
+### ==============================
+### 7. GET /api/accounts/{userId} - 본인 계정만 조회 가능
+### ==============================
+
+### 7-1. 토큰 없음 (401)
+GET {{baseUrl}}/api/accounts/{{authUserAId}}
+
+### 7-2. 깨진 토큰 (401)
+GET {{baseUrl}}/api/accounts/{{authUserAId}}
+Authorization: Bearer broken-token
+
+### 7-3. [A] 본인 정보 조회 (200)
+GET {{baseUrl}}/api/accounts/{{authUserAId}}
+Authorization: Bearer {{authTokenA}}
+
+### 7-4. [A] B의 정보 조회 시도 (403)
+GET {{baseUrl}}/api/accounts/{{authUserBId}}
+Authorization: Bearer {{authTokenA}}
+
+### 7-5. [B] 본인 정보 조회 (200)
+GET {{baseUrl}}/api/accounts/{{authUserBId}}
+Authorization: Bearer {{authTokenB}}
+
+### 7-6. 정리: 테스트용 숙소 삭제
+DELETE {{baseUrl}}/api/admin/rooms/{{authRoomId}}
+Authorization: Bearer {{authTokenA}}
