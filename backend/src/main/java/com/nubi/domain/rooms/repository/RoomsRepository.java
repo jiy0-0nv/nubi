@@ -2,6 +2,8 @@ package com.nubi.domain.rooms.repository;
 
 import com.nubi.entity.RoomsEntity;
 import jakarta.persistence.LockModeType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,6 +26,11 @@ public interface RoomsRepository extends JpaRepository<RoomsEntity, Long> {
     @Query("UPDATE RoomsEntity r SET r.ratingAverage = :ratingAverage where r.id = :roomID")
     void updateRatingAverage(@Param("roomID") Long roomID, @Param("ratingAverage") double ratingAverage);
 
-
+    @Query("SELECT r FROM RoomsEntity r WHERE " +
+            "(:keyword IS NULL OR r.name LIKE CONCAT('%', :keyword, '%') " +
+            "  OR r.city LIKE CONCAT('%', :keyword, '%') " +
+            "  OR r.country LIKE CONCAT('%', :keyword, '%')) " +
+            "AND (:guests IS NULL OR r.maxGuests >= :guests)")
+    Page<RoomsEntity> search(@Param("keyword") String keyword, @Param("guests") Integer guests, Pageable pageable);
 
 }

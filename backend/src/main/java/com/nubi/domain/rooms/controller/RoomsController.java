@@ -28,7 +28,7 @@ public class RoomsController {
         @RequestParam(required = false) Integer guests,
         Pageable pageable
     ){
-        Page<RoomsDTO.ListResponse> rooms = roomsService.getRooms(pageable);
+        Page<RoomsDTO.ListResponse> rooms = roomsService.getRooms(keyword, guests, pageable);
         return ResponseEntity.ok(rooms);
     }
 

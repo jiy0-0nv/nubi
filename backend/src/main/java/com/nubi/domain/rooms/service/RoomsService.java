@@ -29,8 +29,9 @@ public class RoomsService {
     private final RoomImagesRepository roomImagesRepository;
 
     // 1. GET /rooms
-    public Page<RoomsDTO.ListResponse> getRooms(Pageable pageable){
-        Page<RoomsEntity> rooms = roomsRepository.findAll(pageable);
+    public Page<RoomsDTO.ListResponse> getRooms(String keyword, Integer guests, Pageable pageable){
+        String normalizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
+        Page<RoomsEntity> rooms = roomsRepository.search(normalizedKeyword, guests, pageable);
 
         List<Long> roomIds = rooms.getContent().stream().map(RoomsEntity::getId).toList();
         Map<Long, String> thumbnailByRoomId = roomImagesRepository.findByRoom_IdInAndThumbnailTrue(roomIds).stream()
