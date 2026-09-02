@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRoomDetail, getRoomReviews } from '../api/rooms';
+import { getBookmarkStatus } from '../api/bookmarks';
 import { useAuth } from '../context/AuthContext';
 import { useBookmarks } from '../context/BookmarksContext';
 import Spinner from '../components/Spinner';
@@ -21,7 +22,7 @@ export default function RoomDetailPage() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin } = useAuth();
-  const { has, toggle } = useBookmarks();
+  const { has, toggle, reload: reloadBookmarks } = useBookmarks();
 
   const [room, setRoom] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -54,6 +55,27 @@ export default function RoomDetailPage() {
       ignore = true;
     };
   }, [roomId]);
+
+  /**
+   * BookmarksContext의 has()는 로그인 시 마이페이지를 한 번 불러와 만든 캐시라,
+   * 이 방 하나만 놓고 보면 아직 못 불러왔거나 다른 탭에서 바뀌었을 수 있습니다.
+   * 단건 확인 API로 실제 값을 물어보고, 캐시와 어긋나면 캐시를 다시 불러와 맞춥니다.
+   */
+  useEffect(() => {
+    if (!room || !isAuthenticated || isAdmin) return;
+    let ignore = false;
+    getBookmarkStatus(room.id)
+      .then((res) => {
+        if (ignore) return;
+        if (Boolean(res?.bookmarked) !== has(room.id)) reloadBookmarks();
+      })
+      .catch(() => {
+        /* 부가 확인이라 실패해도 화면은 캐시 값을 그대로 보여줍니다. */
+      });
+    return () => {
+      ignore = true;
+    };
+  }, [room, isAuthenticated, isAdmin, has, reloadBookmarks]);
 
   // 백엔드 응답에 images 배열이 없을 수도 있어(대표사진만 내려주는 경우) 폭넓게 받아냅니다.
   const images = useMemo(() => {

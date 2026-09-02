@@ -9,3 +9,8 @@ export function addBookmark(roomId) {
 export function removeBookmark(roomId) {
   return http.delete(`/api/bookmarks/${roomId}`);
 }
+
+/** GET /api/bookmarks/{roomId} - 이 방을 내가 북마크했는지 단건 확인 -> { bookmarked: boolean } */
+export function getBookmarkStatus(roomId) {
+  return http.get(`/api/bookmarks/${roomId}`);
+}

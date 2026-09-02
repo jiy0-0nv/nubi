@@ -49,3 +49,15 @@ export function changePassword(userToken, newPassword) {
 export function withdraw(userId) {
   return http.delete(`/api/accounts/${userId}`);
 }
+
+/**
+ * PATCH /api/accounts/{userId}/role -> role 변경 ("USER" | "ADMIN")
+ */
+export function updateRole(userId, role) {
+  return http.patch(`/api/accounts/${userId}/role`, { role });
+}
+
+/** GET /api/accounts/{userId}/is-admin (본인 계정만) -> { admin: boolean } */
+export function checkIsAdmin(userId) {
+  return http.get(`/api/accounts/${userId}/is-admin`);
+}

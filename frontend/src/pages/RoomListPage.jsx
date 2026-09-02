@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getRooms } from '../api/rooms';
 import RoomCard from '../components/RoomCard';
@@ -47,22 +47,7 @@ export default function RoomListPage() {
     };
   }, [keyword, checkin, checkout, guests, page]);
 
-  /**
-   * 서버 RoomsService가 아직 keyword/guests 필터를 실제로 적용하지 않기 때문에
-   * (파라미터를 받기만 함) 사용자 체감이 이상하지 않도록 화면에서 한 번 더 걸러줍니다.
-   * 서버에 필터가 붙으면 이 블록은 그대로 두어도 결과가 같습니다.
-   */
-  const rooms = useMemo(() => {
-    const list = data?.content || [];
-    const q = keyword.trim().toLowerCase();
-    return list.filter((room) => {
-      if (guests && Number(room.maxGuests) < guests) return false;
-      if (!q) return true;
-      return [room.name, room.city, room.country, room.street]
-        .filter(Boolean)
-        .some((field) => String(field).toLowerCase().includes(q));
-    });
-  }, [data, keyword, guests]);
+  const rooms = data?.content || [];
 
   const submit = (e) => {
     e.preventDefault();
