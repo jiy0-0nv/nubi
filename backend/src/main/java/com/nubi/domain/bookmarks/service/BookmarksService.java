@@ -50,4 +50,9 @@ public class BookmarksService {
         bookmarksRepository.deleteById(bookmarksId);
     }
 
+    @Transactional(readOnly = true)
+    public boolean isBookmarked(Long userId, Long roomId) {
+        return bookmarksRepository.existsById(new BookmarksId(userId, roomId));
+    }
+
 }

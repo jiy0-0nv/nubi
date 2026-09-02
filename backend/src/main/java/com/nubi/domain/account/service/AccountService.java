@@ -115,4 +115,18 @@ public class AccountService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         user.withdraw();
     }
+
+    @Transactional
+    public void updateRole(Long userId, UsersEntity.Role role) {
+        UsersEntity user = accountRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        user.changeRole(role);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isAdmin(Long userId) {
+        UsersEntity user = accountRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        return user.getRole() == UsersEntity.Role.ADMIN;
+    }
 }
