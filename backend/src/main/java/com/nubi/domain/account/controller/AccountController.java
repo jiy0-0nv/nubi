@@ -26,6 +26,7 @@ import java.net.URI;
 |oo POST | `/account/find-password` | `{ "email": string, "name": string, "phone": string }` | 비밀번호 재설정 링크/코드 발송 |
 | PATCH | `/account/change-password` | `{ "token": string, "new_password": string }` | 발급받은 토큰으로 비밀번호 재설정 |
 |oo GET | `/account/{user-id}` | - | 현재 로그인 유저 정보 + role 반환 (기존 `/account/check`, `/account/check/isadmin` 통합) |
+|oo DELETE | `/account/{user-id}` | - | 회원 탈퇴 (row 삭제가 아닌 deleted_at 설정으로 처리) |
 
  */
 
@@ -73,6 +74,15 @@ public class AccountController {
     @PatchMapping("/change-password")
     public String changePassword(@RequestBody UserTokenRequest request){
         return accountService.changePassword(request.getUserToken(), request.getNewPassword());
+    }
+
+    @DeleteMapping("/{userId}")
+    public void withdraw(@PathVariable Long userId) {
+        Long currentUserId = requireUserId();
+        if (!currentUserId.equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 계정만 탈퇴할 수 있습니다.");
+        }
+        accountService.withdraw(userId);
     }
 
     private Long getCurrentUserId() {
