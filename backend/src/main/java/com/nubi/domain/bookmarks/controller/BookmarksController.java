@@ -31,6 +31,12 @@ public class BookmarksController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/bookmarks/{roomId}")
+    public BookmarksDTO.StatusResponse getBookmarkStatus(@PathVariable Long roomId) {
+        Long userId = requireUserId();
+        return new BookmarksDTO.StatusResponse(bookmarksService.isBookmarked(userId, roomId));
+    }
+
     private Long getCurrentUserId() {
         Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
         return userId instanceof Long ? (Long) userId : null;
