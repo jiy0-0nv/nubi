@@ -11,11 +11,15 @@ POST {{baseUrl}}/api/accounts/signup
 Content-Type: application/json
 
 {
-  "email": "tes1234t@example.com",
-  "password": "123456",
-  "name": "홍길동12314",
+  "email": "test2@example.com",
+  "password": "1234",
+  "name": "홍길동1234",
   "phone": "010-1234-5678"
 }
+
+> {%
+    client.global.set("userId", response.body);
+%}
 
 ### 동일 이메일로 재가입 시도 (중복 체크 로직 확인용 - 400 에러 떠야 정상)
 POST {{baseUrl}}/api/accounts/signup
@@ -43,17 +47,17 @@ POST {{baseUrl}}/api/accounts/login
 Content-Type: application/json
 
 {
-  "email": "tes1234t@example.com",
-  "password": "123456"
+  "email": "test2@example.com",
+  "password": "1234"
 }
+
+> {%
+    client.global.set("userToken", response.body);
+%}
 
 ### 정보조회 테스트
-GET {{baseUrl}}/api/accounts/1
-Content-Type: application/json
-
-{
-  "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzMTIzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc4ODE0MzI0MywiZXhwIjoxNzg4MTQ2ODQzfQ.X98DiGs6yUvKCQwg4OMpO4XK-XSJ4mdIQoQPQHsmtVcsIqSLFlGYc0I8H25-RlYefHUuxYb0nWu6j5PS1qkCDg"
-}
+GET {{baseUrl}}/api/accounts/{{userId}}
+Authorization: Bearer {{userToken}}
 
 ### 아이디(이메일) 찾기 테스트
 POST {{baseUrl}}/api/accounts/find-id
@@ -81,3 +85,7 @@ Content-Type: application/json
   "userToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMyIsImVtYWlsIjoibXlzMDkwNEBuYXZlci5jb20iLCJpYXQiOjE3ODgxNTk4MzksImV4cCI6MTc4ODE2MzQzOX0.pqwfzShOODZDu_0tzEF86VafYoceQuKEVCjpt4V6wA_gSBZYL9JyWc4vm54bNdauvwigRq7U7fWzJmo-zmre8A",
   "newPassword" : "1234"
 }
+
+### 회원탈퇴 테스트
+DELETE {{baseUrl}}/api/accounts/{{userId}}
+Authorization: Bearer {{userToken}}

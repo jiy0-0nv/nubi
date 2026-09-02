@@ -51,6 +51,10 @@ public class UsersEntity {
         this.passwordHash = newPasswordHash;
     }
 
+    public void withdraw() {
+        this.deletedAt = LocalDateTime.now();
+    }
+
     @Builder
     public UsersEntity(String email, String passwordHash, String name, String phone, Role role) {
         this.email = email;

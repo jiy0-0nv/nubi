@@ -52,6 +52,10 @@ public class AccountService {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다.");
         }
 
+        if (user.getDeletedAt() != null) {
+            throw new IllegalArgumentException("탈퇴한 계정입니다.");
+        }
+
         return jwtTokenProvider.createToken(user.getId(), user.getEmail());
     }
 
@@ -103,5 +107,12 @@ public class AccountService {
         user.changePassword(passwordEncoder.encode(newPassword));
 
         return "비밀번호 갱신 완료";
+    }
+
+    @Transactional
+    public void withdraw(Long userId) {
+        UsersEntity user = accountRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        user.withdraw();
     }
 }
