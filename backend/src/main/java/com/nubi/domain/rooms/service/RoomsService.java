@@ -4,6 +4,7 @@ import com.nubi.domain.rooms.dto.RoomsDTO;
 import com.nubi.domain.rooms.repository.ReviewRepository;
 import com.nubi.domain.rooms.repository.RoomImagesRepository;
 import com.nubi.domain.rooms.repository.RoomsRepository;
+import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomImagesEntity;
 import com.nubi.entity.RoomsEntity;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,9 +32,14 @@ public class RoomsService {
     private final RoomImagesRepository roomImagesRepository;
 
     // 1. GET /rooms
-    public Page<RoomsDTO.ListResponse> getRooms(String keyword, Integer guests, Pageable pageable){
+    public Page<RoomsDTO.ListResponse> getRooms(String keyword, String checkin, String checkout,
+                                                 Integer guests, Pageable pageable){
         String normalizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
-        Page<RoomsEntity> rooms = roomsRepository.search(normalizedKeyword, guests, pageable);
+        LocalDate[] checkInOut = parseAvailabilityRange(checkin, checkout);
+
+        Page<RoomsEntity> rooms = roomsRepository.search(
+                normalizedKeyword, guests, checkInOut[0], checkInOut[1],
+                BookingsEntity.BookingStatus.CANCELLED, pageable);
 
         List<Long> roomIds = rooms.getContent().stream().map(RoomsEntity::getId).toList();
         Map<Long, String> thumbnailByRoomId = roomImagesRepository.findByRoom_IdInAndThumbnailTrue(roomIds).stream()
@@ -57,5 +65,26 @@ public class RoomsService {
         }
         Page<ReviewEntity> reviews = reviewRepository.findByRoomId(roomId, pageable);
         return reviews.map(RoomsDTO.ReviewResponse::from);
+    }
+
+    private LocalDate[] parseAvailabilityRange(String checkin, String checkout) {
+        if (checkin == null || checkin.isBlank() || checkout == null || checkout.isBlank()) {
+            return new LocalDate[]{null, null};
+        }
+
+        LocalDate checkInDate;
+        LocalDate checkOutDate;
+        try {
+            checkInDate = LocalDate.parse(checkin);
+            checkOutDate = LocalDate.parse(checkout);
+        } catch (DateTimeParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkin/checkout must be in yyyy-MM-dd format");
+        }
+
+        if (!checkOutDate.isAfter(checkInDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout must be after checkin");
+        }
+
+        return new LocalDate[]{checkInDate, checkOutDate};
     }
 }
