@@ -1,18 +1,17 @@
-package com.nubi.domain.bookmarks;
+package com.nubi.domain.bookmarks.controller;
 
+import com.nubi.domain.bookmarks.dto.BookmarksDTO;
+import com.nubi.domain.bookmarks.service.BookmarksService;
 import com.nubi.global.exception.UnauthenticatedException;
 import com.nubi.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 // @RequestMapping("/bookmarks")    -> 개별 경로로
 public class BookmarksController {

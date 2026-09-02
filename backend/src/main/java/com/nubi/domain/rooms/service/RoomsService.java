@@ -1,5 +1,9 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.service;
 
+import com.nubi.domain.rooms.dto.RoomsDTO;
+import com.nubi.domain.rooms.repository.ReviewRepository;
+import com.nubi.domain.rooms.repository.RoomImagesRepository;
+import com.nubi.domain.rooms.repository.RoomsRepository;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomImagesEntity;
 import com.nubi.entity.RoomsEntity;

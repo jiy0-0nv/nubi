@@ -1,6 +1,5 @@
 package com.nubi.domain.bookings.dto;
 
-import com.nubi.domain.rooms.RoomsDTO;
 import com.nubi.entity.ReviewEntity;
 import lombok.Builder;
 import lombok.Getter;

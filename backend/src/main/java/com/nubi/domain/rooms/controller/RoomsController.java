@@ -1,5 +1,7 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.controller;
 
+import com.nubi.domain.rooms.dto.RoomsDTO;
+import com.nubi.domain.rooms.service.RoomsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rooms")
+@RequestMapping("/api/rooms")
 public class RoomsController {
 
     private final RoomsService roomsService;

@@ -5,7 +5,7 @@ import com.nubi.domain.account.service.AccountService;
 import com.nubi.domain.bookings.dto.ReviewResponseDTO;
 import com.nubi.domain.bookings.repository.ReviewsRepository;
 import com.nubi.domain.bookings.service.BookingsService;
-import com.nubi.domain.bookmarks.BookmarksRepository;
+import com.nubi.domain.bookmarks.repository.BookmarksRepository;
 import com.nubi.domain.mypage.dto.BookingsSummaryDTO;
 import com.nubi.domain.mypage.dto.BookmarkSummaryDTO;
 import com.nubi.domain.mypage.dto.MypageResponseDTO;

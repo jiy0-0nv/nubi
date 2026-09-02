@@ -1,4 +1,4 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.repository;
 
 import com.nubi.entity.RoomImagesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

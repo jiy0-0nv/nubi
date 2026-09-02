@@ -1,4 +1,4 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.repository;
 
 import com.nubi.entity.ReviewEntity;
 import org.springframework.data.domain.Page;
