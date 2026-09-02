@@ -1,4 +1,4 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.repository;
 
 import com.nubi.entity.RoomsEntity;
 import jakarta.persistence.LockModeType;

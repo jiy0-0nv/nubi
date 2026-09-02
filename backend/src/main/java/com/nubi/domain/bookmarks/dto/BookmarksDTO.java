@@ -1,4 +1,4 @@
-package com.nubi.domain.bookmarks;
+package com.nubi.domain.bookmarks.dto;
 
 import java.time.LocalDateTime;
 import com.nubi.entity.BookmarksEntity;

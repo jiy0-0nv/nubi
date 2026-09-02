@@ -1,4 +1,4 @@
-package com.nubi.domain.bookmarks;
+package com.nubi.domain.bookmarks.repository;
 
 import com.nubi.entity.BookmarksEntity;
 import com.nubi.entity.BookmarksId;

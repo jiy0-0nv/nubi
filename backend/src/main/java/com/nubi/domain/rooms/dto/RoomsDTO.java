@@ -1,4 +1,4 @@
-package com.nubi.domain.rooms;
+package com.nubi.domain.rooms.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

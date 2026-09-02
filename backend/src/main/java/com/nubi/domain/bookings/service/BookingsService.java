@@ -2,8 +2,8 @@ package com.nubi.domain.bookings.service;
 
 import com.nubi.domain.bookings.dto.*;
 import com.nubi.domain.bookings.repository.BookingsRepository;
-import com.nubi.domain.rooms.ReviewRepository;
-import com.nubi.domain.rooms.RoomsRepository;
+import com.nubi.domain.rooms.repository.ReviewRepository;
+import com.nubi.domain.rooms.repository.RoomsRepository;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;

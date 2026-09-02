@@ -1,14 +1,13 @@
-package com.nubi.domain.bookmarks;
+package com.nubi.domain.bookmarks.service;
 
-import com.nubi.domain.rooms.RoomsRepository;
+import com.nubi.domain.bookmarks.repository.BookmarksRepository;
+import com.nubi.domain.rooms.repository.RoomsRepository;
 import com.nubi.domain.account.repository.AccountRepository;
 import com.nubi.entity.BookmarksEntity;
 import com.nubi.entity.BookmarksId;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
