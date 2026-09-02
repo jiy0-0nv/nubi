@@ -114,6 +114,19 @@ export function isRoomActive(status) {
   return String(status || '').toUpperCase() === 'ACTIVE';
 }
 
+/**
+ * 예약 금액 꺼내기.
+ *
+ * 주의: BookingsResponseDTO의 필드명이 totalprice(소문자 p)라 getter가 getTotalprice()이고,
+ *       Jackson이 JSON 키를 "totalprice"로 직렬화합니다. 반면 마이페이지 요약(BookingsSummaryDTO)과
+ *       관리자 DTO는 "totalPrice"로 내려줍니다. 두 표기를 모두 받아냅니다.
+ *       (백엔드에서 totalPrice로 통일하면 이 헬퍼는 그대로 둬도 문제 없습니다)
+ */
+export function bookingTotal(booking) {
+  if (!booking) return 0;
+  return Number(booking.totalPrice ?? booking.totalprice ?? booking.total_price ?? 0);
+}
+
 /** 백엔드가 "/uploads/xxx.png" 같은 상대경로를 주므로 그대로 쓰되 빈 값만 걸러냅니다. */
 export function imageUrl(url) {
   if (!url) return null;

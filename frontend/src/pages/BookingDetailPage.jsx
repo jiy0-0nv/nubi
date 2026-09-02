@@ -5,7 +5,7 @@ import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import Badge from '../components/Badge';
 import StarRating from '../components/StarRating';
-import { bookingStatus, formatCurrency, formatDateTime } from '../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatDateTime } from '../utils/format';
 
 export default function BookingDetailPage() {
   const { bookingId } = useParams();
@@ -122,7 +122,7 @@ export default function BookingDetailPage() {
         )}
         <div className="price-line total">
           <span>결제 금액</span>
-          <span>{formatCurrency(booking.totalPrice)}</span>
+          <span>{formatCurrency(bookingTotal(booking))}</span>
         </div>
       </div>
 

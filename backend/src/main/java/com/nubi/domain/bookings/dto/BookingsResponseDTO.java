@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
 @Getter
 @NoArgsConstructor
 public class BookingsResponseDTO {
@@ -19,38 +20,40 @@ public class BookingsResponseDTO {
     private LocalDateTime checkOutDate;
     private int guestCount;
     private String status;
-    private BigDecimal totalprice;
+    private BigDecimal totalPrice;
     private LocalDateTime cancelledAt;
 
     @Builder
     public BookingsResponseDTO(Long id, RoomSummaryDto room, LocalDateTime checkInDate, LocalDateTime checkOutDate,
-                               int guestCount, String status, BigDecimal totalprice, LocalDateTime cancelledAt) {
+                               int guestCount, String status, BigDecimal totalPrice, LocalDateTime cancelledAt) {
         this.id = id;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.guestCount = guestCount;
         this.status = status;
-        this.totalprice = totalprice;
+        this.totalPrice = totalPrice;
         this.cancelledAt = cancelledAt;
     }
 
-    public static BookingsResponseDTO from(BookingsEntity booking) {
+    public static BookingsResponseDTO from(BookingsEntity entity) {
         return BookingsResponseDTO.builder()
-                .id(booking.getId())
-                .room(RoomSummaryDto.from(booking.getRoom()))
-                .checkInDate(booking.getCheckInDate())
-                .checkOutDate(booking.getCheckOutDate())
-                .guestCount(booking.getGuestCount())
-                .status(booking.getStatus().name())
-                .totalprice(booking.getTotalPrice())
-                .cancelledAt(booking.getCancelledAt())
+                .id(entity.getId())
+                .room(RoomSummaryDto.from(entity.getRoom()))
+                .checkInDate(entity.getCheckInDate())
+                .checkOutDate(entity.getCheckOutDate())
+                .guestCount(entity.getGuestCount())
+                .status(entity.getStatus().name())
+                .totalPrice(entity.getTotalPrice())
+                .cancelledAt(entity.getCancelledAt())
                 .build();
     }
+
 
     @Getter
     @NoArgsConstructor
     public static class RoomSummaryDto {
+
         private Long id;
         private String name;
         private String city;

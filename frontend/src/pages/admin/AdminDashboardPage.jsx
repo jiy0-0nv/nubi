@@ -6,7 +6,7 @@ import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 import Badge from '../../components/Badge';
 import EmptyState from '../../components/EmptyState';
-import { bookingStatus, formatCurrency, formatShortDate, isRoomActive } from '../../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatShortDate, isRoomActive } from '../../utils/format';
 
 export default function AdminDashboardPage() {
   const { profile } = useAuth();
@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
   const confirmed = bookings.filter((b) => String(b.status).toUpperCase() === 'CONFIRMED');
   const revenue = bookings
     .filter((b) => ['CONFIRMED', 'COMPLETED'].includes(String(b.status).toUpperCase()))
-    .reduce((sum, b) => sum + Number(b.totalPrice || 0), 0);
+    .reduce((sum, b) => sum + bookingTotal(b), 0);
 
   return (
     <>
@@ -113,7 +113,7 @@ export default function AdminDashboardPage() {
                     <td className="tiny">
                       {formatShortDate(b.checkInDate)} → {formatShortDate(b.checkOutDate)}
                     </td>
-                    <td>{formatCurrency(b.totalPrice)}</td>
+                    <td>{formatCurrency(bookingTotal(b))}</td>
                     <td>
                       <Badge tone={s.tone}>{s.label}</Badge>
                     </td>

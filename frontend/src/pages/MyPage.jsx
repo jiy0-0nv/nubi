@@ -7,7 +7,7 @@ import Alert from '../components/Alert';
 import Badge from '../components/Badge';
 import EmptyState from '../components/EmptyState';
 import StarRating from '../components/StarRating';
-import { bookingStatus, formatShortDate } from '../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '../utils/format';
 
 export default function MyPage() {
   const { profile } = useAuth();
@@ -94,6 +94,7 @@ export default function MyPage() {
                 <p className="list-row-title">{booking.roomName}</p>
                 <p className="list-row-sub">
                   {formatShortDate(booking.checkInDate)} → {formatShortDate(booking.checkOutDate)}
+                  {bookingTotal(booking) > 0 && ` · ${formatCurrency(bookingTotal(booking))}`}
                 </p>
               </div>
               <Badge tone={status.tone}>{status.label}</Badge>

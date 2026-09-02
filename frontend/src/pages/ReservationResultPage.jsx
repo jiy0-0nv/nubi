@@ -1,5 +1,5 @@
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { formatCurrency, formatDateTime } from '../utils/format';
+import { bookingTotal, formatCurrency, formatDateTime } from '../utils/format';
 
 export default function ReservationResultPage() {
   const location = useLocation();
@@ -45,7 +45,7 @@ export default function ReservationResultPage() {
         </div>
         <div className="price-line total">
           <span>확정 금액</span>
-          <span>{formatCurrency(booking.totalPrice)}</span>
+          <span>{formatCurrency(bookingTotal(booking))}</span>
         </div>
       </div>
 

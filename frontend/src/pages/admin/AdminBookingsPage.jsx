@@ -6,7 +6,7 @@ import Alert from '../../components/Alert';
 import Badge from '../../components/Badge';
 import EmptyState from '../../components/EmptyState';
 import Pagination from '../../components/Pagination';
-import { bookingStatus, formatCurrency, formatShortDate } from '../../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '../../utils/format';
 
 const TABS = [
   { key: '', label: '전체' },
@@ -149,7 +149,7 @@ export default function AdminBookingsPage() {
                         {formatShortDate(b.checkInDate)} → {formatShortDate(b.checkOutDate)}
                       </td>
                       <td className="tiny">{b.guestCount}명</td>
-                      <td>{formatCurrency(b.totalPrice)}</td>
+                      <td>{formatCurrency(bookingTotal(b))}</td>
                       <td>
                         <Badge tone={s.tone}>{s.label}</Badge>
                       </td>

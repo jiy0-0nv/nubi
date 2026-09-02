@@ -4,7 +4,7 @@ import { deleteAdminRoom, getAdminBookings, getAdminRoomDetail, getRoomImages } 
 import Spinner from '../../components/Spinner';
 import Alert from '../../components/Alert';
 import Badge from '../../components/Badge';
-import { bookingStatus, formatCurrency, formatShortDate, formatTime, isRoomActive } from '../../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatShortDate, formatTime, isRoomActive } from '../../utils/format';
 
 export default function AdminRoomDetailPage() {
   const { roomId } = useParams();
@@ -172,7 +172,7 @@ export default function AdminRoomDetailPage() {
                       {formatShortDate(b.checkInDate)} → {formatShortDate(b.checkOutDate)}
                     </td>
                     <td className="tiny">{b.guestCount}명</td>
-                    <td>{formatCurrency(b.totalPrice)}</td>
+                    <td>{formatCurrency(bookingTotal(b))}</td>
                     <td>
                       <Badge tone={s.tone}>{s.label}</Badge>
                     </td>

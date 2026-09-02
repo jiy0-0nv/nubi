@@ -6,7 +6,7 @@ import Alert from '../components/Alert';
 import Badge from '../components/Badge';
 import EmptyState from '../components/EmptyState';
 import Pagination from '../components/Pagination';
-import { bookingStatus, formatCurrency, formatShortDate } from '../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '../utils/format';
 
 const TABS = [
   { key: '', label: '전체' },
@@ -82,7 +82,7 @@ export default function BookingListPage() {
                   <p className="list-row-title">{booking.roomName || booking.room?.name}</p>
                   <p className="list-row-sub">
                     {formatShortDate(booking.checkInDate)} → {formatShortDate(booking.checkOutDate)} ·{' '}
-                    {booking.guestCount}명 · {formatCurrency(booking.totalPrice)}
+                    {booking.guestCount}명 · {formatCurrency(bookingTotal(booking))}
                   </p>
                 </div>
                 <Badge tone={s.tone}>{s.label}</Badge>
