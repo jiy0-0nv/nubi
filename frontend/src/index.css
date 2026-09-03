@@ -1033,6 +1033,31 @@ a.list-row:hover,
   color: var(--bone);
 }
 
+.scroll-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--hair-strong);
+  background: var(--blood-bright);
+  color: var(--on-accent);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: filter 0.16s ease, transform 0.16s ease;
+}
+
+.scroll-to-top:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
 .login-pill {
   display: flex;
   align-items: center;
