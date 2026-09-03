@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRoomDetail, getRoomReviews } from '../api/rooms';
 import { getBookmarkStatus } from '../api/bookmarks';
@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useBookmarks } from '../context/BookmarksContext';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
+import Modal from '../components/Modal';
 import StarRating from '../components/StarRating';
 import GuestStepper from '../components/GuestStepper';
 import {
@@ -31,6 +32,11 @@ export default function RoomDetailPage() {
   const [error, setError] = useState('');
   const [formError, setFormError] = useState('');
   const [activeImage, setActiveImage] = useState(0);
+
+  // 설명이 10줄을 넘으면 [더보기] 버튼을 보여주고, 눌렀을 때만 전체를 팝업으로 띄웁니다.
+  const descriptionRef = useRef(null);
+  const [descriptionOverflows, setDescriptionOverflows] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const today = toDateInputValue(new Date());
   const [checkin, setCheckin] = useState(today);
@@ -77,6 +83,16 @@ export default function RoomDetailPage() {
       ignore = true;
     };
   }, [room, isAuthenticated, isAdmin, has, reloadBookmarks]);
+
+  // 클램프된 문단이 실제로 잘려나갔는지(=10줄을 넘겼는지)는 렌더된 실제 높이로만 알 수 있습니다.
+  useLayoutEffect(() => {
+    const el = descriptionRef.current;
+    if (!el) {
+      setDescriptionOverflows(false);
+      return;
+    }
+    setDescriptionOverflows(el.scrollHeight > el.clientHeight + 1);
+  }, [room?.description]);
 
   // 백엔드 응답에 images 배열이 없을 수도 있어(대표사진만 내려주는 경우) 폭넓게 받아냅니다.
   const images = useMemo(() => {
@@ -204,9 +220,28 @@ export default function RoomDetailPage() {
 
           <h2 className="serif">이 묘소에 대하여</h2>
           <div className="rule mb-16" />
-          <p className="muted" style={{ lineHeight: 1.9, whiteSpace: 'pre-wrap' }}>
+          <p
+            ref={descriptionRef}
+            className="muted clamp-text"
+            style={{ lineHeight: 1.9, whiteSpace: 'pre-wrap', '--clamp-lines': 10 }}
+          >
             {room.description || '기록이 남아 있지 않습니다.'}
           </p>
+          {descriptionOverflows && (
+            <button
+              type="button"
+              className="link blood-text tiny mt-8"
+              style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
+              onClick={() => setShowFullDescription(true)}
+            >
+              더보기
+            </button>
+          )}
+          {showFullDescription && (
+            <Modal title="이 묘소에 대하여" onClose={() => setShowFullDescription(false)}>
+              {room.description}
+            </Modal>
+          )}
 
           <div className="divider" />
 
