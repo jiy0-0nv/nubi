@@ -34,6 +34,13 @@ export default function BookingDetailPage() {
 
   useEffect(load, [load]);
 
+  // 안내 메시지는 계속 떠 있으면 거슬리니 잠깐 보여주고 스스로 사라집니다.
+  useEffect(() => {
+    if (!notice) return;
+    const timer = setTimeout(() => setNotice(''), 2600);
+    return () => clearTimeout(timer);
+  }, [notice]);
+
   const handleCancel = async () => {
     setError('');
     setBusy(true);
@@ -60,7 +67,7 @@ export default function BookingDetailPage() {
     setBusy(true);
     try {
       await createReview(bookingId, { rating, content: content.trim() });
-      setNotice('리뷰을 남겼습니다.');
+      setNotice('리뷰를 남겼습니다.');
       setContent('');
       load();
     } catch (err) {
@@ -82,7 +89,7 @@ export default function BookingDetailPage() {
   const status = bookingStatus(booking.status);
   const upper = String(booking.status || '').toUpperCase();
   const canCancel = upper === 'CONFIRMED';
-  const canReview = upper === 'COMPLETED' && !booking.reviewed && !booking.review;
+  const canReview = upper === 'COMPLETED' && !booking.review;
 
   return (
     <div className="container-narrow page">
@@ -186,6 +193,20 @@ export default function BookingDetailPage() {
               {busy ? '남기는 중…' : '리뷰 남기기'}
             </button>
           </form>
+        </div>
+      )}
+
+      {/* ---------- 내가 남긴 리뷰 ---------- */}
+      {upper === 'COMPLETED' && booking.review && (
+        <div className="panel">
+          <p className="eyebrow">내가 남긴 리뷰</p>
+          <StarRating value={booking.review.rating} size={15} />
+          <p className="muted mt-16" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
+            {booking.review.content}
+          </p>
+          {booking.review.createdAt && (
+            <p className="tiny dim mt-16">{formatDateTime(booking.review.createdAt)}에 남김</p>
+          )}
         </div>
       )}
     </div>
