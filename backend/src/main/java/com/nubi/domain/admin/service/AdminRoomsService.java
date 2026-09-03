@@ -5,6 +5,7 @@ import com.nubi.domain.admin.dto.AdminRoomResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomUpdateRequestDTO;
 import com.nubi.domain.admin.repository.AdminBookingsRepository;
 import com.nubi.domain.admin.repository.AdminRoomsRepository;
+import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.RoomsEntity;
 import com.nubi.entity.UsersEntity;
 import jakarta.persistence.EntityManager;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +34,36 @@ public class AdminRoomsService {
     private EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Page<AdminRoomResponseDTO> getRooms(Long ownerId, Pageable pageable) {
-        return adminRoomsRepository.findByOwnerId(ownerId, pageable).map(AdminRoomResponseDTO::from);
+    public Page<AdminRoomResponseDTO> getRooms(Long ownerId, String keyword, String checkin, String checkout,
+                                                Integer guests, Pageable pageable) {
+        String normalizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
+        LocalDate[] checkInOut = parseAvailabilityRange(checkin, checkout);
+
+        return adminRoomsRepository.search(
+                ownerId, normalizedKeyword, guests, checkInOut[0], checkInOut[1],
+                BookingsEntity.BookingStatus.CANCELLED, pageable
+        ).map(AdminRoomResponseDTO::from);
+    }
+
+    private LocalDate[] parseAvailabilityRange(String checkin, String checkout) {
+        if (checkin == null || checkin.isBlank() || checkout == null || checkout.isBlank()) {
+            return new LocalDate[]{null, null};
+        }
+
+        LocalDate checkInDate;
+        LocalDate checkOutDate;
+        try {
+            checkInDate = LocalDate.parse(checkin);
+            checkOutDate = LocalDate.parse(checkout);
+        } catch (DateTimeParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkin/checkout must be in yyyy-MM-dd format");
+        }
+
+        if (!checkOutDate.isAfter(checkInDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout must be after checkin");
+        }
+
+        return new LocalDate[]{checkInDate, checkOutDate};
     }
 
     @Transactional

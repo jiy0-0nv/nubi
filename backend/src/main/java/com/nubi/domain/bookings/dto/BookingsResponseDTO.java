@@ -2,6 +2,7 @@ package com.nubi.domain.bookings.dto;
 
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.RoomsEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,51 +10,79 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
+@Schema(description = "사용자용 예약 응답")
 @Getter
 @NoArgsConstructor
 public class BookingsResponseDTO {
 
+    @Schema(description = "예약 ID", example = "1")
     private Long id;
+
+    @Schema(description = "예약한 숙소 요약")
     private RoomSummaryDto room;
+
+    @Schema(description = "체크인 일시", example = "2026-11-10T15:00:00")
     private LocalDateTime checkInDate;
+
+    @Schema(description = "체크아웃 일시", example = "2026-11-12T11:00:00")
     private LocalDateTime checkOutDate;
+
+    @Schema(description = "투숙 인원", example = "2")
     private int guestCount;
+
+    @Schema(description = "예약 상태. 체크아웃 시각이 지나면 스케줄러가 COMPLETED 로 변경합니다",
+            example = "CONFIRMED", allowableValues = {"CONFIRMED", "COMPLETED", "CANCELLED"})
     private String status;
-    private BigDecimal totalprice;
+
+    @Schema(description = "총 결제 금액 (서버 계산값)", example = "160000")
+    private BigDecimal totalPrice;
+
+    @Schema(description = "취소 일시. 취소되지 않았으면 null", example = "2026-09-02T09:00:00")
     private LocalDateTime cancelledAt;
 
     @Builder
     public BookingsResponseDTO(Long id, RoomSummaryDto room, LocalDateTime checkInDate, LocalDateTime checkOutDate,
-                               int guestCount, String status, BigDecimal totalprice, LocalDateTime cancelledAt) {
+                               int guestCount, String status, BigDecimal totalPrice, LocalDateTime cancelledAt) {
         this.id = id;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.guestCount = guestCount;
         this.status = status;
-        this.totalprice = totalprice;
+        this.totalPrice = totalPrice;
         this.cancelledAt = cancelledAt;
     }
 
-    public static BookingsResponseDTO from(BookingsEntity booking) {
+    public static BookingsResponseDTO from(BookingsEntity entity) {
         return BookingsResponseDTO.builder()
-                .id(booking.getId())
-                .room(RoomSummaryDto.from(booking.getRoom()))
-                .checkInDate(booking.getCheckInDate())
-                .checkOutDate(booking.getCheckOutDate())
-                .guestCount(booking.getGuestCount())
-                .status(booking.getStatus().name())
-                .totalprice(booking.getTotalPrice())
-                .cancelledAt(booking.getCancelledAt())
+                .id(entity.getId())
+                .room(RoomSummaryDto.from(entity.getRoom()))
+                .checkInDate(entity.getCheckInDate())
+                .checkOutDate(entity.getCheckOutDate())
+                .guestCount(entity.getGuestCount())
+                .status(entity.getStatus().name())
+                .totalPrice(entity.getTotalPrice())
+                .cancelledAt(entity.getCancelledAt())
                 .build();
     }
 
+
+    @Schema(description = "예약한 숙소 요약 정보")
     @Getter
     @NoArgsConstructor
     public static class RoomSummaryDto {
+
+        @Schema(description = "숙소 ID", example = "1")
         private Long id;
+
+        @Schema(description = "숙소명", example = "해운대 오션뷰 스튜디오")
         private String name;
+
+        @Schema(description = "도시", example = "부산")
         private String city;
+
+        @Schema(description = "숙소 소개글", example = "바다가 보이는 아늑한 스튜디오")
         private String description;
 
         @Builder
