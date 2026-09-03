@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AdminRoomImagesRepository extends JpaRepository<RoomImagesEntity, Long> {
 
-    List<RoomImagesEntity> findByRoom_IdOrderByIdAsc(Long roomId);
+    List<RoomImagesEntity> findByRoom_IdOrderBySortOrderAscIdAsc(Long roomId);
 
     Optional<RoomImagesEntity> findByIdAndRoom_Id(Long id, Long roomId);
 

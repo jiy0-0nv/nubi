@@ -85,12 +85,12 @@ export default function Navbar() {
               </Link>
               <button
                 type="button"
-                className="login-pill-avatar filled"
+                className="logout-btn"
                 onClick={handleLogout}
-                aria-label="나가기"
-                title="나가기"
+                aria-label="로그아웃"
+                title="로그아웃"
               >
-                {profile?.name ? profile.name[0] : '?'}
+                로그아웃
               </button>
             </div>
           ) : (

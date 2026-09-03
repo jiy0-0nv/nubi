@@ -53,7 +53,7 @@ public class RoomsService {
         RoomsEntity room = roomsRepository.findById(roomId)
             .orElseThrow(() -> new ResponseStatusException(
             HttpStatus.NOT_FOUND, "숙소를 찾을 수 없습니다. id=" + roomId));
-        List<RoomImagesEntity> images = roomImagesRepository.findByRoom_IdOrderByIdAsc(roomId);
+        List<RoomImagesEntity> images = roomImagesRepository.findByRoom_IdOrderBySortOrderAscIdAsc(roomId);
         return RoomsDTO.DetailResponse.from(room, images);
     }
 

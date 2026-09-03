@@ -63,6 +63,20 @@ export function deleteRoomImage(roomId, imageId) {
   return http.delete(`/api/admin/rooms/${roomId}/images/${imageId}`);
 }
 
+/**
+ * PATCH /api/admin/rooms/{roomId}/images/order
+ * body: 새 순서대로 나열한 imageId 배열. 기존 이미지 id가 빠짐없이 한 번씩 와야 함.
+ * 응답: 갱신된 이미지 목록(새 순서 반영)
+ */
+export function reorderRoomImages(roomId, orderedImageIds) {
+  return http.patch(`/api/admin/rooms/${roomId}/images/order`, orderedImageIds);
+}
+
+/** PATCH /api/admin/rooms/{roomId}/images/{imageId}/thumbnail - 대표 사진으로 지정 */
+export function setRoomImageThumbnail(roomId, imageId) {
+  return http.patch(`/api/admin/rooms/${roomId}/images/${imageId}/thumbnail`);
+}
+
 /* ---------------- 예약 ---------------- */
 
 /**
