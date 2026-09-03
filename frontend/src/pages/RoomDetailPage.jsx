@@ -11,10 +11,10 @@ import StarRating from '../components/StarRating';
 import GuestStepper from '../components/GuestStepper';
 import {
   addDays,
-  calculateEstimatedTotal,
   calculateNights,
+  calculateStayBreakdown,
   formatCurrency,
-  formatDateTime,
+  formatDate,
   formatTime,
   isRoomActive,
   toDateInputValue,
@@ -23,7 +23,7 @@ import {
 export default function RoomDetailPage() {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { has, toggle, reload: reloadBookmarks } = useBookmarks();
 
   const [room, setRoom] = useState(null);
@@ -69,7 +69,7 @@ export default function RoomDetailPage() {
    * 단건 확인 API로 실제 값을 물어보고, 캐시와 어긋나면 캐시를 다시 불러와 맞춥니다.
    */
   useEffect(() => {
-    if (!room || !isAuthenticated || isAdmin) return;
+    if (!room || !isAuthenticated) return;
     let ignore = false;
     getBookmarkStatus(room.id)
       .then((res) => {
@@ -82,7 +82,7 @@ export default function RoomDetailPage() {
     return () => {
       ignore = true;
     };
-  }, [room, isAuthenticated, isAdmin, has, reloadBookmarks]);
+  }, [room, isAuthenticated, has, reloadBookmarks]);
 
   // 클램프된 문단이 실제로 잘려나갔는지(=10줄을 넘겼는지)는 렌더된 실제 높이로만 알 수 있습니다.
   useLayoutEffect(() => {
@@ -104,7 +104,10 @@ export default function RoomDetailPage() {
   }, [room]);
 
   const nights = calculateNights(checkin, checkout);
-  const estimate = room ? calculateEstimatedTotal(checkin, checkout, room.weekdayPrice, room.weekendPrice) : 0;
+  const stay = room
+    ? calculateStayBreakdown(checkin, checkout, room.weekdayPrice, room.weekendPrice)
+    : { weekdayNights: 0, weekendNights: 0, weekdayTotal: 0, weekendTotal: 0, total: 0 };
+  const estimate = stay.total;
 
   if (loading) return <Spinner label="묘소를 여는 중" />;
   if (error) {
@@ -187,11 +190,9 @@ export default function RoomDetailPage() {
           </span>
           {!active && <span className="badge badge-cancelled">폐쇄됨</span>}
         </div>
-        {!isAdmin && (
-          <button type="button" className="btn btn-outline btn-sm" onClick={handleBookmark}>
-            {bookmarked ? '♥ 표식 남김' : '♡ 표식 남기기'}
-          </button>
-        )}
+        <button type="button" className="btn btn-outline btn-sm" onClick={handleBookmark}>
+          {bookmarked ? '♥ 저장됨' : '♡ 저장하기'}
+        </button>
       </div>
 
       <div className="detail-layout">
@@ -213,8 +214,10 @@ export default function RoomDetailPage() {
               <p className="spec-value">{room.maxGuests}명</p>
             </div>
             <div className="spec">
-              <p className="spec-label">주말 요금</p>
-              <p className="spec-value">{formatCurrency(room.weekendPrice)}</p>
+              <p className="spec-label">1박 요금</p>
+              <p className="spec-value">
+                {formatCurrency(room.weekdayPrice)} <span className="tiny dim">~ {formatCurrency(room.weekendPrice)}</span>
+              </p>
             </div>
           </div>
 
@@ -228,12 +231,7 @@ export default function RoomDetailPage() {
             {room.description || '기록이 남아 있지 않습니다.'}
           </p>
           {descriptionOverflows && (
-            <button
-              type="button"
-              className="link blood-text tiny mt-8"
-              style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
-              onClick={() => setShowFullDescription(true)}
-            >
+            <button type="button" className="btn btn-outline btn-sm mt-8" onClick={() => setShowFullDescription(true)}>
               더보기
             </button>
           )}
@@ -260,7 +258,7 @@ export default function RoomDetailPage() {
               <div className="review" key={review.id}>
                 <div className="review-head">
                   <span className="review-name">{review.reviewerName || '익명'}</span>
-                  <span className="tiny dim">{formatDateTime(review.createdAt)}</span>
+                  <span className="tiny dim">{formatDate(review.createdAt)}</span>
                 </div>
                 <StarRating value={review.rating} size={13} />
                 <p className="muted mt-8" style={{ whiteSpace: 'pre-wrap' }}>
@@ -273,17 +271,21 @@ export default function RoomDetailPage() {
 
         {/* ---------- 예약 위젯 ---------- */}
         <aside className="booking-box">
-          <p className="eyebrow">1박 요금</p>
-          <p className="price" style={{ fontSize: 26, marginBottom: 4 }}>
-            {formatCurrency(room.weekdayPrice)}
-            <small>평일</small>
-          </p>
-          <p className="tiny dim mb-16">금·토 숙박은 {formatCurrency(room.weekendPrice)}</p>
+          <div className="row-between" style={{ alignItems: 'baseline', marginBottom: 6 }}>
+            <p className="price" style={{ fontSize: 22 }}>
+              {formatCurrency(room.weekdayPrice)}
+              <small>/ 평일 1박</small>
+            </p>
+          </div>
+          <p className="tiny dim mb-16">~ {formatCurrency(room.weekendPrice)} (금/토)</p>
 
-          <div className="field-row">
-            <div className="field">
-              <label>입실일</label>
+          <div className="booking-fields">
+            <div className="booking-field">
+              <label className="booking-field-label" htmlFor="bf-checkin">
+                입실일
+              </label>
               <input
+                id="bf-checkin"
                 type="date"
                 min={today}
                 value={checkin}
@@ -293,20 +295,26 @@ export default function RoomDetailPage() {
                 }}
               />
             </div>
-            <div className="field">
-              <label>퇴실일</label>
+            <div className="booking-field">
+              <label className="booking-field-label" htmlFor="bf-checkout">
+                퇴실일
+              </label>
               <input
+                id="bf-checkout"
                 type="date"
                 min={addDays(checkin, 1)}
                 value={checkout}
                 onChange={(e) => setCheckout(e.target.value)}
               />
             </div>
-          </div>
-
-          <div className="field">
-            <label>인원</label>
-            <GuestStepper value={guests} onChange={setGuests} min={1} max={Math.max(1, Number(room.maxGuests) || 1)} />
+            <div className="booking-field full">
+              <div>
+                <p className="booking-field-label" style={{ marginBottom: 0 }}>
+                  인원
+                </p>
+              </div>
+              <GuestStepper value={guests} onChange={setGuests} min={1} max={Math.max(1, Number(room.maxGuests) || 1)} />
+            </div>
           </div>
 
           <Alert>{formError}</Alert>
@@ -321,18 +329,30 @@ export default function RoomDetailPage() {
           >
             입실 예약하기
           </button>
+          <p className="tiny dim text-center mt-8">최종 금액은 예약 확정 시 확정됩니다.</p>
 
           {nights > 0 && (
             <div className="mt-24">
-              <div className="price-line">
-                <span>{nights}박 요금 (예상)</span>
-                <span>{formatCurrency(estimate)}</span>
-              </div>
+              {stay.weekdayNights > 0 && (
+                <div className="price-line">
+                  <span>
+                    {formatCurrency(room.weekdayPrice)} × {stay.weekdayNights}박
+                  </span>
+                  <span>{formatCurrency(stay.weekdayTotal)}</span>
+                </div>
+              )}
+              {stay.weekendNights > 0 && (
+                <div className="price-line">
+                  <span>
+                    {formatCurrency(room.weekendPrice)} × {stay.weekendNights}박 (금·토)
+                  </span>
+                  <span>{formatCurrency(stay.weekendTotal)}</span>
+                </div>
+              )}
               <div className="price-line total">
-                <span>합계</span>
+                <span>총 합계</span>
                 <span>{formatCurrency(estimate)}</span>
               </div>
-              <p className="tiny dim mt-8">최종 금액은 예약 확정 시 서버 계산 결과로 확정됩니다.</p>
             </div>
           )}
         </aside>

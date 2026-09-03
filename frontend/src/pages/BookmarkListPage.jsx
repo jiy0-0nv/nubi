@@ -31,7 +31,7 @@ export default function BookmarkListPage() {
   return (
     <div className="container page">
       <p className="eyebrow">Marks</p>
-      <h1>남긴 표식</h1>
+      <h1>저장한 묘소</h1>
       <div className="rule mb-24" />
 
       <Alert>{error}</Alert>
@@ -39,8 +39,8 @@ export default function BookmarkListPage() {
       {items.length === 0 ? (
         <EmptyState
           mark="♡"
-          title="아직 표식이 없습니다"
-          description="마음에 둔 묘소에 표식을 남겨두십시오."
+          title="아직 저장한 묘소가 없습니다."
+          description="가보고 싶은 묘소를 저장해보세요."
           action={
             <Link to="/rooms" className="btn btn-primary">
               SEARCH
@@ -60,7 +60,7 @@ export default function BookmarkListPage() {
                 </p>
               </Link>
               <button type="button" className="btn btn-danger btn-sm" onClick={() => handleRemove(roomId)}>
-                표식 지우기
+                저장 해제하기
               </button>
             </div>
           );

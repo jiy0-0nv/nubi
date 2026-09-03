@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useBookmarks } from '../context/BookmarksContext';
 
 export default function RoomCard({ room }) {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { has, isPending, toggle } = useBookmarks();
   const navigate = useNavigate();
 
@@ -32,34 +32,32 @@ export default function RoomCard({ room }) {
             †
           </div>
         )}
-        {!isAdmin && (
-          <button
-            type="button"
-            onClick={handleBookmark}
-            disabled={isPending(room.id)}
-            aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
-            style={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              zIndex: 2,
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              display: 'grid',
-              placeItems: 'center',
-              border: '1px solid var(--hair-strong)',
-              background: 'rgba(7,9,13,0.72)',
-              backdropFilter: 'blur(6px)',
-              color: bookmarked ? 'var(--blood-bright)' : 'var(--ash)',
-              cursor: 'pointer',
-              fontSize: 15,
-              lineHeight: 1,
-            }}
-          >
-            {bookmarked ? '♥' : '♡'}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={handleBookmark}
+          disabled={isPending(room.id)}
+          aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
+          style={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            zIndex: 2,
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            display: 'grid',
+            placeItems: 'center',
+            border: '1px solid var(--hair-strong)',
+            background: 'rgba(7,9,13,0.72)',
+            backdropFilter: 'blur(6px)',
+            color: bookmarked ? 'var(--blood-bright)' : 'var(--ash)',
+            cursor: 'pointer',
+            fontSize: 15,
+            lineHeight: 1,
+          }}
+        >
+          {bookmarked ? '♥' : '♡'}
+        </button>
         {!active && (
           <span style={{ position: 'absolute', left: 12, top: 12, zIndex: 2 }}>
             <span className="badge badge-cancelled">폐쇄됨</span>
@@ -85,6 +83,7 @@ export default function RoomCard({ room }) {
           {formatCurrency(room.weekdayPrice)}
           <small>/ 1박</small>
         </p>
+        <p className="tiny dim">~ {formatCurrency(room.weekendPrice)}</p>
       </div>
     </Link>
   );

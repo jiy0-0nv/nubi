@@ -39,7 +39,7 @@ export default function MyPage() {
         </div>
         <div style={{ flex: 1 }}>
           <p className="eyebrow" style={{ marginBottom: 6 }}>
-            입주자 기록
+            User
           </p>
           <h1 style={{ fontSize: 26 }}>{me?.name || '이름 없음'}</h1>
           <p className="tiny dim mono mt-8">{me?.email}</p>
@@ -56,7 +56,7 @@ export default function MyPage() {
         </Link>
         <Link to="/mypage/bookmarks" className="tile">
           <p className="tile-num">{bookmarks.length}</p>
-          <p className="tile-label">남긴 표식</p>
+          <p className="tile-label">저장된 묘소</p>
         </Link>
         <div className="tile">
           <p className="tile-num">{reviews.length}</p>
