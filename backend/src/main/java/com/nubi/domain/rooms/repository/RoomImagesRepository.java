@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface RoomImagesRepository extends JpaRepository<RoomImagesEntity, Long> {
 
-    List<RoomImagesEntity> findByRoom_IdOrderByIdAsc(Long roomId);
+    List<RoomImagesEntity> findByRoom_IdOrderBySortOrderAscIdAsc(Long roomId);
 
     List<RoomImagesEntity> findByRoom_IdInAndThumbnailTrue(Collection<Long> roomIds);
 }

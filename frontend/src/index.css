@@ -1926,12 +1926,24 @@ table.table {
   border-radius: var(--r-md);
   overflow: hidden;
   background: var(--grave);
+  cursor: grab;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.image-cell:active {
+  cursor: grabbing;
+}
+
+.image-cell.drag-over {
+  border-color: var(--blood-bright);
+  box-shadow: 0 0 0 2px rgba(94, 224, 238, 0.28) inset;
 }
 
 .image-cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 .image-cell .image-del {
@@ -1950,6 +1962,39 @@ table.table {
 .image-cell .image-del:hover {
   background: var(--blood);
   color: #fff;
+}
+
+.image-cell .image-thumb-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair-strong);
+  background: rgba(7, 9, 13, 0.82);
+  color: var(--ash);
+  cursor: pointer;
+}
+
+.image-cell .image-thumb-btn:hover:not(:disabled) {
+  border-color: var(--hair-blood);
+  color: var(--bone);
+}
+
+.image-cell .image-thumb-btn.active {
+  border-color: var(--hair-blood);
+  background: var(--blood-bright);
+  color: var(--void);
+  cursor: default;
+}
+
+.image-cell .image-del:disabled,
+.image-cell .image-thumb-btn:disabled:not(.active) {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dropzone {
