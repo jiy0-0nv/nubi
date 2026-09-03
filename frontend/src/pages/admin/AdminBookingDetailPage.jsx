@@ -26,12 +26,12 @@ export default function AdminBookingDetailPage() {
   useEffect(load, [load]);
 
   const cancel = async () => {
-    if (!window.confirm('이 예약을 파기할까요? 기록은 남습니다.')) return;
+    if (!window.confirm('이 예약을 취소할까요? 기록은 남습니다.')) return;
     setBusy(true);
     setError('');
     try {
       await cancelAdminBooking(bookingId);
-      setNotice('예약을 파기했습니다.');
+      setNotice('예약을 취소했습니다.');
       load();
     } catch (err) {
       setError(err.message);
@@ -71,7 +71,7 @@ export default function AdminBookingDetailPage() {
           </Link>
           {canCancel && (
             <button type="button" className="btn btn-danger" onClick={cancel} disabled={busy}>
-              {busy ? '파기하는 중…' : '예약 파기'}
+              {busy ? '취소하는 중…' : '예약 취소'}
             </button>
           )}
         </div>
@@ -125,7 +125,7 @@ export default function AdminBookingDetailPage() {
           {booking.room?.id && (
             <>
               <div className="divider" style={{ margin: '20px 0' }} />
-              <p className="eyebrow eyebrow-ash">무덤</p>
+              <p className="eyebrow eyebrow-ash">묘소</p>
               <Link to={`/admin/rooms/${booking.room.id}`} className="link">
                 {booking.room.name} 상세로 →
               </Link>
@@ -136,7 +136,7 @@ export default function AdminBookingDetailPage() {
 
       {booking.cancelReason && (
         <div className="panel mt-24" style={{ borderColor: 'var(--hair-blood)' }}>
-          <p className="eyebrow">파기 사유</p>
+          <p className="eyebrow">취소 사유</p>
           <p className="muted" style={{ whiteSpace: 'pre-wrap' }}>
             {booking.cancelReason}
           </p>

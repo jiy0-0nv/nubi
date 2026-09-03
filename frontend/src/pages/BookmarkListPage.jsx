@@ -40,7 +40,7 @@ export default function BookmarkListPage() {
         <EmptyState
           mark="♡"
           title="아직 표식이 없습니다"
-          description="마음에 둔 무덤에 표식을 남겨두십시오."
+          description="마음에 둔 묘소에 표식을 남겨두십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
               SEARCH

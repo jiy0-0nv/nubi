@@ -90,7 +90,7 @@ export default function RoomDetailPage() {
   const nights = calculateNights(checkin, checkout);
   const estimate = room ? calculateEstimatedTotal(checkin, checkout, room.weekdayPrice, room.weekendPrice) : 0;
 
-  if (loading) return <Spinner label="무덤을 여는 중" />;
+  if (loading) return <Spinner label="묘소를 여는 중" />;
   if (error) {
     return (
       <div className="container page">
@@ -123,7 +123,7 @@ export default function RoomDetailPage() {
       return;
     }
     if (guests > Number(room.maxGuests)) {
-      setFormError(`이 무덤은 최대 ${room.maxGuests}명까지만 받습니다.`);
+      setFormError(`이 묘소은 최대 ${room.maxGuests}명까지만 받습니다.`);
       return;
     }
     const params = new URLSearchParams({ checkin, checkout, guests: String(guests) });
@@ -202,7 +202,7 @@ export default function RoomDetailPage() {
             </div>
           </div>
 
-          <h2 className="serif">이 무덤에 대하여</h2>
+          <h2 className="serif">이 묘소에 대하여</h2>
           <div className="rule mb-16" />
           <p className="muted" style={{ lineHeight: 1.9, whiteSpace: 'pre-wrap' }}>
             {room.description || '기록이 남아 있지 않습니다.'}
@@ -276,7 +276,7 @@ export default function RoomDetailPage() {
 
           <Alert>{formError}</Alert>
 
-          {!active && <Alert tone="info">지금은 이 무덤에 들어갈 수 없습니다.</Alert>}
+          {!active && <Alert tone="info">지금은 이 묘소에 들어갈 수 없습니다.</Alert>}
           {isAdmin && <Alert tone="info">관리자 계정으로는 예약할 수 없습니다.</Alert>}
 
           <button

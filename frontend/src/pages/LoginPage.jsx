@@ -13,7 +13,7 @@ import Alert from '../components/Alert';
  *
  * 로그인 전에 보호된 페이지로 접근했다면 location.state.from 에 그 주소가
  * 담겨 오는데, 관리자는 그 주소가 사용자 화면일 수 있으므로 무시하고
- * 항상 관리자 구역으로 보냅니다.
+ * 항상 호스트 화면으로 보냅니다.
  * ------------------------------------------------------------------ */
 export default function LoginPage() {
   const navigate = useNavigate();

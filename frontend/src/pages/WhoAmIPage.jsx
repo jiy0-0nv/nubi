@@ -227,7 +227,7 @@ UPDATE users SET role = 'admin' WHERE email = '${payload?.email || 'you@example.
         </Link>
         {isAdmin && (
           <Link to="/admin" className="btn btn-primary">
-            관리자 구역으로
+            호스트 화면으로
           </Link>
         )}
       </div>

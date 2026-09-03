@@ -23,7 +23,7 @@ export default function ForbiddenPage() {
         </p>
         <div className="row gap-8 mt-24" style={{ justifyContent: 'center' }}>
           <Link to="/" className="btn btn-primary">
-            무덤 밖으로 나가기
+            묘소 밖으로 나가기
           </Link>
           {isAuthenticated ? (
             <Link to="/whoami" className="btn btn-outline">

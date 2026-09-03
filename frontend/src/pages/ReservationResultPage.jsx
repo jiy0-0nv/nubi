@@ -28,7 +28,7 @@ export default function ReservationResultPage() {
           <span className="mono">#{String(booking.id).padStart(6, '0')}</span>
         </div>
         <div className="price-line">
-          <span>무덤</span>
+          <span>묘소</span>
           <span>{room?.name || booking.roomName || '-'}</span>
         </div>
         <div className="price-line">
@@ -54,7 +54,7 @@ export default function ReservationResultPage() {
           예약 상세 보기
         </Link>
         <Link to="/rooms" className="btn btn-outline">
-          다른 무덤 보기
+          다른 묘소 보기
         </Link>
       </div>
     </div>

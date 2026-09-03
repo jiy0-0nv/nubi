@@ -48,7 +48,7 @@ export default function ReservationPage() {
     setError('');
 
     if (nights <= 0) {
-      setError('날짜가 올바르지 않습니다. 무덤 상세 화면에서 다시 선택해 주십시오.');
+      setError('날짜가 올바르지 않습니다. 묘소 상세 화면에서 다시 선택해 주십시오.');
       return;
     }
 
@@ -73,7 +73,7 @@ export default function ReservationPage() {
   if (!room) {
     return (
       <div className="container page">
-        <Alert>{error || '무덤을 찾을 수 없습니다.'}</Alert>
+        <Alert>{error || '묘소를 찾을 수 없습니다.'}</Alert>
       </div>
     );
   }
@@ -157,8 +157,8 @@ export default function ReservationPage() {
             style={{ width: 16, height: 16, marginTop: 4, accentColor: 'var(--blood-bright)' }}
           />
           <span className="tiny muted">
-            해가 진 뒤에는 무덤 밖으로 나가지 않겠습니다. 방 안에서 들리는 소리에 대답하지 않겠습니다.
-            이 예약의 모든 기록이 무덤에 남는 것에 동의합니다.
+            해가 진 뒤에는 묘소 밖으로 나가지 않겠습니다. 방 안에서 들리는 소리에 대답하지 않겠습니다.
+            이 예약의 모든 기록이 묘소에 남는 것에 동의합니다.
           </span>
         </label>
 

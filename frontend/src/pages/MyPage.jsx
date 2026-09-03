@@ -78,7 +78,7 @@ export default function MyPage() {
         <EmptyState
           mark="†"
           title="아직 든 적이 없습니다"
-          description="묘역의 무덤을 둘러보십시오."
+          description="묘역의 묘소를 둘러보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
               SEARCH

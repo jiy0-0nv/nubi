@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
  * 사용자 영역 상단 헤더.
  * 관리자 영역(/admin)은 이 헤더를 쓰지 않고 자체 사이드바 셸을 씁니다.
  * 다만 ADMIN으로 로그인한 채 사용자 화면을 볼 수도 있으므로,
- * 그때는 "관리자 구역" 진입 링크를 하나 노출해 줍니다.
+ * 그때는 "호스트 화면" 진입 링크를 하나 노출해 줍니다.
  */
 export default function Navbar() {
   const { isAuthenticated, isAdmin, profile, logout } = useAuth();
@@ -40,7 +40,7 @@ export default function Navbar() {
         <div className="row" style={{ marginLeft: 'auto', gap: 18, flexShrink: 0 }}>
           {isAdmin ? (
             <NavLink to="/admin" className="nav-link nav-link-strong">
-              관리자 구역
+              호스트 화면
             </NavLink>
           ) : (
             <Link to={isAuthenticated ? '/whoami' : '/signup'} className="nav-link nav-link-strong">

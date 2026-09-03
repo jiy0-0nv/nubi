@@ -39,7 +39,7 @@ export default function BookingDetailPage() {
     setBusy(true);
     try {
       await cancelBooking(bookingId, reason);
-      setNotice('예약을 파기했습니다. 기록은 남습니다.');
+      setNotice('예약을 취소했습니다. 기록은 남습니다.');
       setCancelOpen(false);
       setReason('');
       load();
@@ -129,11 +129,11 @@ export default function BookingDetailPage() {
       {/* ---------- 취소 ---------- */}
       {canCancel && (
         <div className="panel mb-24" style={{ borderColor: 'var(--hair-blood)' }}>
-          <p className="eyebrow">예약 파기</p>
+          <p className="eyebrow">예약 취소</p>
           {cancelOpen ? (
             <>
               <div className="field mt-16">
-                <label htmlFor="reason">파기 사유 (선택)</label>
+                <label htmlFor="reason">취소 사유 (선택)</label>
                 <textarea
                   id="reason"
                   rows={3}
@@ -144,7 +144,7 @@ export default function BookingDetailPage() {
               </div>
               <div className="row gap-8">
                 <button type="button" className="btn btn-danger" onClick={handleCancel} disabled={busy}>
-                  {busy ? '파기하는 중…' : '정말 파기합니다'}
+                  {busy ? '취소하는 중…' : '정말 취소합니다'}
                 </button>
                 <button type="button" className="btn btn-ghost" onClick={() => setCancelOpen(false)}>
                   그만두기
@@ -153,9 +153,9 @@ export default function BookingDetailPage() {
             </>
           ) : (
             <>
-              <p className="tiny muted mb-16">파기해도 예약 기록 자체는 무덤에 남습니다.</p>
+              <p className="tiny muted mb-16">취소해도 예약 기록 자체는 묘소에 남습니다.</p>
               <button type="button" className="btn btn-danger" onClick={() => setCancelOpen(true)}>
-                예약 파기하기
+                예약 취소하기
               </button>
             </>
           )}

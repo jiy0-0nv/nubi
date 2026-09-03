@@ -11,7 +11,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const NAV = [
   { to: '/admin', end: true, label: '대시보드', mark: '◈' },
-  { to: '/admin/rooms', end: false, label: '무덤 관리', mark: '▣' },
+  { to: '/admin/rooms', end: false, label: '묘소 관리', mark: '▣' },
   { to: '/admin/bookings', end: false, label: '예약 관리', mark: '❑' },
 ];
 
@@ -28,11 +28,11 @@ export default function AdminLayout() {
     <div className="admin-shell">
       <aside className="admin-side">
         <div className="admin-brand">
-          <Link to="/admin" className="admin-brand-mark">
-            누비 묘원
+          <Link to="/" className="admin-brand-mark">
+            NUBI
           </Link>
           <br />
-          <span className="admin-brand-tag">Keeper Only</span>
+          <span className="admin-brand-tag">Host Only</span>
         </div>
 
         <nav className="admin-nav">

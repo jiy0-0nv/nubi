@@ -83,17 +83,17 @@ export default function AdminRoomsPage() {
       <div className="admin-topbar">
         <div>
           <p className="eyebrow">Properties</p>
-          <h1>무덤 관리</h1>
-          <p className="tiny dim mt-8">내가 소유한 무덤만 보입니다. 다른 호스트의 것은 서버가 차단합니다.</p>
+          <h1>묘소 관리</h1>
+          <p className="tiny dim mt-8">현재 운영중인 묘소들입니다.</p>
         </div>
         <Link to="/admin/rooms/new" className="btn btn-primary">
-          + 새 무덤 세우기
+          + 새 묘소 등록
         </Link>
       </div>
 
       <form className="search-bar mb-24" onSubmit={submitSearch}>
         <div className="field">
-          <label htmlFor="af-keyword">지역 · 무덤 이름</label>
+          <label htmlFor="af-keyword">지역 · 묘소 이름</label>
           <input
             id="af-keyword"
             type="text"
@@ -162,8 +162,8 @@ export default function AdminRoomsPage() {
       ) : rooms.length === 0 ? (
         <EmptyState
           mark="▣"
-          title={hasActiveFilters ? '조건에 맞는 무덤이 없습니다' : '세워둔 무덤이 없습니다'}
-          description={hasActiveFilters ? '검색 조건을 바꾸어 다시 찾아보십시오.' : '첫 무덤을 등록해 묘역에 올려보십시오.'}
+          title={hasActiveFilters ? '조건에 맞는 방이 없습니다' : '호스팅 중인 방이 없습니다'}
+          description={hasActiveFilters ? '검색 조건을 바꾸어 다시 찾아보세요.' : '첫 호스팅를 시작해 보세요.'}
           action={
             hasActiveFilters ? (
               <button type="button" className="btn btn-outline" onClick={resetSearch}>
@@ -171,7 +171,7 @@ export default function AdminRoomsPage() {
               </button>
             ) : (
               <Link to="/admin/rooms/new" className="btn btn-primary">
-                새 무덤 세우기
+                새 묘소 등록
               </Link>
             )
           }
@@ -182,7 +182,7 @@ export default function AdminRoomsPage() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>무덤</th>
+                  <th>묘소</th>
                   <th>위치</th>
                   <th>요금 (평일/주말)</th>
                   <th>정원</th>
@@ -209,7 +209,7 @@ export default function AdminRoomsPage() {
                     </td>
                     <td>
                       <Badge tone={isRoomActive(room.status) ? 'confirmed' : 'cancelled'}>
-                        {isRoomActive(room.status) ? '개방중' : '폐쇄됨'}
+                        {isRoomActive(room.status) ? '운영중' : '폐쇄됨'}
                       </Badge>
                     </td>
                     <td>
@@ -220,7 +220,7 @@ export default function AdminRoomsPage() {
                           disabled={busyId === room.id}
                           onClick={() => toggleStatus(room)}
                         >
-                          {isRoomActive(room.status) ? '폐쇄' : '개방'}
+                          {isRoomActive(room.status) ? '폐쇄' : '운영'}
                         </button>
                         <button
                           type="button"

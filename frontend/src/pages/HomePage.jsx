@@ -27,7 +27,7 @@ const PROMOS = [
   },
   {
     title: '세계문화유산 컬렉션',
-    desc: '유네스코 등재 묘역 214곳. 보존 규정 안내 포함.',
+    desc: '유네스코 등재 묘소 214곳. 보존 규정 안내 포함.',
     color: 'var(--yellow)',
     from: 'rgba(255,210,63,.12)',
   },
@@ -40,7 +40,7 @@ const PROMOS = [
 ];
 
 const RULES = [
-  ['첫째', '해가 진 뒤에는 무덤 밖으로 나오지 마십시오.', '체크인은 15시, 체크아웃은 11시입니다.'],
+  ['첫째', '해가 진 뒤에는 묘소 밖으로 나오지 마십시오.', '체크인은 15시, 체크아웃은 11시입니다.'],
   ['둘째', '방 안에서 들리는 소리에 대답하지 마십시오.', '문의는 호스트(관리자)에게만 남겨주십시오.'],
   ['셋째', '예약은 취소할 수 있습니다. 기록은 남습니다.', '취소된 예약도 내역에서 계속 확인됩니다.'],
 ];
@@ -253,7 +253,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ---------- 추천 무덤 ---------- */}
+      {/* ---------- 추천 묘소 ---------- */}
       <div className="container page">
         <div className="section-head">
           <div>
@@ -267,12 +267,12 @@ export default function HomePage() {
         <Alert>{error}</Alert>
 
         {loading ? (
-          <Spinner label="무덤을 여는 중" />
+          <Spinner label="묘소를 찾는 중" />
         ) : rooms.length === 0 ? (
           <EmptyState
             mark="†"
-            title="등록된 무덤이 없습니다"
-            description="아직 이 묘역에는 아무것도 세워지지 않았습니다."
+            title="등록된 묘소가 없습니다"
+            description="아직 이 지역에는 아무것도 없습니다."
           />
         ) : (
           <div className="grid-4">

@@ -68,12 +68,12 @@ export default function AdminRoomImagesPage() {
       <div className="admin-topbar">
         <div>
           <p className="eyebrow">Photos</p>
-          <h1>{room?.name || '무덤'} · 사진 관리</h1>
+          <h1>{room?.name || '묘소'} · 사진 관리</h1>
           <p className="tiny dim mt-8">맨 처음 사진이 목록에서 대표 사진으로 쓰입니다.</p>
         </div>
         <div className="row gap-8">
           <Link to={`/admin/rooms/${roomId}`} className="btn btn-ghost">
-            ← 무덤 상세
+            ← 묘소 상세
           </Link>
           <Link to="/admin/rooms" className="btn btn-outline">
             목록으로
@@ -113,7 +113,7 @@ export default function AdminRoomImagesPage() {
       </div>
 
       {images.length === 0 ? (
-        <EmptyState mark="▣" title="등록된 사진이 없습니다" description="첫 사진을 올려 무덤의 얼굴을 만들어 주십시오." />
+        <EmptyState mark="▣" title="등록된 사진이 없습니다" description="첫 사진을 올려 묘소의 얼굴을 만들어 주십시오." />
       ) : (
         <div className="image-grid">
           {images.map((img, i) => (
