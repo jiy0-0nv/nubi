@@ -103,7 +103,8 @@ public class BookingsService {
     // 3) 예약 상세 조회 (GET /mypage/bookings/{booking_id})
     public BookingsResponseDTO getBookingDetail(Long userId, Long bookingId) {
         BookingsEntity booking = getOwnedBookingOrThrow(userId, bookingId);
-        return BookingsResponseDTO.from(booking);
+        ReviewEntity review = reviewRepository.findByBookingId(bookingId).orElse(null);
+        return BookingsResponseDTO.from(booking, review);
     }
 
     //  4) 예약 취소 (PATCH /mypage/bookings/{booking_id}/cancel)

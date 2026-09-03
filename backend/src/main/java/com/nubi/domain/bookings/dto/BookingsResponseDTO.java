@@ -1,6 +1,7 @@
 package com.nubi.domain.bookings.dto;
 
 import com.nubi.entity.BookingsEntity;
+import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomsEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -40,10 +41,13 @@ public class BookingsResponseDTO {
 
     @Schema(description = "취소 일시. 취소되지 않았으면 null", example = "2026-09-02T09:00:00")
     private LocalDateTime cancelledAt;
+    /** 이 예약에 이미 남긴 리뷰. 없으면 null — 프런트가 이 값으로 "리뷰 작성폼"과 "내가 남긴 리뷰"를 구분합니다. */
+    private ReviewResponseDTO review;
 
     @Builder
     public BookingsResponseDTO(Long id, RoomSummaryDto room, LocalDateTime checkInDate, LocalDateTime checkOutDate,
-                               int guestCount, String status, BigDecimal totalPrice, LocalDateTime cancelledAt) {
+                               int guestCount, String status, BigDecimal totalPrice, LocalDateTime cancelledAt,
+                               ReviewResponseDTO review) {
         this.id = id;
         this.room = room;
         this.checkInDate = checkInDate;
@@ -52,9 +56,14 @@ public class BookingsResponseDTO {
         this.status = status;
         this.totalPrice = totalPrice;
         this.cancelledAt = cancelledAt;
+        this.review = review;
     }
 
     public static BookingsResponseDTO from(BookingsEntity entity) {
+        return from(entity, null);
+    }
+
+    public static BookingsResponseDTO from(BookingsEntity entity, ReviewEntity review) {
         return BookingsResponseDTO.builder()
                 .id(entity.getId())
                 .room(RoomSummaryDto.from(entity.getRoom()))
@@ -64,6 +73,7 @@ public class BookingsResponseDTO {
                 .status(entity.getStatus().name())
                 .totalPrice(entity.getTotalPrice())
                 .cancelledAt(entity.getCancelledAt())
+                .review(review != null ? ReviewResponseDTO.from(review) : null)
                 .build();
     }
 

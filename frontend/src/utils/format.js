@@ -73,18 +73,34 @@ export function calculateNights(checkinStr, checkoutStr) {
   return diff > 0 ? diff : 0;
 }
 
-export function calculateEstimatedTotal(checkinStr, checkoutStr, weekdayPrice, weekendPrice) {
+/**
+ * 평일/주말(금·토) 박수와 각각의 소계를 나눠서 계산합니다.
+ * 요금이 평일/주말로 갈리기 때문에 "1박 요금 × N박" 한 줄로는 총액과 안 맞을 수 있어,
+ * 화면에서 두 요금이 섞인 구간을 각각 따로 보여줄 때 씁니다.
+ */
+export function calculateStayBreakdown(checkinStr, checkoutStr, weekdayPrice, weekendPrice) {
   const nights = calculateNights(checkinStr, checkoutStr);
-  if (!nights) return 0;
+  if (!nights) {
+    return { weekdayNights: 0, weekendNights: 0, weekdayTotal: 0, weekendTotal: 0, total: 0 };
+  }
 
-  let total = 0;
+  let weekdayNights = 0;
+  let weekendNights = 0;
   const cursor = new Date(`${checkinStr}T00:00:00`);
   for (let i = 0; i < nights; i += 1) {
     const day = cursor.getDay(); // 0=일 ... 5=금, 6=토
-    total += Number((day === 5 || day === 6 ? weekendPrice : weekdayPrice) || 0);
+    if (day === 5 || day === 6) weekendNights += 1;
+    else weekdayNights += 1;
     cursor.setDate(cursor.getDate() + 1);
   }
-  return total;
+
+  const weekdayTotal = weekdayNights * Number(weekdayPrice || 0);
+  const weekendTotal = weekendNights * Number(weekendPrice || 0);
+  return { weekdayNights, weekendNights, weekdayTotal, weekendTotal, total: weekdayTotal + weekendTotal };
+}
+
+export function calculateEstimatedTotal(checkinStr, checkoutStr, weekdayPrice, weekendPrice) {
+  return calculateStayBreakdown(checkinStr, checkoutStr, weekdayPrice, weekendPrice).total;
 }
 
 /* ---------------- 상태 라벨 ---------------- */
