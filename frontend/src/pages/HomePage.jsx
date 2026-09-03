@@ -7,18 +7,117 @@ import Alert from '../components/Alert';
 import EmptyState from '../components/EmptyState';
 import { toDateInputValue, addDays } from '../utils/format';
 
-/** 히어로 아래에서 자라 오르는 뿌리 실루엣 (포스터 모티프) */
-function Roots() {
+const CATEGORIES = [
+  { key: 'pyramid', label: '피라미드', color: 'var(--blood-bright)', shape: 'triangle' },
+  { key: 'tomb', label: '왕릉·능묘', color: 'var(--yellow)', shape: 'dome' },
+  { key: 'dolmen', label: '고인돌·거석', color: 'var(--green)', shape: 'bar' },
+  { key: 'catacomb', label: '카타콤·지하묘', color: 'var(--pink)', shape: 'arch' },
+  { key: 'shrine', label: '사당·묘당', color: 'var(--violet)', shape: 'diamond' },
+  { key: 'fossil', label: '화석층', color: 'var(--bone-2)', shape: 'pill' },
+  { key: 'virtual', label: '가상 묘소', color: 'var(--blood-bright)', shape: 'ring' },
+];
+
+const PROMOS = [
+  {
+    title: '시대별로 둘러보기',
+    desc: '신석기 고인돌부터 20세기 납골당까지, 연식으로 골라보세요.',
+    color: 'var(--blood-bright)',
+    from: 'rgba(94,224,238,.12)',
+  },
+  {
+    title: '세계문화유산 컬렉션',
+    desc: '유네스코 등재 묘역 214곳. 보존 규정 안내 포함.',
+    color: 'var(--yellow)',
+    from: 'rgba(255,210,63,.12)',
+  },
+  {
+    title: '소설 속 가상 묘소',
+    desc: '카르파티아의 관, 아발론의 왕묘. 실존하지 않으므로 환불 규정이 다릅니다.',
+    color: 'var(--violet)',
+    from: 'rgba(160,110,232,.12)',
+  },
+];
+
+const RULES = [
+  ['첫째', '해가 진 뒤에는 무덤 밖으로 나오지 마십시오.', '체크인은 15시, 체크아웃은 11시입니다.'],
+  ['둘째', '방 안에서 들리는 소리에 대답하지 마십시오.', '문의는 묘지기(관리자)에게만 남겨주십시오.'],
+  ['셋째', '예약은 취소할 수 있습니다. 기록은 남습니다.', '취소된 예약도 내역에서 계속 확인됩니다.'],
+];
+
+function CategoryIcon({ shape, color }) {
+  const base = { width: 32, height: 28, background: color, flexShrink: 0 };
+  if (shape === 'triangle') {
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          width: 0,
+          height: 0,
+          borderLeft: '17px solid transparent',
+          borderRight: '17px solid transparent',
+          borderBottom: `27px solid ${color}`,
+        }}
+      />
+    );
+  }
+  if (shape === 'dome') return <div aria-hidden="true" style={{ ...base, borderRadius: '16px 16px 3px 3px' }} />;
+  if (shape === 'bar') return <div aria-hidden="true" style={{ ...base, height: 13, borderRadius: 4, margin: '7px 0' }} />;
+  if (shape === 'arch') return <div aria-hidden="true" style={{ ...base, borderRadius: '3px 3px 16px 16px' }} />;
+  if (shape === 'diamond') return <div aria-hidden="true" style={{ ...base, width: 26, height: 26, transform: 'rotate(45deg)', borderRadius: 4 }} />;
+  if (shape === 'pill') return <div aria-hidden="true" style={{ ...base, borderRadius: '999px 999px 6px 999px' }} />;
+  if (shape === 'ring') {
+    return <div aria-hidden="true" style={{ width: 28, height: 28, borderRadius: 999, border: `4px solid ${color}` }} />;
+  }
+  return null;
+}
+
+/** 히어로 배경의 달·피라미드 실루엣 (순수 CSS 장식) */
+function HeroDecor() {
   return (
-    <svg className="hero-roots" viewBox="0 0 1200 260" fill="none" aria-hidden="true">
-      <g stroke="#071211" strokeWidth="2.4" strokeLinecap="round" opacity="0.95">
-        <path d="M600 260V120M600 150l-42-38M600 178l46-42M558 112l-30-34M558 112l-46-16M646 136l40-30M646 136l16-44M528 78l-26-30M512 96l-52-8M686 106l44-16M662 92l10-40" />
-        <path d="M600 200l-70-30M600 214l84-36M530 170l-64-14M684 178l70-24M466 156l-58 8M754 154l62 12" />
-        <path d="M408 164l-52 22M816 166l56 26M356 186l-58-6M872 192l64-8M298 180l-64 26M936 184l70 20" />
-        <path d="M234 206l-70-8M1006 204l72-6M164 198l-72 22M1078 198l76 18" />
-      </g>
-      <path d="M0 260h1200V236c-120-16-210 8-320-6s-180-30-280-30-190 22-300 34S110 224 0 238z" fill="#071211" />
-    </svg>
+    <>
+      <div
+        aria-hidden="true"
+        style={{ position: 'absolute', top: 40, right: 110, width: 108, height: 108, borderRadius: 999, background: 'var(--yellow)' }}
+      />
+      <div
+        aria-hidden="true"
+        style={{ position: 'absolute', top: 40, right: 76, width: 108, height: 108, borderRadius: 999, background: 'var(--void)' }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', bottom: 0, right: 170,
+          width: 0, height: 0,
+          borderLeft: '92px solid transparent', borderRight: '92px solid transparent', borderBottom: '116px solid var(--stone-2)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', bottom: 0, right: 330,
+          width: 0, height: 0,
+          borderLeft: '60px solid transparent', borderRight: '60px solid transparent', borderBottom: '80px solid var(--soil)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', bottom: 0, right: 90,
+          width: 0, height: 0,
+          borderLeft: '46px solid transparent', borderRight: '46px solid transparent', borderBottom: '60px solid var(--soil)',
+        }}
+      />
+    </>
+  );
+}
+
+function PromoCard({ title, desc, color, from }) {
+  return (
+    <div className="promo-card" style={{ background: `linear-gradient(150deg, ${from}, var(--stone) 70%)`, borderColor: 'var(--hair)' }}>
+      <div className="promo-card-icon" style={{ width: 28, height: 22, borderRadius: '14px 14px 3px 3px', background: color }} />
+      <p className="promo-card-title">{title}</p>
+      <p className="promo-card-desc">{desc}</p>
+    </div>
   );
 }
 
@@ -63,81 +162,90 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ---------- 포스터형 히어로 ---------- */}
-      <section className="hero">
-        <Roots />
-        <div className="hero-inner">
-          <p className="hero-credit">누비 묘원 · 제 1 구역 개방</p>
-          <h1 className="hero-title">영면</h1>
-          <p className="hero-tagline">함부로 깨우지 말 것</p>
-          <p className="hero-desc">
-            1987년 이후 열두 기의 무덤이 이 묘역에 들어섰습니다.
-            <br />
-            그 아래에 무엇이 묻혀 있는지는 아무도 묻지 않았습니다.
-            <br />
-            지금 남은 방을 확인하십시오.
-          </p>
-          <div className="hero-actions">
-            <Link to="/rooms" className="btn btn-primary btn-lg">
-              남은 방 확인하기
-            </Link>
-            <Link to="/signup" className="btn btn-outline btn-lg">
-              입주 신청
-            </Link>
+      {/* ---------- 상단 안내 바 ---------- */}
+      {/* <div className="promo-bar">
+        <strong>만성절 특가 — 오래된 묘소 20% 할인</strong>
+        <span className="ticker">✦ NUBI 묘원 ✦ REST IN STAY ✦ NUBI 묘원 ✦ REST IN STAY ✦</span>
+      </div> */}
+
+      {/* ---------- 히어로 ---------- */}
+      <section className="landing-hero">
+        <div className="landing-hero-decor">
+          <HeroDecor />
+        </div>
+        <div className="container">
+          <div className="landing-hero-inner">
+            <div className="landing-kicker">
+              <span className="landing-kicker-dot" />
+              <span>등록 묘 1,204기 · 최고 연식 6,600만 년</span>
+            </div>
+            <h1 className="landing-title">
+              오늘 밤은 <span className="accent">4,600년</span>짜리
+              <br />
+              방에서 자보세요
+            </h1>
+            <p className="landing-desc">
+              기자 대피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.
+            </p>
+
+            <form className="search-pill" onSubmit={handleSearch}>
+              <div className="search-pill-field">
+                <span>어디로</span>
+                <input
+                  type="text"
+                  placeholder="어느 묘역을 찾으십니까"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+              </div>
+              <div className="search-pill-divider" />
+              <div className="search-pill-field">
+                <span>입실 · 퇴실</span>
+                <input
+                  type="date"
+                  value={checkin}
+                  min={today}
+                  onChange={(e) => {
+                    setCheckin(e.target.value);
+                    if (e.target.value >= checkout) setCheckout(addDays(e.target.value, 1));
+                  }}
+                />
+              </div>
+              <div className="search-pill-divider" />
+              <div className="search-pill-field">
+                <span>인원</span>
+                <select value={guests} onChange={(e) => setGuests(Number(e.target.value))}>
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                    <option key={n} value={n}>
+                      성인 {n}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button type="submit" className="search-pill-btn">
+                검색
+              </button>
+            </form>
+
+            <div className="landing-tags">
+              <span className="landing-tag">석실 난방 있음</span>
+              <span className="landing-tag">세계문화유산</span>
+              <span className="landing-tag">발굴 진행 중</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ---------- 검색 ---------- */}
+      {/* ---------- 카테고리 ---------- */}
       <div className="container">
-        <form className="search-bar" onSubmit={handleSearch}>
-          <div className="field">
-            <label htmlFor="q">지역 · 무덤 이름</label>
-            <input
-              id="q"
-              type="text"
-              placeholder="어느 묘역을 찾으십니까"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="ci">입실일</label>
-            <input
-              id="ci"
-              type="date"
-              value={checkin}
-              min={today}
-              onChange={(e) => {
-                setCheckin(e.target.value);
-                if (e.target.value >= checkout) setCheckout(addDays(e.target.value, 1));
-              }}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="co">퇴실일</label>
-            <input
-              id="co"
-              type="date"
-              value={checkout}
-              min={addDays(checkin, 1)}
-              onChange={(e) => setCheckout(e.target.value)}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="g">인원</label>
-            <select id="g" value={guests} onChange={(e) => setGuests(Number(e.target.value))}>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                <option key={n} value={n}>
-                  {n}명
-                </option>
-              ))}
-            </select>
-          </div>
-          <button type="submit" className="btn btn-primary" style={{ height: 44 }}>
-            찾기
-          </button>
-        </form>
+        <div className="category-row" style={{ marginTop: 26 }}>
+          {CATEGORIES.map((c) => (
+            <div className="category-tile" key={c.key}>
+              <CategoryIcon shape={c.shape} color={c.color} />
+              <span>{c.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ---------- 추천 무덤 ---------- */}
@@ -145,7 +253,7 @@ export default function HomePage() {
         <div className="section-head">
           <div>
             <p className="eyebrow">아직 비어 있는 방</p>
-            <h2>묘역의 무덤들</h2>
+            <h2>평이 좋은 묘소</h2>
           </div>
           <Link to="/rooms" className="link tiny">
             전체 보기 →
@@ -170,27 +278,52 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* ---------- 컨셉 안내 ---------- */}
-        <div className="section-head">
-          <div>
-            <p className="eyebrow eyebrow-ash">입주 전 반드시 읽을 것</p>
-            <h2>세 가지 규칙</h2>
-          </div>
-        </div>
-        <div className="grid-3">
-          {[
-            ['첫째', '해가 진 뒤에는 무덤 밖으로 나오지 마십시오.', '체크인은 15시, 체크아웃은 11시입니다.'],
-            ['둘째', '방 안에서 들리는 소리에 대답하지 마십시오.', '문의는 묘지기(관리자)에게만 남겨주십시오.'],
-            ['셋째', '예약은 취소할 수 있습니다. 기록은 남습니다.', '취소된 예약도 내역에서 계속 확인됩니다.'],
-          ].map(([no, title, desc]) => (
-            <div className="panel" key={no}>
-              <p className="eyebrow">{no}</p>
-              <p className="serif" style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 10 }}>
-                {title}
-              </p>
-              <p className="tiny dim">{desc}</p>
-            </div>
+        {/* ---------- 프로모 카드 ---------- */}
+        <div className="grid-3" style={{ marginTop: 48 }}>
+          {PROMOS.map((p) => (
+            <PromoCard key={p.title} {...p} />
           ))}
+        </div>
+
+        {/* ---------- 호스트 CTA ---------- */}
+        <div className="host-cta">
+          <div style={{ flex: '1.2 1 320px' }}>
+            <h2 style={{ fontSize: 'clamp(22px, 3vw, 30px)', marginBottom: 14 }}>
+              관리하는 묘소가 있다면, NUBI에 올려주세요
+            </h2>
+            <p className="muted" style={{ marginBottom: 24, maxWidth: 480, lineHeight: 1.75 }}>
+              등록 7분. 문화재 심의 대행, 관리인 인증, 보존 가이드까지 안내합니다.
+            </p>
+            <Link to="/signup" className="btn btn-primary btn-lg">
+              호스팅 시작하기
+            </Link>
+          </div>
+          <div className="grid-2" style={{ flex: '1 1 320px', gap: 14 }}>
+            <div className="stat-mini">
+              <div className="stat-mini-num" style={{ color: 'var(--blood-bright)' }}>
+                1.2K
+              </div>
+              <div className="stat-mini-label">등록 묘소</div>
+            </div>
+            <div className="stat-mini">
+              <div className="stat-mini-num" style={{ color: 'var(--yellow)' }}>
+                98%
+              </div>
+              <div className="stat-mini-label">무사 체크아웃률</div>
+            </div>
+            <div className="stat-mini">
+              <div className="stat-mini-num" style={{ color: 'var(--pink)' }}>
+                24H
+              </div>
+              <div className="stat-mini-label">관리인 콜센터</div>
+            </div>
+            <div className="stat-mini">
+              <div className="stat-mini-num" style={{ color: 'var(--green)' }}>
+                41
+              </div>
+              <div className="stat-mini-label">등재 국가</div>
+            </div>
+          </div>
         </div>
       </div>
     </>

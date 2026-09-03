@@ -43,13 +43,13 @@ export default function RoomCard({ room }) {
               top: 12,
               right: 12,
               zIndex: 2,
-              width: 34,
-              height: 34,
+              width: 32,
+              height: 32,
               borderRadius: '50%',
               display: 'grid',
               placeItems: 'center',
               border: '1px solid var(--hair-strong)',
-              background: 'rgba(5,4,6,0.7)',
+              background: 'rgba(7,9,13,0.72)',
               backdropFilter: 'blur(6px)',
               color: bookmarked ? 'var(--blood-bright)' : 'var(--ash)',
               cursor: 'pointer',
@@ -68,27 +68,23 @@ export default function RoomCard({ room }) {
       </div>
 
       <div className="card-body">
-        <p className="card-sub">
-          {[room.country, room.city].filter(Boolean).join(' · ') || '위치 미상'}
-        </p>
-        <p className="card-title">{room.name}</p>
-        <p className="card-sub">
-          {rating > 0 ? (
-            <>
-              <span className="blood-text">★ {rating.toFixed(1)}</span>
-              {room.reviewCount ? ` · 증언 ${room.reviewCount}건` : ''}
-            </>
-          ) : (
-            '아직 아무도 다녀가지 않음'
+        <div className="row-between" style={{ gap: 8, alignItems: 'baseline' }}>
+          <p className="card-title" style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {room.name}
+          </p>
+          {rating > 0 && (
+            <span className="mono" style={{ flexShrink: 0, color: 'var(--bone)', fontWeight: 600 }}>
+              ☾ {rating.toFixed(2)}
+            </span>
           )}
-        </p>
-        <div className="card-foot">
-          <span className="price">
-            {formatCurrency(room.weekdayPrice)}
-            <small>/ 1박</small>
-          </span>
-          <span className="tiny dim">최대 {room.maxGuests}인</span>
         </div>
+        <p className="card-sub">
+          {[room.country, room.city].filter(Boolean).join(' · ') || '위치 미상'} · 최대 {room.maxGuests}인
+        </p>
+        <p className="price" style={{ marginTop: 2 }}>
+          {formatCurrency(room.weekdayPrice)}
+          <small>/ 1박</small>
+        </p>
       </div>
     </Link>
   );

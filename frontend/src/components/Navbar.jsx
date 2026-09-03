@@ -18,44 +18,63 @@ export default function Navbar() {
 
   return (
     <header className="site-header">
-      <div className="container row" style={{ width: '100%' }}>
-        <Link to="/" className="brand" aria-label="누비 홈으로">
+      <div className="container row" style={{ width: '100%', gap: 26 }}>
+        <Link to="/" className="row" style={{ gap: 10, flexShrink: 0 }} aria-label="누비 홈으로">
+          <span className="brand-icon" aria-hidden="true" />
           <span className="brand-mark">
-            NU<em>BI</em>
+            NUBI <emp> MYOBI</emp>
           </span>
-          <span className="brand-sub">Nubi Broadcasting System</span>
         </Link>
 
         <nav className="nav">
           <NavLink to="/rooms" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
             무덤 둘러보기
           </NavLink>
-
-          {isAuthenticated ? (
-            <>
-              {isAdmin && (
-                <NavLink to="/admin" className="nav-link blood-text">
-                  관리자 구역
-                </NavLink>
-              )}
-              <NavLink to="/mypage" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
-                {profile?.name ? `${profile.name} 님` : '마이페이지'}
-              </NavLink>
-              <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
-                나가기
-              </button>
-            </>
-          ) : (
-            <>
-              <NavLink to="/login" className="nav-link">
-                입주 기록
-              </NavLink>
-              <Link to="/signup" className="btn btn-primary btn-sm">
-                입주 신청
-              </Link>
-            </>
+          {isAuthenticated && (
+            <NavLink to="/mypage/bookings" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
+              예약 내역
+            </NavLink>
           )}
         </nav>
+
+        <div className="row" style={{ marginLeft: 'auto', gap: 18, flexShrink: 0 }}>
+          {isAdmin ? (
+            <NavLink to="/admin" className="nav-link nav-link-strong">
+              관리자 구역
+            </NavLink>
+          ) : (
+            <Link to={isAuthenticated ? '/whoami' : '/signup'} className="nav-link nav-link-strong">
+              내 묘소 호스팅하기
+            </Link>
+          )}
+          <span className="mono dim" style={{ fontSize: 12 }}>
+            KR / KRW
+          </span>
+
+          {isAuthenticated ? (
+            <div className="login-pill">
+              <Link to="/mypage" className="tiny" style={{ color: 'var(--bone)', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                {profile?.name ? `${profile.name} 님` : '마이페이지'}
+              </Link>
+              <button
+                type="button"
+                className="login-pill-avatar filled"
+                onClick={handleLogout}
+                aria-label="나가기"
+                title="나가기"
+              >
+                {profile?.name ? profile.name[0] : '?'}
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="login-pill">
+              <span className="tiny" style={{ color: 'var(--ash)' }}>
+                로그인
+              </span>
+              <span className="login-pill-avatar" aria-hidden="true" />
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
