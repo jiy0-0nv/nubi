@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -193,16 +194,61 @@ public class AdminRoomsController {
     }
 
     /** 드래그로 바꾼 사진 순서를 저장합니다. body: 새 순서대로 나열한 imageId 배열 */
+    @Operation(
+            summary = "숙소 사진 순서 변경",
+            description = """
+                    호스트가 드래그로 바꾼 사진 순서를 저장합니다.
+
+                    요청 본문은 **새 순서대로 나열한 imageId 배열**입니다. (예: `[12, 10, 11]`)
+                    해당 숙소가 가진 모든 사진 id 가 **빠짐없이, 정확히 한 번씩** 들어가야 하며
+                    하나라도 빠지거나 중복되면 400 입니다.
+
+                    응답은 새 순서가 반영된 사진 목록입니다.
+                    """)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "순서 변경 완료, 정렬된 사진 목록 반환",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = AdminRoomImageResponseDTO.class)))),
+            @ApiResponse(responseCode = "400",
+                    description = "배열에 이 숙소의 모든 imageId 가 한 번씩 들어있지 않음", content = @Content),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 숙소", content = @Content)
+    })
     @PatchMapping("/{roomId}/images/order")
-    public List<AdminRoomImageResponseDTO> reorderRoomImages(@PathVariable Long roomId,
-                                                               @RequestBody List<Long> orderedImageIds) {
+    public List<AdminRoomImageResponseDTO> reorderRoomImages(
+            @Parameter(description = "사진 순서를 바꿀 숙소 ID", example = "1")
+            @PathVariable Long roomId,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "새 순서대로 나열한 imageId 배열",
+                    required = true,
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(type = "integer", format = "int64")),
+                            examples = @ExampleObject(value = "[12, 10, 11]")))
+            @RequestBody List<Long> orderedImageIds) {
         Long ownerId = requireUserId();
         return adminRoomImagesService.reorderImages(ownerId, roomId, orderedImageIds);
     }
 
     /** imageId를 대표 사진으로 지정합니다. */
+    @Operation(
+            summary = "대표 사진 지정",
+            description = """
+                    지정한 사진을 이 숙소의 대표 사진(`thumbnail: true`)으로 만들고 나머지는 모두 해제합니다.
+                    대표 사진은 공개 목록(`GET /api/rooms`)의 `thumbnailUrl` 로 노출됩니다.
+
+                    응답은 갱신된 사진 목록입니다.
+                    """)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "지정 완료, 갱신된 사진 목록 반환",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = AdminRoomImageResponseDTO.class)))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 숙소 또는 사진", content = @Content)
+    })
     @PatchMapping("/{roomId}/images/{imageId}/thumbnail")
-    public List<AdminRoomImageResponseDTO> setRoomImageThumbnail(@PathVariable Long roomId, @PathVariable Long imageId) {
+    public List<AdminRoomImageResponseDTO> setRoomImageThumbnail(
+            @Parameter(description = "숙소 ID", example = "1")
+            @PathVariable Long roomId,
+            @Parameter(description = "대표로 지정할 사진 ID", example = "10")
+            @PathVariable Long imageId) {
         Long ownerId = requireUserId();
         return adminRoomImagesService.setThumbnail(ownerId, roomId, imageId);
     }
