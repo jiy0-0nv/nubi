@@ -3,6 +3,12 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { updateRole } from '../api/auth';
 
+const THEME_KEY = 'nubi-theme';
+
+function getInitialTheme() {
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+}
+
 /**
  * 사용자 영역 상단 헤더.
  * 관리자 영역(/admin)은 이 헤더를 쓰지 않고 자체 사이드바 셸을 씁니다.
@@ -13,6 +19,19 @@ export default function Navbar() {
   const { isAuthenticated, isAdmin, userId, profile, logout, reloadProfile } = useAuth();
   const navigate = useNavigate();
   const [becomingHost, setBecomingHost] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  // 묘지 컨셉(다크)이 기본. 라이트모드는 평범한 숙소 사이트처럼 보이는 이스터에그.
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light';
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem(THEME_KEY, next);
+    } catch {
+      /* 저장 실패해도 이번 세션 화면 전환은 그대로 유지됩니다. */
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -74,9 +93,15 @@ export default function Navbar() {
               호스팅하기
             </Link>
           )}
-          {/* <span className="mono dim" style={{ fontSize: 12 }}>
-            TODO: 다크모드 전환 버튼
-          </span> */}
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === 'light' ? '다크모드로 전환' : '라이트모드로 전환'}
+            title={theme === 'light' ? '다크모드로 전환' : '라이트모드로 전환'}
+          >
+            {theme === 'light' ? '☾' : '☀'}
+          </button>
 
           {isAuthenticated ? (
             <div className="login-pill">

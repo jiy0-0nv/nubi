@@ -74,6 +74,41 @@
 
   --header-h: 72px;
   color-scheme: dark;
+
+  /* 선택 영역 텍스트 — 라이트/다크 모두 밝은 시안 위에 얹히므로 고정 어두운색 */
+  --on-accent: #07090d;
+  /* 상단 헤더 배경 (블러 위에 얹는 반투명 판) */
+  --surface-header: rgba(7, 9, 13, 0.9);
+}
+
+/* -------------------- 1-b) 라이트 모드 (이스터에그) --------------------
+ * 켜면 고딕 묘지 콘셉트를 벗고 평범한 숙소 예약 사이트처럼 보입니다.
+ * 값만 갈아끼우는 토큰이라 나머지 CSS는 그대로 재사용됩니다. */
+:root[data-theme='light'] {
+  --void: #f6f7f9;
+  --soil: #ffffff;
+  --stone: #ffffff;
+  --stone-2: #eef1f4;
+  --grave: #eef1f4;
+
+  --blood: #0f8b9e;
+  --blood-bright: #0a94a8;
+  --blood-glow: rgba(10, 148, 168, 0.14);
+  --rust: #c2ccd3;
+
+  --bone: #12181f;
+  --ash: #55636f;
+  --ash-dim: #7c8790;
+
+  --hair: rgba(18, 24, 31, 0.1);
+  --hair-strong: rgba(18, 24, 31, 0.18);
+  --hair-blood: rgba(10, 148, 168, 0.32);
+
+  --shadow: 0 20px 44px -26px rgba(18, 24, 31, 0.22);
+  --shadow-blood: 0 0 0 1px var(--hair-blood), 0 16px 34px -20px rgba(18, 24, 31, 0.16);
+  --surface-header: rgba(255, 255, 255, 0.86);
+
+  color-scheme: light;
 }
 
 /* ------------------------- 2) 리셋 / 기본 ------------------------- */
@@ -121,7 +156,7 @@ textarea {
 
 ::selection {
   background: var(--blood-bright);
-  color: var(--void);
+  color: var(--on-accent);
 }
 
 ::-webkit-scrollbar {
@@ -323,7 +358,7 @@ p {
 
 .btn-primary {
   background: var(--blood-bright);
-  color: var(--void);
+  color: var(--on-accent);
   border-color: transparent;
 }
 
@@ -917,7 +952,7 @@ a.list-row:hover,
   height: var(--header-h);
   display: flex;
   align-items: center;
-  background: rgba(7, 9, 13, 0.9);
+  background: var(--surface-header);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--hair);
 }
@@ -978,6 +1013,26 @@ a.list-row:hover,
 }
 
 /* ---- 로그인 필 ---- */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ash);
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--hair-blood);
+  color: var(--bone);
+}
+
 .login-pill {
   display: flex;
   align-items: center;
@@ -1013,7 +1068,7 @@ a.list-row:hover,
 
 .login-pill-avatar.filled {
   background: linear-gradient(160deg, var(--blood-bright), var(--rust));
-  color: var(--void);
+  color: var(--on-accent);
   border-color: transparent;
 }
 
@@ -1024,7 +1079,7 @@ a.list-row:hover,
   border: 1px solid transparent;
   flex-shrink: 0;
   background: linear-gradient(160deg, var(--blood-bright), var(--rust));
-  color: var(--void);
+  color: var(--on-accent);
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
@@ -1245,7 +1300,7 @@ a.list-row:hover,
   padding: 0 24px;
   border-radius: var(--r-md);
   background: var(--blood-bright);
-  color: var(--void);
+  color: var(--on-accent);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 14px;
@@ -1439,6 +1494,11 @@ a.list-row:hover,
   right: 32px;
   bottom: 28px;
   z-index: 1;
+}
+
+.detail-hero-caption .eyebrow {
+  /* 사진 위 어두운 그라디언트에 얹히는 자리라 테마와 무관하게 밝은 시안으로 고정 */
+  color: #5ee0ee;
 }
 
 .detail-hero-arrow {
@@ -1851,7 +1911,7 @@ a.list-row:hover,
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
-  color: var(--void);
+  color: var(--on-accent);
 }
 
 .tile {
@@ -2156,7 +2216,7 @@ table.table {
 .image-cell .image-thumb-btn.active {
   border-color: var(--hair-blood);
   background: var(--blood-bright);
-  color: var(--void);
+  color: var(--on-accent);
   cursor: default;
 }
 

@@ -16,6 +16,17 @@
     />
 
     <title>Nubi</title>
+
+    <!-- 라이트모드 저장값을 CSS/React가 그리기 전에 <html>에 반영해 깜빡임을 막습니다 -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('nubi-theme') === 'light') {
+            document.documentElement.dataset.theme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
