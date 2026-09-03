@@ -186,7 +186,7 @@ export default function HomePage() {
               방에서 자보세요
             </h1>
             <p className="landing-desc">
-              기자 대피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.
+              피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.
             </p>
 
             <form className="search-pill" onSubmit={handleSearch}>
