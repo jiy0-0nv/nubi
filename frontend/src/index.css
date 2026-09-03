@@ -842,9 +842,7 @@ a.list-row:hover,
 }
 
 .brand-mark {
-  font-family: var(--font-accent);
-  font-size: 19px;
-  font-weight: 400;
+  font:400 19px/1 'Bungee',sans-serif;
   letter-spacing: 0.01em;
   color: var(--bone);
 }
@@ -855,7 +853,7 @@ a.list-row:hover,
 }
 
 .brand-mark emp {
-  font:400 18px/1 'Bungee',sans-serif;
+  font:400 19px/1 'Bungee',sans-serif;
   color:#ff5ea8;
   white-space:nowrap;
 }
@@ -1274,6 +1272,7 @@ a.list-row:hover,
 /* ---- 호스트 CTA ---- */
 .host-cta {
   padding: 48px 0;
+  margin-top: 20px;
   border-top: 1px solid var(--hair);
   display: flex;
   align-items: center;

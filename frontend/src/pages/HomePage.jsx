@@ -20,7 +20,7 @@ const CATEGORIES = [
 
 const PROMOS = [
   {
-    title: '시대별로 둘러보기',
+    title: '시대별로 SEARCH',
     desc: '신석기 고인돌부터 20세기 납골당까지, 연식으로 골라보세요.',
     color: 'var(--blood-bright)',
     from: 'rgba(94,224,238,.12)',

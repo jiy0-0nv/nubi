@@ -216,10 +216,10 @@ export default function RoomDetailPage() {
 
           <div className="divider" />
 
-          <h2 className="serif">다녀간 이들의 리뷰</h2>
+          <h2 className="serif">리뷰</h2>
           <div className="rule mb-16" />
           {reviews.length === 0 ? (
-            <p className="tiny dim">아직 아무도 입을 열지 않았습니다.</p>
+            <p className="tiny dim">아직 리뷰가 없습니다.</p>
           ) : (
             reviews.map((review) => (
               <div className="review" key={review.id}>

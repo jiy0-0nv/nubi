@@ -81,7 +81,7 @@ export default function MyPage() {
           description="묘역의 무덤을 둘러보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              무덤 둘러보기
+              SEARCH
             </Link>
           }
         />

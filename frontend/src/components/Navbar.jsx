@@ -28,7 +28,7 @@ export default function Navbar() {
 
         <nav className="nav">
           <NavLink to="/rooms" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
-            무덤 둘러보기
+            SEARCH
           </NavLink>
           {isAuthenticated && (
             <NavLink to="/mypage/bookings" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
@@ -44,7 +44,7 @@ export default function Navbar() {
             </NavLink>
           ) : (
             <Link to={isAuthenticated ? '/whoami' : '/signup'} className="nav-link nav-link-strong">
-              내 묘소 호스팅하기
+              호스팅하기
             </Link>
           )}
           {/* <span className="mono dim" style={{ fontSize: 12 }}>

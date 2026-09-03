@@ -68,7 +68,7 @@ export default function BookingListPage() {
           description="다른 상태를 골라보거나 새로 예약해 보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              무덤 둘러보기
+              SEARCH
             </Link>
           }
         />

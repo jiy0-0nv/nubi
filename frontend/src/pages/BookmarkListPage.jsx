@@ -43,7 +43,7 @@ export default function BookmarkListPage() {
           description="마음에 둔 무덤에 표식을 남겨두십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              무덤 둘러보기
+              SEARCH
             </Link>
           }
         />
