@@ -1441,6 +1441,39 @@ a.list-row:hover,
   z-index: 1;
 }
 
+.detail-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(7, 9, 13, 0.45);
+  color: var(--bone);
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.detail-hero-arrow:hover {
+  background: rgba(7, 9, 13, 0.7);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.detail-hero-arrow.left {
+  left: 16px;
+}
+
+.detail-hero-arrow.right {
+  right: 16px;
+}
+
 .thumb-strip {
   display: flex;
   gap: 10px;

@@ -103,6 +103,9 @@ export default function RoomDetailPage() {
     return room.thumbnailUrl ? [room.thumbnailUrl] : [];
   }, [room]);
 
+  const showPrevImage = () => setActiveImage((i) => (i - 1 + images.length) % images.length);
+  const showNextImage = () => setActiveImage((i) => (i + 1) % images.length);
+
   const nights = calculateNights(checkin, checkout);
   const stay = room
     ? calculateStayBreakdown(checkin, checkout, room.weekdayPrice, room.weekendPrice)
@@ -159,6 +162,26 @@ export default function RoomDetailPage() {
           <div className="card-media-empty" style={{ height: '100%' }} aria-hidden="true">
             †
           </div>
+        )}
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="detail-hero-arrow left"
+              onClick={showPrevImage}
+              aria-label="이전 사진"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="detail-hero-arrow right"
+              onClick={showNextImage}
+              aria-label="다음 사진"
+            >
+              ›
+            </button>
+          </>
         )}
         <div className="detail-hero-caption">
           <p className="eyebrow">{[room.country, room.city].filter(Boolean).join(' · ')}</p>
