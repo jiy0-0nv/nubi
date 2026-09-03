@@ -9,13 +9,13 @@ import GuestStepper from '../components/GuestStepper';
 import { toDateInputValue, addDays } from '../utils/format';
 
 const CATEGORIES = [
-  { key: 'pyramid', label: '피라미드', color: 'var(--blood-bright)', shape: 'triangle' },
-  { key: 'tomb', label: '왕릉·능묘', color: 'var(--yellow)', shape: 'dome' },
-  { key: 'dolmen', label: '고인돌·거석', color: 'var(--green)', shape: 'bar' },
-  { key: 'catacomb', label: '카타콤·지하묘', color: 'var(--pink)', shape: 'arch' },
-  { key: 'shrine', label: '사당·묘당', color: 'var(--violet)', shape: 'diamond' },
-  { key: 'fossil', label: '화석층', color: 'var(--bone-2)', shape: 'pill' },
-  { key: 'virtual', label: '가상 묘소', color: 'var(--blood-bright)', shape: 'ring' },
+  { key: 'pyramid', label: '피라미드', color: 'var(--blood-bright)', shape: 'triangle', keywords: ['피라미드'] },
+  { key: 'tomb', label: '왕릉·능묘', color: 'var(--yellow)', shape: 'dome', keywords: ['왕릉', '능묘'] },
+  { key: 'dolmen', label: '고인돌·거석', color: 'var(--green)', shape: 'bar', keywords: ['고인돌', '거석'] },
+  { key: 'catacomb', label: '카타콤·지하묘', color: 'var(--pink)', shape: 'arch', keywords: ['카타콤', '지하묘'] },
+  { key: 'shrine', label: '사당·묘당', color: 'var(--violet)', shape: 'diamond', keywords: ['사당', '묘당'] },
+  { key: 'fossil', label: '화석층', color: 'var(--bone-2)', shape: 'pill', keywords: ['화석'] },
+  { key: 'virtual', label: '가상 묘소', color: 'var(--blood-bright)', shape: 'ring', keywords: ['가상'] },
 ];
 
 const PROMOS = [
@@ -245,10 +245,10 @@ export default function HomePage() {
       <div className="container">
         <div className="category-row" style={{ marginTop: 26 }}>
           {CATEGORIES.map((c) => (
-            <div className="category-tile" key={c.key}>
+            <Link className="category-tile" key={c.key} to={`/rooms?keyword=${encodeURIComponent(c.keywords.join(','))}`}>
               <CategoryIcon shape={c.shape} color={c.color} />
               <span>{c.label}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

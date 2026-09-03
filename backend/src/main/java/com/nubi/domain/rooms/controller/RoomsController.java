@@ -38,7 +38,7 @@ public class RoomsController {
     @ApiResponse(responseCode = "200", description = "조회 성공")
     @GetMapping
     public ResponseEntity<Page<RoomsDTO.ListResponse>> getRooms(
-        @Parameter(description = "숙소명 / 지역 검색어", example = "해운대")
+        @Parameter(description = "숙소명 / 설명 / 지역 검색어. 콤마로 여러 개 넘기면 OR 매치 (예: \"왕릉,능묘\")", example = "해운대")
         @RequestParam(required = false) String keyword,
         @Parameter(description = "체크인 날짜 (yyyy-MM-dd). 해당 기간에 예약 가능한 숙소만 필터링", example = "2026-11-10")
         @RequestParam(required = false) String checkin,

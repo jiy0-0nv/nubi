@@ -1326,6 +1326,7 @@ a.list-row:hover,
   border-radius: var(--r-md);
   border: 1px solid var(--hair);
   cursor: pointer;
+  text-decoration: none;
   transition: border-color 0.16s ease, background 0.16s ease;
 }
 
