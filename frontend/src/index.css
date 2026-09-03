@@ -446,8 +446,14 @@ p {
 
 .field-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr): 그리드 칸의 기본 최소 너비(auto)는 안의 콘텐츠 크기를 따라가서,
+     input[type=date]처럼 폭이 있는 요소가 들어오면 칸이 못 줄어들고 박스 밖으로 밀려납니다. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
+}
+
+.field-row .field {
+  min-width: 0;
 }
 
 /* 날짜/시간 입력의 기본 아이콘을 어두운 배경에 맞춰 시안 톤으로 */
@@ -801,6 +807,81 @@ a.list-row:hover,
 .full { width: 100%; }
 .nowrap { white-space: nowrap; }
 .gap-8 { gap: 8px; }
+
+/* 길게 이어지는 본문을 지정한 줄 수에서 잘라 보여줍니다. (예: 묘소 설명 미리보기) */
+.clamp-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp-lines, 10);
+  line-clamp: var(--clamp-lines, 10);
+  overflow: hidden;
+}
+
+/* ---- 모달 ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 11, 0.72);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 560px;
+  max-height: min(72vh, 640px);
+  display: flex;
+  flex-direction: column;
+  background: var(--stone);
+  border: 1px solid var(--hair-blood);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-blood);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hair);
+  flex-shrink: 0;
+}
+
+.modal-head h3 {
+  margin: 0;
+}
+
+.modal-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ash);
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease;
+}
+
+.modal-close:hover {
+  border-color: var(--hair-blood);
+  color: var(--bone);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  color: var(--ash);
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
 
 /* ======================= 10) 화면별 스타일 ======================= */
 
