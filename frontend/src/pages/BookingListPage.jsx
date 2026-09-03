@@ -10,9 +10,9 @@ import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '..
 
 const TABS = [
   { key: '', label: '전체' },
-  { key: 'CONFIRMED', label: '봉인 완료' },
-  { key: 'COMPLETED', label: '하산 완료' },
-  { key: 'CANCELLED', label: '파기됨' },
+  { key: 'CONFIRMED', label: '방문 예정' },
+  { key: 'COMPLETED', label: '퇴실 완료' },
+  { key: 'CANCELLED', label: '취소됨' },
 ];
 
 export default function BookingListPage() {
@@ -37,7 +37,7 @@ export default function BookingListPage() {
 
   return (
     <div className="container page">
-      <p className="eyebrow">Entry Log</p>
+      <p className="eyebrow">Reservation</p>
       <h1>예약 내역</h1>
       <div className="rule mb-24" />
 
@@ -68,7 +68,7 @@ export default function BookingListPage() {
           description="다른 상태를 골라보거나 새로 예약해 보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              산장 둘러보기
+              SEARCH
             </Link>
           }
         />

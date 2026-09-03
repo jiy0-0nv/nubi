@@ -15,15 +15,15 @@ export default function ForbiddenPage() {
           ⛔
         </div>
         <p className="eyebrow">Access Denied · 403</p>
-        <h1>여기는 산장지기의 구역입니다</h1>
+        <h1>여기는 호스트의 구역입니다</h1>
         <p className="muted mt-16" style={{ maxWidth: 460, margin: '16px auto 0' }}>
           {isAuthenticated
             ? `${profile?.name || '당신'}의 권한으로는 이 문을 열 수 없습니다. 관리자(ADMIN) 계정으로만 들어갈 수 있습니다.`
-            : '먼저 입산 기록을 남기십시오.'}
+            : '먼저 입주 기록을 남기십시오.'}
         </p>
         <div className="row gap-8 mt-24" style={{ justifyContent: 'center' }}>
           <Link to="/" className="btn btn-primary">
-            산 아래로 내려가기
+            묘소 밖으로 나가기
           </Link>
           {isAuthenticated ? (
             <Link to="/whoami" className="btn btn-outline">
@@ -31,7 +31,7 @@ export default function ForbiddenPage() {
             </Link>
           ) : (
             <Link to="/login" className="btn btn-outline">
-              입산 기록
+              입주 기록
             </Link>
           )}
         </div>

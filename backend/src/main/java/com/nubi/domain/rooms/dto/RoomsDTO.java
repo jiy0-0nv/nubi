@@ -24,6 +24,7 @@ public class RoomsDTO {
         private double ratingAverage;
         private String thumbnailUrl;
         private String checkinTime;
+        private int maxGuests;
         private String status;
 
         public static ListResponse from(RoomsEntity room, String thumbnailUrl){
@@ -37,6 +38,7 @@ public class RoomsDTO {
                 .ratingAverage(room.getRatingAverage())
                 .thumbnailUrl(thumbnailUrl)
                 .checkinTime(room.getCheckinTime().toString())
+                .maxGuests(room.getMaxGuests())
                 .status(room.getStatus().name())
                 .build();
         }

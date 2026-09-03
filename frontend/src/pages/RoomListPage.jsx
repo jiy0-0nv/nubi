@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getRooms } from '../api/rooms';
 import RoomCard from '../components/RoomCard';
@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import EmptyState from '../components/EmptyState';
 import Pagination from '../components/Pagination';
+import GuestStepper from '../components/GuestStepper';
 import { addDays, toDateInputValue } from '../utils/format';
 
 const PAGE_SIZE = 12;
@@ -47,22 +48,7 @@ export default function RoomListPage() {
     };
   }, [keyword, checkin, checkout, guests, page]);
 
-  /**
-   * 서버 RoomsService가 아직 keyword/guests 필터를 실제로 적용하지 않기 때문에
-   * (파라미터를 받기만 함) 사용자 체감이 이상하지 않도록 화면에서 한 번 더 걸러줍니다.
-   * 서버에 필터가 붙으면 이 블록은 그대로 두어도 결과가 같습니다.
-   */
-  const rooms = useMemo(() => {
-    const list = data?.content || [];
-    const q = keyword.trim().toLowerCase();
-    return list.filter((room) => {
-      if (guests && Number(room.maxGuests) < guests) return false;
-      if (!q) return true;
-      return [room.name, room.city, room.country, room.street]
-        .filter(Boolean)
-        .some((field) => String(field).toLowerCase().includes(q));
-    });
-  }, [data, keyword, guests]);
+  const rooms = data?.content || [];
 
   const submit = (e) => {
     e.preventDefault();
@@ -86,22 +72,22 @@ export default function RoomListPage() {
 
   return (
     <div className="container page">
-      <p className="eyebrow">Ridge Directory</p>
-      <h1>능선 위의 산장들</h1>
+      <p className="eyebrow">Grave Directory</p>
+      <h1>세계의 묘소들</h1>
       <div className="rule" />
 
       <form className="search-bar mb-24" style={{ marginTop: 32 }} onSubmit={submit}>
         <div className="field">
-          <label>지역 · 산장명</label>
+          <label>지역 · 묘소 이름</label>
           <input
             type="text"
-            placeholder="어느 능선으로 갑니까"
+            placeholder="어디로든"
             value={form.keyword}
             onChange={(e) => setForm((f) => ({ ...f, keyword: e.target.value }))}
           />
         </div>
         <div className="field">
-          <label>입산일</label>
+          <label>입실일</label>
           <input
             type="date"
             min={today}
@@ -113,7 +99,7 @@ export default function RoomListPage() {
           />
         </div>
         <div className="field">
-          <label>하산일</label>
+          <label>퇴실일</label>
           <input
             type="date"
             min={form.checkin ? addDays(form.checkin, 1) : today}
@@ -123,13 +109,7 @@ export default function RoomListPage() {
         </div>
         <div className="field">
           <label>인원</label>
-          <select value={form.guests} onChange={(e) => setForm((f) => ({ ...f, guests: Number(e.target.value) }))}>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-              <option key={n} value={n}>
-                {n}명
-              </option>
-            ))}
-          </select>
+          <GuestStepper value={form.guests} onChange={(v) => setForm((f) => ({ ...f, guests: v }))} min={1} max={8} />
         </div>
         <button type="submit" className="btn btn-primary" style={{ height: 44 }}>
           찾기
@@ -139,16 +119,16 @@ export default function RoomListPage() {
       <Alert>{error}</Alert>
 
       {loading ? (
-        <Spinner label="산을 오르는 중" />
+        <Spinner label="묘소를 여는 중" />
       ) : rooms.length === 0 ? (
         <EmptyState
           mark="†"
-          title="조건에 맞는 산장이 없습니다"
+          title="조건에 맞는 묘소가 없습니다"
           description="날짜나 인원을 바꾸어 다시 찾아보십시오."
         />
       ) : (
         <>
-          <p className="tiny dim mb-16">{rooms.length}채의 산장이 문을 열고 있습니다.</p>
+          <p className="tiny dim mb-16">{rooms.length}개의 검색 결과가 존재합니다.</p>
           <div className="grid-4">
             {rooms.map((room) => (
               <RoomCard key={room.id} room={room} />

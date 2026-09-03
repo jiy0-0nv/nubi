@@ -48,7 +48,7 @@ export default function AdminRoomDetailPage() {
   if (!room) {
     return (
       <>
-        <Alert>{error || '산장을 찾을 수 없습니다.'}</Alert>
+        <Alert>{error || '묘소를 찾을 수 없습니다.'}</Alert>
         <Link to="/admin/rooms" className="btn btn-ghost">
           ← 목록으로
         </Link>
@@ -141,7 +141,7 @@ export default function AdminRoomDetailPage() {
       <div className="section-head">
         <div>
           <p className="eyebrow eyebrow-ash">Bookings</p>
-          <h2>이 산장의 예약 {bookings.length}건</h2>
+          <h2>이 묘소의 예약 {bookings.length}건</h2>
         </div>
         <Link to={`/admin/bookings?room_id=${roomId}`} className="link tiny">
           예약 관리로 →
@@ -186,9 +186,9 @@ export default function AdminRoomDetailPage() {
 
       <div className="panel mt-40" style={{ borderColor: 'var(--hair-blood)' }}>
         <p className="eyebrow">위험 구역</p>
-        <p className="tiny muted mb-16">허물면 이 산장과 등록된 사진이 모두 사라집니다.</p>
+        <p className="tiny muted mb-16">허물면 이 묘소과 등록된 사진이 모두 사라집니다.</p>
         <button type="button" className="btn btn-danger" onClick={remove}>
-          이 산장 허물기
+          이 묘소 허물기
         </button>
       </div>
     </>

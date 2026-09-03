@@ -39,7 +39,7 @@ export default function BookingDetailPage() {
     setBusy(true);
     try {
       await cancelBooking(bookingId, reason);
-      setNotice('예약을 파기했습니다. 기록은 남습니다.');
+      setNotice('예약을 취소했습니다. 기록은 남습니다.');
       setCancelOpen(false);
       setReason('');
       load();
@@ -54,13 +54,13 @@ export default function BookingDetailPage() {
     e.preventDefault();
     setError('');
     if (!content.trim()) {
-      setError('증언 내용을 적어주십시오.');
+      setError('리뷰 내용을 적어주십시오.');
       return;
     }
     setBusy(true);
     try {
       await createReview(bookingId, { rating, content: content.trim() });
-      setNotice('증언을 남겼습니다.');
+      setNotice('리뷰을 남겼습니다.');
       setContent('');
       load();
     } catch (err) {
@@ -103,11 +103,11 @@ export default function BookingDetailPage() {
 
       <div className="panel mb-24">
         <div className="price-line">
-          <span>입산</span>
+          <span>입실</span>
           <span>{formatDateTime(booking.checkInDate)}</span>
         </div>
         <div className="price-line">
-          <span>하산</span>
+          <span>퇴실</span>
           <span>{formatDateTime(booking.checkOutDate)}</span>
         </div>
         <div className="price-line">
@@ -129,22 +129,22 @@ export default function BookingDetailPage() {
       {/* ---------- 취소 ---------- */}
       {canCancel && (
         <div className="panel mb-24" style={{ borderColor: 'var(--hair-blood)' }}>
-          <p className="eyebrow">예약 파기</p>
+          <p className="eyebrow">예약 취소</p>
           {cancelOpen ? (
             <>
               <div className="field mt-16">
-                <label htmlFor="reason">파기 사유 (선택)</label>
+                <label htmlFor="reason">취소 사유 (선택)</label>
                 <textarea
                   id="reason"
                   rows={3}
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  placeholder="왜 오르지 못하게 되었습니까"
+                  placeholder="왜 입주하지 못하게 되었습니까"
                 />
               </div>
               <div className="row gap-8">
                 <button type="button" className="btn btn-danger" onClick={handleCancel} disabled={busy}>
-                  {busy ? '파기하는 중…' : '정말 파기합니다'}
+                  {busy ? '취소하는 중…' : '정말 취소합니다'}
                 </button>
                 <button type="button" className="btn btn-ghost" onClick={() => setCancelOpen(false)}>
                   그만두기
@@ -153,9 +153,9 @@ export default function BookingDetailPage() {
             </>
           ) : (
             <>
-              <p className="tiny muted mb-16">파기해도 예약 기록 자체는 산장에 남습니다.</p>
+              <p className="tiny muted mb-16">취소해도 예약 기록 자체는 묘소에 남습니다.</p>
               <button type="button" className="btn btn-danger" onClick={() => setCancelOpen(true)}>
-                예약 파기하기
+                예약 취소하기
               </button>
             </>
           )}
@@ -165,7 +165,7 @@ export default function BookingDetailPage() {
       {/* ---------- 후기 ---------- */}
       {canReview && (
         <div className="panel">
-          <p className="eyebrow">증언 남기기</p>
+          <p className="eyebrow">리뷰 남기기</p>
           <p className="tiny muted mb-16">무사히 내려오셨습니까. 그곳에서 본 것을 적어주십시오.</p>
           <form onSubmit={handleReview}>
             <div className="field">
@@ -173,7 +173,7 @@ export default function BookingDetailPage() {
               <StarRating value={rating} onChange={setRating} readOnly={false} />
             </div>
             <div className="field">
-              <label htmlFor="rc">증언</label>
+              <label htmlFor="rc">리뷰</label>
               <textarea
                 id="rc"
                 rows={5}
@@ -183,7 +183,7 @@ export default function BookingDetailPage() {
               />
             </div>
             <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
-              {busy ? '남기는 중…' : '증언 남기기'}
+              {busy ? '남기는 중…' : '리뷰 남기기'}
             </button>
           </form>
         </div>

@@ -19,7 +19,7 @@ export default function ReservationResultPage() {
       <p className="muted mt-16">
         {room?.name || booking.roomName}에 당신의 이름이 새겨졌습니다.
         <br />
-        정해진 날, 정해진 시각에 오르십시오.
+        정해진 날, 정해진 시각에 드십시오.
       </p>
 
       <div className="panel mt-40 text-left">
@@ -28,15 +28,15 @@ export default function ReservationResultPage() {
           <span className="mono">#{String(booking.id).padStart(6, '0')}</span>
         </div>
         <div className="price-line">
-          <span>산장</span>
+          <span>묘소</span>
           <span>{room?.name || booking.roomName || '-'}</span>
         </div>
         <div className="price-line">
-          <span>입산</span>
+          <span>입실</span>
           <span>{formatDateTime(booking.checkInDate)}</span>
         </div>
         <div className="price-line">
-          <span>하산</span>
+          <span>퇴실</span>
           <span>{formatDateTime(booking.checkOutDate)}</span>
         </div>
         <div className="price-line">
@@ -54,7 +54,7 @@ export default function ReservationResultPage() {
           예약 상세 보기
         </Link>
         <Link to="/rooms" className="btn btn-outline">
-          다른 산장 보기
+          다른 묘소 보기
         </Link>
       </div>
     </div>

@@ -36,9 +36,14 @@ public class AdminRoomsController {
     private final HttpServletRequest request;
 
     @GetMapping
-    public Page<AdminRoomResponseDTO> getRooms(@PageableDefault(size = 20) Pageable pageable) {
+    public Page<AdminRoomResponseDTO> getRooms(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String checkin,
+            @RequestParam(required = false) String checkout,
+            @RequestParam(required = false) Integer guests,
+            @PageableDefault(size = 20) Pageable pageable) {
         Long ownerId = requireUserId();
-        return adminRoomsService.getRooms(ownerId, pageable);
+        return adminRoomsService.getRooms(ownerId, keyword, checkin, checkout, guests, pageable);
     }
 
     @PostMapping

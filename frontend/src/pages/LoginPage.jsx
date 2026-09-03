@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROLE, useAuth } from '../context/AuthContext';
 import Alert from '../components/Alert';
+import AuthBrandPanel from '../components/AuthBrandPanel';
 
 /* ------------------------------------------------------------------
  * 로그인 화면.
@@ -13,7 +14,7 @@ import Alert from '../components/Alert';
  *
  * 로그인 전에 보호된 페이지로 접근했다면 location.state.from 에 그 주소가
  * 담겨 오는데, 관리자는 그 주소가 사용자 화면일 수 있으므로 무시하고
- * 항상 관리자 구역으로 보냅니다.
+ * 항상 호스트 화면으로 보냅니다.
  * ------------------------------------------------------------------ */
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -56,62 +59,88 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-wrap">
-      <div className="auth-card">
-        <div className="auth-head">
-          <p className="eyebrow">Entry Record</p>
-          <h1>입산 기록</h1>
-          <p>이름을 남긴 자만이 산을 오를 수 있습니다.</p>
-        </div>
+    <div className="auth-split">
+      {/* ---------- 좌측 브랜드 패널 ---------- */}
+      <AuthBrandPanel />
 
-        <Alert>{error}</Alert>
-        {warning && (
-          <Alert tone="info">
-            {warning}{' '}
-            <Link to="/whoami" className="link">
-              권한 진단 열기
+      {/* ---------- 우측 폼 패널 ---------- */}
+      <div className="auth-split-form">
+        <div className="auth-split-form-inner">
+          <div className="auth-tabs">
+            <span className="auth-tab active">로그인</span>
+            <Link to="/signup" className="auth-tab">
+              회원가입
             </Link>
-          </Alert>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label htmlFor="email">이메일</label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="username"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-            />
           </div>
-          <div className="field">
-            <label htmlFor="password">비밀번호</label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
-            {submitting ? '확인하는 중…' : '입산하기'}
-          </button>
-        </form>
 
-        <div className="auth-foot">
-          <Link to="/signup" className="link">
-            입산 신청
-          </Link>
-          <span className="dim">·</span>
-          <Link to="/find-account" className="link">
-            기록을 잃어버렸습니다
-          </Link>
+          <Alert>{error}</Alert>
+          {warning && (
+            <Alert tone="info">
+              {warning}{' '}
+              <Link to="/whoami" className="link">
+                권한 진단 열기
+              </Link>
+            </Alert>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="email" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              이메일
+            </label>
+            <div className="input-box">
+              <input
+                id="email"
+                type="email"
+                autoComplete="username"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <label htmlFor="password" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              비밀번호
+            </label>
+            <div className="input-box">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="input-box-toggle"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+              >
+                {showPassword ? '숨김' : '표시'}
+              </button>
+            </div>
+
+            <div className="row-between" style={{ marginBottom: 28 }}>
+              <label className="auth-check">
+                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+                <span>로그인 상태 유지</span>
+              </label>
+              <Link to="/find-account" className="link tiny">
+                비밀번호 찾기
+              </Link>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
+              {submitting ? '확인하는 중…' : '로그인하기'}
+            </button>
+          </form>
+
+          <p className="tiny dim" style={{ lineHeight: 1.7, marginTop: 26 }}>
+            계속하면 이용약관과 개인정보 처리방침에 동의하게 됩니다. 만 19세 이상만 가입할 수
+            있습니다.
+          </p>
         </div>
       </div>
     </div>

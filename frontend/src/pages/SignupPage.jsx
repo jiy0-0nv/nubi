@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
 import Alert from '../components/Alert';
+import AuthBrandPanel from '../components/AuthBrandPanel';
 
 export default function SignupPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const [form, setForm] = useState({ email: '', password: '', passwordConfirm: '', name: '', phone: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -46,77 +49,112 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="auth-wrap">
-      <div className="auth-card">
-        <div className="auth-head">
-          <p className="eyebrow">Application</p>
-          <h1>입산 신청</h1>
-          <p>이 아래에 남긴 이름은 지워지지 않습니다.</p>
-        </div>
+    <div className="auth-split">
+      {/* ---------- 좌측 브랜드 패널 ---------- */}
+      <AuthBrandPanel />
 
-        <Alert>{error}</Alert>
+      {/* ---------- 우측 폼 패널 ---------- */}
+      <div className="auth-split-form">
+        <div className="auth-split-form-inner">
+          <div className="auth-tabs">
+            <Link to="/login" className="auth-tab">
+              로그인
+            </Link>
+            <span className="auth-tab active">회원가입</span>
+          </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label htmlFor="name">이름</label>
-            <input id="name" type="text" required value={form.name} onChange={update('name')} placeholder="홍길동" />
-          </div>
-          <div className="field">
-            <label htmlFor="email">이메일</label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="username"
-              required
-              value={form.email}
-              onChange={update('email')}
-              placeholder="you@example.com"
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="phone">연락처</label>
-            <input
-              id="phone"
-              type="tel"
-              required
-              value={form.phone}
-              onChange={update('phone')}
-              placeholder="010-0000-0000"
-            />
-            <span className="field-hint">기록 분실 시 본인 확인에 사용됩니다.</span>
-          </div>
-          <div className="field">
-            <label htmlFor="pw">비밀번호</label>
-            <input
-              id="pw"
-              type="password"
-              autoComplete="new-password"
-              required
-              value={form.password}
-              onChange={update('password')}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="pw2">비밀번호 확인</label>
-            <input
-              id="pw2"
-              type="password"
-              autoComplete="new-password"
-              required
-              value={form.passwordConfirm}
-              onChange={update('passwordConfirm')}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
-            {submitting ? '기록하는 중…' : '이름 남기기'}
-          </button>
-        </form>
+          <Alert>{error}</Alert>
 
-        <div className="auth-foot">
-          <span className="dim">이미 기록이 있습니까?</span>
-          <Link to="/login" className="link">
-            입산 기록으로
-          </Link>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="name" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              이름
+            </label>
+            <div className="input-box">
+              <input id="name" type="text" required value={form.name} onChange={update('name')} placeholder="홍길동" />
+            </div>
+
+            <label htmlFor="email" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              이메일
+            </label>
+            <div className="input-box">
+              <input
+                id="email"
+                type="email"
+                autoComplete="username"
+                required
+                value={form.email}
+                onChange={update('email')}
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <label htmlFor="phone" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              연락처
+            </label>
+            <div className="input-box" style={{ marginBottom: 8 }}>
+              <input
+                id="phone"
+                type="tel"
+                required
+                value={form.phone}
+                onChange={update('phone')}
+                placeholder="010-0000-0000"
+              />
+            </div>
+
+            <label htmlFor="pw" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              비밀번호
+            </label>
+            <div className="input-box">
+              <input
+                id="pw"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="new-password"
+                required
+                value={form.password}
+                onChange={update('password')}
+              />
+              <button
+                type="button"
+                className="input-box-toggle"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+              >
+                {showPassword ? '숨김' : '표시'}
+              </button>
+            </div>
+
+            <label htmlFor="pw2" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              비밀번호 확인
+            </label>
+            <div className="input-box">
+              <input
+                id="pw2"
+                type={showPasswordConfirm ? 'text' : 'password'}
+                autoComplete="new-password"
+                required
+                value={form.passwordConfirm}
+                onChange={update('passwordConfirm')}
+              />
+              <button
+                type="button"
+                className="input-box-toggle"
+                onClick={() => setShowPasswordConfirm((v) => !v)}
+                aria-label={showPasswordConfirm ? '비밀번호 숨기기' : '비밀번호 표시'}
+              >
+                {showPasswordConfirm ? '숨김' : '표시'}
+              </button>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block btn-lg" style={{ marginTop: 8 }} disabled={submitting}>
+              {submitting ? '기록하는 중…' : '회원가입'}
+            </button>
+          </form>
+
+          <p className="tiny dim" style={{ lineHeight: 1.7, marginTop: 26 }}>
+            계속하면 이용약관과 개인정보 처리방침에 동의하게 됩니다. 만 19세 이상만 가입할 수
+            있습니다.
+          </p>
         </div>
       </div>
     </div>

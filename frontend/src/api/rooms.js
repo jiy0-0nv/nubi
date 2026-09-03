@@ -7,10 +7,9 @@ import { http, toQuery } from './client';
  *                 maxGuests, status, thumbnailUrl, ratingAverage, reviewCount }],
  *     totalPages, totalElements, number, size }
  *
- * NOTE. 현재 백엔드 RoomsService는 keyword/checkin/checkout/guests 를 받기만 하고
- *       실제 필터링은 아직 안 합니다(페이지네이션만 동작). 서버에 필터가 붙으면
- *       바로 동작하도록 파라미터는 그대로 전달하고, 화면에서도 클라이언트측
- *       보조 필터를 함께 적용합니다.
+ * keyword(이름/도시/국가 부분일치), guests(정원 이상), checkin+checkout(그 기간에
+ * 겹치는 확정 예약이 없는 방만) 전부 서버에서 실제로 필터링합니다. checkin/checkout은
+ * 둘 다 있어야 적용되고, 형식이 yyyy-MM-dd가 아니거나 checkout <= checkin이면 400.
  */
 export function getRooms({ keyword, checkin, checkout, guests, page = 0, size = 12 } = {}) {
   return http.get(`/api/rooms${toQuery({ keyword, checkin, checkout, guests, page, size })}`, { auth: false });
