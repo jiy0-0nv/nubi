@@ -213,8 +213,13 @@ export default function RoomDetailPage() {
               <p className="spec-value">{room.maxGuests}명</p>
             </div>
             <div className="spec">
-              <p className="spec-label">주말 요금</p>
-              <p className="spec-value">{formatCurrency(room.weekendPrice)}</p>
+              <p className="spec-label">1박 요금</p>
+              <p className="spec-value">
+                {formatCurrency(room.weekdayPrice)} <span className="tiny dim">평일</span>
+              </p>
+              <p className="tiny dim mt-8">
+                {formatCurrency(room.weekendPrice)} <span className="dim">금·토</span>
+              </p>
             </div>
           </div>
 
@@ -228,12 +233,7 @@ export default function RoomDetailPage() {
             {room.description || '기록이 남아 있지 않습니다.'}
           </p>
           {descriptionOverflows && (
-            <button
-              type="button"
-              className="link blood-text tiny mt-8"
-              style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
-              onClick={() => setShowFullDescription(true)}
-            >
+            <button type="button" className="btn btn-outline btn-sm mt-8" onClick={() => setShowFullDescription(true)}>
               더보기
             </button>
           )}
