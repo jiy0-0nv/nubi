@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import CursorThief from './CursorThief.jsx';
+import ScrollToTopButton from './ScrollToTopButton';
 
 /** 사용자 영역 공통 셸 (헤더 + 본문 + 푸터) */
 export default function UserLayout() {
@@ -31,6 +32,7 @@ export default function UserLayout() {
         커서가 사라지면 곤란하니까요. 전역으로 쓰고 싶으면 App.jsx로 옮기면 됩니다.
       */}
       <CursorThief idleDelay={10000} />
+      <ScrollToTopButton />
     </>
   );
 }
