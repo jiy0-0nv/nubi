@@ -215,8 +215,9 @@ export default function RoomDetailPage() {
             </div>
             <div className="spec">
               <p className="spec-label">1박 요금</p>
-              <p className="spec-value">{formatCurrency(room.weekdayPrice)}</p>
-              <p className="tiny dim mt-8">~ {formatCurrency(room.weekendPrice)}</p>
+              <p className="spec-value">
+                {formatCurrency(room.weekdayPrice)} <span className="tiny dim">~ {formatCurrency(room.weekendPrice)}</span>
+              </p>
             </div>
           </div>
 
