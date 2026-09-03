@@ -276,7 +276,7 @@ export default function RoomDetailPage() {
 
           <Alert>{formError}</Alert>
 
-          {!active && <Alert tone="info">지금은 이 묘소에 들어갈 수 없습니다.</Alert>}
+          {!active && <Alert tone="info">예약할 수 없는 날짜입니다.</Alert>}
           {isAdmin && <Alert tone="info">관리자 계정으로는 예약할 수 없습니다.</Alert>}
 
           <button
