@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import EmptyState from '../components/EmptyState';
 import Pagination from '../components/Pagination';
+import GuestStepper from '../components/GuestStepper';
 import { addDays, toDateInputValue } from '../utils/format';
 
 const PAGE_SIZE = 12;
@@ -80,7 +81,7 @@ export default function RoomListPage() {
           <label>지역 · 무덤 이름</label>
           <input
             type="text"
-            placeholder="어느 묘역을 찾으십니까"
+            placeholder="어디로든"
             value={form.keyword}
             onChange={(e) => setForm((f) => ({ ...f, keyword: e.target.value }))}
           />
@@ -108,13 +109,7 @@ export default function RoomListPage() {
         </div>
         <div className="field">
           <label>인원</label>
-          <select value={form.guests} onChange={(e) => setForm((f) => ({ ...f, guests: Number(e.target.value) }))}>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-              <option key={n} value={n}>
-                {n}명
-              </option>
-            ))}
-          </select>
+          <GuestStepper value={form.guests} onChange={(v) => setForm((f) => ({ ...f, guests: v }))} min={1} max={8} />
         </div>
         <button type="submit" className="btn btn-primary" style={{ height: 44 }}>
           찾기

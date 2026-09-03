@@ -13,9 +13,12 @@ import { http, toQuery } from './client';
 
 /* ---------------- 숙소 ---------------- */
 
-/** GET /api/admin/rooms - 내가 소유한 숙소 목록 (Page<AdminRoomResponseDTO>) */
-export function getAdminRooms({ page = 0, size = 20 } = {}) {
-  return http.get(`/api/admin/rooms${toQuery({ page, size })}`);
+/**
+ * GET /api/admin/rooms - 내가 소유한 숙소 목록 (Page<AdminRoomResponseDTO>)
+ * 필터: keyword(이름·도시·국가), checkin/checkout(yyyy-MM-dd, 둘 다 있어야 적용), guests(최대 인원 이상)
+ */
+export function getAdminRooms({ keyword, checkin, checkout, guests, page = 0, size = 20 } = {}) {
+  return http.get(`/api/admin/rooms${toQuery({ keyword, checkin, checkout, guests, page, size })}`);
 }
 
 /** GET /api/admin/rooms/{roomId} */

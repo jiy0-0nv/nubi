@@ -15,7 +15,7 @@ export default function ForbiddenPage() {
           ⛔
         </div>
         <p className="eyebrow">Access Denied · 403</p>
-        <h1>여기는 묘지기의 구역입니다</h1>
+        <h1>여기는 호스트의 구역입니다</h1>
         <p className="muted mt-16" style={{ maxWidth: 460, margin: '16px auto 0' }}>
           {isAuthenticated
             ? `${profile?.name || '당신'}의 권한으로는 이 문을 열 수 없습니다. 관리자(ADMIN) 계정으로만 들어갈 수 있습니다.`

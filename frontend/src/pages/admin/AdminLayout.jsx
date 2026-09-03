@@ -51,7 +51,7 @@ export default function AdminLayout() {
 
         <div className="admin-side-foot">
           <p className="tiny" style={{ color: 'var(--bone)' }}>
-            {profile?.name || '묘지기'}
+            {profile?.name || '호스트'}
           </p>
           <p className="tiny dim mono" style={{ marginBottom: 12 }}>
             {profile?.email}

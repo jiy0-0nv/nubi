@@ -38,8 +38,8 @@ export default function AdminDashboardPage() {
       <div className="admin-topbar">
         <div>
           <p className="eyebrow">Keeper's Ledger</p>
-          <h1>묘지기 장부</h1>
-          <p className="tiny dim mt-8">{profile?.name || '묘지기'}님이 관리하는 무덤만 표시됩니다.</p>
+          <h1>호스트 장부</h1>
+          <p className="tiny dim mt-8">{profile?.name || '호스트'}님이 관리하는 무덤만 표시됩니다.</p>
         </div>
         <Link to="/admin/rooms/new" className="btn btn-primary">
           + 새 무덤 세우기

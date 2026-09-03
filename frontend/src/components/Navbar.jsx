@@ -47,9 +47,9 @@ export default function Navbar() {
               내 묘소 호스팅하기
             </Link>
           )}
-          <span className="mono dim" style={{ fontSize: 12 }}>
-            KR / KRW
-          </span>
+          {/* <span className="mono dim" style={{ fontSize: 12 }}>
+            TODO: 다크모드 전환 버튼
+          </span> */}
 
           {isAuthenticated ? (
             <div className="login-pill">

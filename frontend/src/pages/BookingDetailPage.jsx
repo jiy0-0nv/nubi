@@ -54,13 +54,13 @@ export default function BookingDetailPage() {
     e.preventDefault();
     setError('');
     if (!content.trim()) {
-      setError('증언 내용을 적어주십시오.');
+      setError('리뷰 내용을 적어주십시오.');
       return;
     }
     setBusy(true);
     try {
       await createReview(bookingId, { rating, content: content.trim() });
-      setNotice('증언을 남겼습니다.');
+      setNotice('리뷰을 남겼습니다.');
       setContent('');
       load();
     } catch (err) {
@@ -165,7 +165,7 @@ export default function BookingDetailPage() {
       {/* ---------- 후기 ---------- */}
       {canReview && (
         <div className="panel">
-          <p className="eyebrow">증언 남기기</p>
+          <p className="eyebrow">리뷰 남기기</p>
           <p className="tiny muted mb-16">무사히 내려오셨습니까. 그곳에서 본 것을 적어주십시오.</p>
           <form onSubmit={handleReview}>
             <div className="field">
@@ -173,7 +173,7 @@ export default function BookingDetailPage() {
               <StarRating value={rating} onChange={setRating} readOnly={false} />
             </div>
             <div className="field">
-              <label htmlFor="rc">증언</label>
+              <label htmlFor="rc">리뷰</label>
               <textarea
                 id="rc"
                 rows={5}
@@ -183,7 +183,7 @@ export default function BookingDetailPage() {
               />
             </div>
             <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
-              {busy ? '남기는 중…' : '증언 남기기'}
+              {busy ? '남기는 중…' : '리뷰 남기기'}
             </button>
           </form>
         </div>

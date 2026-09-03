@@ -33,7 +33,7 @@ export function formatDateTime(dateLike) {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  });
+  })
 }
 
 /** LocalTime("15:00:00" 또는 "15:00")을 "15:00"으로 */

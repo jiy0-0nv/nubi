@@ -7,6 +7,7 @@ import { useBookmarks } from '../context/BookmarksContext';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import StarRating from '../components/StarRating';
+import GuestStepper from '../components/GuestStepper';
 import {
   addDays,
   calculateEstimatedTotal,
@@ -166,7 +167,7 @@ export default function RoomDetailPage() {
         <div className="row gap-8">
           <StarRating value={rating} size={16} />
           <span className="tiny dim">
-            {rating > 0 ? `${rating.toFixed(1)} · 증언 ${reviews.length}건` : '아직 증언이 없습니다'}
+            {rating > 0 ? `${rating.toFixed(1)} · 리뷰 ${reviews.length}건` : '아직 리뷰이 없습니다'}
           </span>
           {!active && <span className="badge badge-cancelled">폐쇄됨</span>}
         </div>
@@ -182,7 +183,7 @@ export default function RoomDetailPage() {
         <div>
           <div className="spec-list mb-24">
             <div className="spec">
-              <p className="spec-label">묘지기</p>
+              <p className="spec-label">호스트</p>
               <p className="spec-value">{room.ownerName || '알 수 없음'}</p>
             </div>
             <div className="spec">
@@ -215,7 +216,7 @@ export default function RoomDetailPage() {
 
           <div className="divider" />
 
-          <h2 className="serif">다녀간 이들의 증언</h2>
+          <h2 className="serif">다녀간 이들의 리뷰</h2>
           <div className="rule mb-16" />
           {reviews.length === 0 ? (
             <p className="tiny dim">아직 아무도 입을 열지 않았습니다.</p>
@@ -270,13 +271,7 @@ export default function RoomDetailPage() {
 
           <div className="field">
             <label>인원</label>
-            <select value={guests} onChange={(e) => setGuests(Number(e.target.value))}>
-              {Array.from({ length: Math.max(1, Number(room.maxGuests) || 1) }, (_, i) => i + 1).map((n) => (
-                <option key={n} value={n}>
-                  {n}명
-                </option>
-              ))}
-            </select>
+            <GuestStepper value={guests} onChange={setGuests} min={1} max={Math.max(1, Number(room.maxGuests) || 1)} />
           </div>
 
           <Alert>{formError}</Alert>

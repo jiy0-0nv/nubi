@@ -5,6 +5,7 @@ import RoomCard from '../components/RoomCard';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import EmptyState from '../components/EmptyState';
+import GuestStepper from '../components/GuestStepper';
 import { toDateInputValue, addDays } from '../utils/format';
 
 const CATEGORIES = [
@@ -40,7 +41,7 @@ const PROMOS = [
 
 const RULES = [
   ['첫째', '해가 진 뒤에는 무덤 밖으로 나오지 마십시오.', '체크인은 15시, 체크아웃은 11시입니다.'],
-  ['둘째', '방 안에서 들리는 소리에 대답하지 마십시오.', '문의는 묘지기(관리자)에게만 남겨주십시오.'],
+  ['둘째', '방 안에서 들리는 소리에 대답하지 마십시오.', '문의는 호스트(관리자)에게만 남겨주십시오.'],
   ['셋째', '예약은 취소할 수 있습니다. 기록은 남습니다.', '취소된 예약도 내역에서 계속 확인됩니다.'],
 ];
 
@@ -175,10 +176,10 @@ export default function HomePage() {
         </div>
         <div className="container">
           <div className="landing-hero-inner">
-            <div className="landing-kicker">
+            {/* <div className="landing-kicker">
               <span className="landing-kicker-dot" />
               <span>등록 묘 1,204기 · 최고 연식 6,600만 년</span>
-            </div>
+            </div> */}
             <h1 className="landing-title">
               오늘 밤은 <span className="accent">4,600년</span>짜리
               <br />
@@ -193,14 +194,14 @@ export default function HomePage() {
                 <span>어디로</span>
                 <input
                   type="text"
-                  placeholder="어느 묘역을 찾으십니까"
+                  placeholder="어디로든"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                 />
               </div>
               <div className="search-pill-divider" />
               <div className="search-pill-field">
-                <span>입실 · 퇴실</span>
+                <span>입실일</span>
                 <input
                   type="date"
                   value={checkin}
@@ -213,25 +214,29 @@ export default function HomePage() {
               </div>
               <div className="search-pill-divider" />
               <div className="search-pill-field">
+                <span>퇴실일</span>
+                <input
+                  type="date"
+                  value={checkout}
+                  min={addDays(checkin, 1)}
+                  onChange={(e) => setCheckout(e.target.value)}
+                />
+              </div>
+              <div className="search-pill-divider" />
+              <div className="search-pill-field" style={{ flex: '0.85 1 0' }}>
                 <span>인원</span>
-                <select value={guests} onChange={(e) => setGuests(Number(e.target.value))}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                    <option key={n} value={n}>
-                      성인 {n}
-                    </option>
-                  ))}
-                </select>
+                <GuestStepper value={guests} onChange={setGuests} min={1} max={8} />
               </div>
               <button type="submit" className="search-pill-btn">
                 검색
               </button>
             </form>
 
-            <div className="landing-tags">
+            {/* <div className="landing-tags">
               <span className="landing-tag">석실 난방 있음</span>
               <span className="landing-tag">세계문화유산</span>
               <span className="landing-tag">발굴 진행 중</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -252,7 +257,6 @@ export default function HomePage() {
       <div className="container page">
         <div className="section-head">
           <div>
-            <p className="eyebrow">아직 비어 있는 방</p>
             <h2>평이 좋은 묘소</h2>
           </div>
           <Link to="/rooms" className="link tiny">
