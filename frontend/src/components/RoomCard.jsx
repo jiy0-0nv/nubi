@@ -81,9 +81,9 @@ export default function RoomCard({ room }) {
         </p>
         <p className="price" style={{ marginTop: 2 }}>
           {formatCurrency(room.weekdayPrice)}
-          <small>/ 1박</small>
+          <small>~ {formatCurrency(room.weekendPrice)} / 1박</small>
         </p>
-        <p className="tiny dim">~ {formatCurrency(room.weekendPrice)}</p>
+        <p className="tiny dim"></p>
       </div>
     </Link>
   );

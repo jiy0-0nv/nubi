@@ -4,6 +4,7 @@ import com.nubi.domain.rooms.dto.RoomsDTO;
 import com.nubi.domain.rooms.repository.ReviewRepository;
 import com.nubi.domain.rooms.repository.RoomImagesRepository;
 import com.nubi.domain.rooms.repository.RoomsRepository;
+import com.nubi.domain.rooms.repository.RoomsSpecifications;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.ReviewEntity;
 import com.nubi.entity.RoomImagesEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,12 +36,13 @@ public class RoomsService {
     // 1. GET /rooms
     public Page<RoomsDTO.ListResponse> getRooms(String keyword, String checkin, String checkout,
                                                  Integer guests, Pageable pageable){
-        String normalizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
+        List<String> keywords = parseKeywords(keyword);
         LocalDate[] checkInOut = parseAvailabilityRange(checkin, checkout);
 
-        Page<RoomsEntity> rooms = roomsRepository.search(
-                normalizedKeyword, guests, checkInOut[0], checkInOut[1],
-                BookingsEntity.BookingStatus.CANCELLED, pageable);
+        Page<RoomsEntity> rooms = roomsRepository.findAll(
+                RoomsSpecifications.search(keywords, guests, checkInOut[0], checkInOut[1],
+                        BookingsEntity.BookingStatus.CANCELLED),
+                pageable);
 
         List<Long> roomIds = rooms.getContent().stream().map(RoomsEntity::getId).toList();
         Map<Long, String> thumbnailByRoomId = roomImagesRepository.findByRoom_IdInAndThumbnailTrue(roomIds).stream()
@@ -65,6 +68,18 @@ public class RoomsService {
         }
         Page<ReviewEntity> reviews = reviewRepository.findByRoomId(roomId, pageable);
         return reviews.map(RoomsDTO.ReviewResponse::from);
+    }
+
+    // 콤마로 구분된 키워드를 OR 조건 목록으로 변환한다 (카테고리 동의어 검색: "왕릉,능묘" 등).
+    private List<String> parseKeywords(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return List.of();
+        }
+        return Arrays.stream(keyword.split(","))
+                .map(String::trim)
+                .filter(term -> !term.isEmpty())
+                .distinct()
+                .toList();
     }
 
     private LocalDate[] parseAvailabilityRange(String checkin, String checkout) {
