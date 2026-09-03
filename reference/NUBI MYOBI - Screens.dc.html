@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Bungee&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#07090d;}
+body{font-family:'Gothic A1',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+*{box-sizing:border-box;}
+a{color:#5ee0ee;text-decoration:none;}
+a:hover{color:#9af1f9;}
+.scr{padding:40px 48px;border-bottom:1px solid rgba(120,170,190,.12);scroll-margin-top:16px;}
+.shd{display:flex;align-items:baseline;gap:10px;margin:0 0 18px;}
+.sid{font:600 10px 'IBM Plex Mono',monospace;padding:4px 8px;background:#5ee0ee;color:#05161a;border-radius:4px;text-decoration:none;white-space:nowrap;}
+.sname{font:700 14px/1.2 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;}
+.snote{font:400 12px/1.4 'Gothic A1',sans-serif;color:#7e8d9a;}
+.card{width:1440px;flex:none;background:#0b1016;border:1px solid rgba(120,170,190,.14);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.9);}
+</style></helmet>
+
+<!-- ══════════ S1 로그인 ══════════ -->
+<section class="scr" id="s1" style="background:#07090d;background-image:radial-gradient(1000px 460px at 14% -6%, rgba(38,86,140,.22), transparent 70%);">
+<div class="shd"><a class="sid" href="#s1">S1</a><span class="sname">로그인 / 회원가입</span><span class="snote">좌측 브랜드 패널 + 우측 폼. 2a의 도형 실루엣을 배경 오브제로 사용.</span></div>
+<div class="card" style="height:820px;display:flex;">
+  <div style="width:620px;flex:none;position:relative;overflow:hidden;background:linear-gradient(170deg,#0e1a24,#0a0f15);border-right:1px solid rgba(120,170,190,.14);padding:48px;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:24px;height:26px;border-radius:12px 12px 3px 3px;background:#5ee0ee;"></div>
+      <span style="font:400 17px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">NUBI MYOBI</span>
+    </div>
+    <div style="margin-top:auto;position:relative;z-index:2;">
+      <div style="font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#3fd18a;margin-bottom:16px;white-space:nowrap;">WORLD'S OLDEST BEDROOMS</div>
+      <h2 style="margin:0 0 14px;font:800 38px/1.24 'Gothic A1',sans-serif;color:#f4f8fa;text-wrap:balance;">4,600년 된 방이<br>당신을 기다립니다</h2>
+      <p style="margin:0;font:400 14px/1.75 'Gothic A1',sans-serif;color:#8b98a6;max-width:400px;">등록 묘소 1,204곳 · 41개국 · 최고 연식 6,600만 년</p>
+    </div>
+    <div style="position:absolute;top:120px;right:-40px;width:150px;height:150px;border-radius:999px;background:#ffd23f;opacity:.9;"></div>
+    <div style="position:absolute;top:120px;right:-2px;width:150px;height:150px;border-radius:999px;background:#0d1620;"></div>
+    <div style="position:absolute;bottom:-1px;right:56px;width:0;height:0;border-left:96px solid transparent;border-right:96px solid transparent;border-bottom:124px solid rgba(94,224,238,.14);"></div>
+    <div style="position:absolute;bottom:-1px;right:216px;width:0;height:0;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:80px solid rgba(94,224,238,.08);"></div>
+  </div>
+
+  <div style="flex:1;min-width:0;padding:64px 88px;display:flex;flex-direction:column;justify-content:center;">
+    <div style="display:flex;gap:26px;border-bottom:1px solid rgba(120,170,190,.14);margin-bottom:34px;">
+      <div style="padding:0 2px 14px;border-bottom:2px solid #5ee0ee;font:800 15px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">로그인</div>
+      <div style="padding:0 2px 14px;font:600 15px/1 'Gothic A1',sans-serif;color:#7e8d9a;white-space:nowrap;">회원가입</div>
+    </div>
+    <label style="display:block;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#6d8494;margin-bottom:9px;white-space:nowrap;">이메일</label>
+    <div style="height:52px;border-radius:11px;background:#111821;border:1px solid rgba(94,224,238,.35);display:flex;align-items:center;padding:0 16px;margin-bottom:20px;">
+      <span style="font:500 14px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">nubi@example.com</span>
+      <div style="width:1px;height:18px;background:#5ee0ee;margin-left:2px;"></div>
+    </div>
+    <label style="display:block;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#6d8494;margin-bottom:9px;white-space:nowrap;">비밀번호</label>
+    <div style="height:52px;border-radius:11px;background:#111821;border:1px solid rgba(120,170,190,.22);display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:16px;">
+      <span style="font:500 15px/1 'IBM Plex Mono',monospace;color:#8b98a6;letter-spacing:.24em;white-space:nowrap;">••••••••••</span>
+      <span style="font:600 12px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">표시</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
+      <div style="display:flex;align-items:center;gap:9px;">
+        <div style="width:17px;height:17px;border-radius:5px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:800 11px/1 'Gothic A1',sans-serif;color:#05161a;">✓</div>
+        <span style="font:500 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">로그인 상태 유지</span>
+      </div>
+      <span style="font:500 13px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">비밀번호 찾기</span>
+    </div>
+    <div style="height:54px;border-radius:11px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:800 15px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">누비러 들어가기</div>
+    <div style="display:flex;align-items:center;gap:14px;margin:26px 0;">
+      <div style="flex:1;height:1px;background:rgba(120,170,190,.16);"></div>
+      <span style="font:500 11px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">OR</span>
+      <div style="flex:1;height:1px;background:rgba(120,170,190,.16);"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:11px;">
+      <div style="height:50px;border-radius:11px;border:1px solid rgba(120,170,190,.22);display:flex;align-items:center;justify-content:center;gap:10px;font:700 14px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;"><div style="width:16px;height:16px;border-radius:999px;background:#ffd23f;"></div>소셜 계정으로 계속</div>
+      <div style="height:50px;border-radius:11px;border:1px solid rgba(120,170,190,.22);display:flex;align-items:center;justify-content:center;gap:10px;font:700 14px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;"><div style="width:16px;height:16px;border-radius:4px;background:#3fd18a;"></div>관리인 계정으로 계속</div>
+    </div>
+    <p style="margin:26px 0 0;font:400 12px/1.7 'Gothic A1',sans-serif;color:#6b7a88;">계속하면 이용약관과 개인정보 처리방침에 동의하게 됩니다. 만 19세 이상, 그리고 살아 있는 분만 가입할 수 있습니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ S2 숙소 상세 ══════════ -->
+<section class="scr" id="s2" style="background:#07090d;">
+<div class="shd"><a class="sid" href="#s2">S2</a><span class="sname">묘소 상세</span><span class="snote">갤러리 → 요약/편의시설/연식 정보 → 우측 스티키 예약 카드 → 후기 요약 → 지도.</span></div>
+<div class="card">
+  <div style="height:76px;padding:0 36px;display:flex;align-items:center;gap:26px;border-bottom:1px solid rgba(120,170,190,.12);background:rgba(9,13,19,.92);">
+    <div style="display:flex;align-items:center;gap:10px;flex:none;">
+      <div style="width:24px;height:26px;border-radius:12px 12px 3px 3px;background:#5ee0ee;"></div>
+      <span style="font:400 17px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">NUBI MYOBI</span>
+    </div>
+    <div style="flex:none;display:flex;align-items:center;height:44px;border:1px solid rgba(120,170,190,.2);border-radius:999px;padding:0 6px 0 18px;gap:14px;margin-left:14px;">
+      <span style="font:500 12px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">기자, 이집트</span>
+      <div style="width:1px;height:16px;background:rgba(120,170,190,.2);"></div>
+      <span style="font:500 12px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">11월 3일 – 5일</span>
+      <div style="width:30px;height:30px;border-radius:999px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 13px/1 'IBM Plex Mono',monospace;color:#05161a;">⌕</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-left:auto;flex:none;">
+      <span style="font:600 13px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">내 묘소 호스팅하기</span>
+      <div style="width:32px;height:32px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);"></div>
+    </div>
+  </div>
+
+  <div style="padding:28px 36px 0;display:flex;align-items:baseline;justify-content:space-between;gap:24px;">
+    <div>
+      <h2 style="margin:0 0 8px;font:800 30px/1.28 'Gothic A1',sans-serif;color:#f4f8fa;">기자 대피라미드 · 왕의 방</h2>
+      <div style="display:flex;align-items:center;gap:12px;font:500 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">
+        <span style="font-family:'IBM Plex Mono',monospace;color:#eef4f7;">☾ 4.97</span><span>후기 412개</span><span style="color:#5b7180;">·</span><span>기자, 이집트</span><span style="color:#5b7180;">·</span><span style="color:#5ee0ee;">세계문화유산</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex:none;">
+      <div style="padding:10px 16px;border-radius:9px;border:1px solid rgba(120,170,190,.22);font:600 12px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">공유</div>
+      <div style="padding:10px 16px;border-radius:9px;border:1px solid rgba(120,170,190,.22);font:600 12px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">저장</div>
+    </div>
+  </div>
+
+  <div style="padding:20px 36px 0;display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:150px 150px;gap:10px;">
+    <div style="grid-row:span 2;border-radius:14px 0 0 14px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:14px;font:500 11px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 왕의 방 내부 (메인)</div>
+    <div style="background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:12px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 대회랑 통로</div>
+    <div style="border-radius:0 14px 0 0;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:12px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 석관</div>
+    <div style="background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:12px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 야경 외관</div>
+    <div style="position:relative;border-radius:0 0 14px 0;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:12px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 환기구
+      <div style="position:absolute;bottom:12px;right:12px;padding:7px 12px;border-radius:8px;background:#0b1016;border:1px solid rgba(120,170,190,.3);font:700 11px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">사진 32장 모두 보기</div>
+    </div>
+  </div>
+
+  <div style="padding:34px 36px 46px;display:flex;gap:48px;align-items:flex-start;">
+    <div style="flex:1;min-width:0;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:24px;border-bottom:1px solid rgba(120,170,190,.14);">
+        <div>
+          <div style="font:800 20px/1.4 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:6px;">쿠푸 왕조 관리인이 운영하는 석실 1칸</div>
+          <div style="font:400 14px/1.7 'Gothic A1',sans-serif;color:#8b98a6;">최대 2명 · 석관 1 · 통로 침구 1 · 화장실 없음 (지상 이용)</div>
+        </div>
+        <div style="flex:none;display:flex;align-items:center;gap:12px;">
+          <div>
+            <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">관리인 · 하템</div>
+            <div style="font:500 11px/1.4 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">호스팅 12년</div>
+          </div>
+          <div style="width:46px;height:46px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;padding:24px 0;border-bottom:1px solid rgba(120,170,190,.14);">
+        <div style="flex:1;padding:18px;border-radius:12px;background:rgba(255,210,63,.07);border:1px solid rgba(255,210,63,.28);">
+          <div style="font:400 22px/1 'Bungee',sans-serif;color:#ffd23f;margin-bottom:8px;white-space:nowrap;">4,600</div>
+          <div style="font:600 12px/1.5 'Gothic A1',sans-serif;color:#c3d2da;">연식 (년) · B.C. 2560</div>
+        </div>
+        <div style="flex:1;padding:18px;border-radius:12px;background:rgba(94,224,238,.07);border:1px solid rgba(94,224,238,.28);">
+          <div style="font:400 22px/1 'Bungee',sans-serif;color:#5ee0ee;margin-bottom:8px;white-space:nowrap;">17℃</div>
+          <div style="font:600 12px/1.5 'Gothic A1',sans-serif;color:#c3d2da;">석실 연중 실내온도</div>
+        </div>
+        <div style="flex:1;padding:18px;border-radius:12px;background:rgba(63,209,138,.07);border:1px solid rgba(63,209,138,.28);">
+          <div style="font:400 22px/1 'Bungee',sans-serif;color:#3fd18a;margin-bottom:8px;white-space:nowrap;">0</div>
+          <div style="font:600 12px/1.5 'Gothic A1',sans-serif;color:#c3d2da;">최근 1년 소음 신고</div>
+        </div>
+        <div style="flex:1;padding:18px;border-radius:12px;background:rgba(255,94,168,.07);border:1px solid rgba(255,94,168,.28);">
+          <div style="font:400 22px/1 'Bungee',sans-serif;color:#ff5ea8;margin-bottom:8px;white-space:nowrap;">98%</div>
+          <div style="font:600 12px/1.5 'Gothic A1',sans-serif;color:#c3d2da;">무사 체크아웃률</div>
+        </div>
+      </div>
+
+      <div style="padding:24px 0;border-bottom:1px solid rgba(120,170,190,.14);">
+        <p style="margin:0 0 14px;font:400 15px/1.85 'Gothic A1',sans-serif;color:#b6c5cf;text-wrap:pretty;">피라미드 중심부, 대회랑을 지나 도착하는 왕의 방입니다. 4,600년간 한 분이 쓰시던 공간을 정비해 하룻밤 내어드립니다. 화강암 벽 덕분에 여름에도 시원하고, 밤에는 아주 조용합니다 — 이웃이 조용한 편입니다.</p>
+        <p style="margin:0;font:400 15px/1.85 'Gothic A1',sans-serif;color:#8b98a6;">입실은 폐장 후 19:00부터. 손전등과 무릎 보호대를 권합니다. 통로가 좁아 캐리어는 지상 보관소에 맡겨주세요.</p>
+      </div>
+
+      <div style="padding:24px 0;border-bottom:1px solid rgba(120,170,190,.14);">
+        <div style="font:800 17px/1 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:18px;white-space:nowrap;">편의시설</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px 24px;">
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">석관 침구 (린넨 제공)</span></div>
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">비상 손전등 2개</span></div>
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">관리인 24시간 상주</span></div>
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">지상 캐리어 보관소</span></div>
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">헌화 키트 (유료)</span></div>
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:9px;height:9px;border-radius:999px;background:#5ee0ee;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">일출 관람 가이드</span></div>
+          <div style="display:flex;align-items:center;gap:11px;opacity:.45;"><div style="width:9px;height:9px;border-radius:999px;background:#8b98a6;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#8b98a6;text-decoration:line-through;white-space:nowrap;">와이파이 (석재 두께 5m)</span></div>
+          <div style="display:flex;align-items:center;gap:11px;opacity:.45;"><div style="width:9px;height:9px;border-radius:999px;background:#8b98a6;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#8b98a6;text-decoration:line-through;white-space:nowrap;">주방 · 취사</span></div>
+          <div style="display:flex;align-items:center;gap:11px;opacity:.45;"><div style="width:9px;height:9px;border-radius:999px;background:#8b98a6;flex:none;"></div><span style="font:500 14px/1 'Gothic A1',sans-serif;color:#8b98a6;text-decoration:line-through;white-space:nowrap;">반려동물 동반</span></div>
+        </div>
+      </div>
+
+      <div style="padding:24px 0 0;">
+        <div style="font:800 17px/1 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:16px;white-space:nowrap;">투숙 규칙</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:999px;background:#ff5ea8;margin-top:6px;flex:none;"></div><span style="font:400 14px/1.7 'Gothic A1',sans-serif;color:#b6c5cf;">벽면·석관에 접촉하거나 낙서하지 마십시오. 4,600년 된 표면입니다.</span></div>
+          <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:999px;background:#ffd23f;margin-top:6px;flex:none;"></div><span style="font:400 14px/1.7 'Gothic A1',sans-serif;color:#b6c5cf;">부장품은 기념품이 아닙니다. 가져가면 저희가 아니라 다른 쪽에서 연락합니다.</span></div>
+          <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:999px;background:#3fd18a;margin-top:6px;flex:none;"></div><span style="font:400 14px/1.7 'Gothic A1',sans-serif;color:#b6c5cf;">체크아웃 06:30 (일출 전). 연장은 문화재청 승인이 필요합니다.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:392px;flex:none;">
+      <div style="border-radius:16px;border:1px solid rgba(120,170,190,.2);background:#111821;padding:26px;box-shadow:0 22px 50px -24px rgba(0,0,0,.9);">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
+          <div style="font:800 22px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">₩890,000 <span style="font:400 14px/1 'Gothic A1',sans-serif;color:#8b98a6;">/ 1박</span></div>
+          <span style="font:600 12px/1 'IBM Plex Mono',monospace;color:#dbe4ea;white-space:nowrap;">☾ 4.97</span>
+        </div>
+        <div style="border:1px solid rgba(120,170,190,.22);border-radius:12px;overflow:hidden;margin-bottom:14px;">
+          <div style="display:flex;border-bottom:1px solid rgba(120,170,190,.18);">
+            <div style="flex:1;padding:13px 15px;border-right:1px solid rgba(120,170,190,.18);">
+              <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#6d8494;margin-bottom:5px;white-space:nowrap;">체크인</div>
+              <div style="font:600 13px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">2026. 11. 3</div>
+            </div>
+            <div style="flex:1;padding:13px 15px;">
+              <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#6d8494;margin-bottom:5px;white-space:nowrap;">체크아웃</div>
+              <div style="font:600 13px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">2026. 11. 5</div>
+            </div>
+          </div>
+          <div style="padding:13px 15px;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#6d8494;margin-bottom:5px;white-space:nowrap;">인원</div>
+              <div style="font:600 13px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">산 사람 2명</div>
+            </div>
+            <span style="font:600 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">▾</span>
+          </div>
+        </div>
+        <div style="height:54px;border-radius:11px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:800 15px/1 'Gothic A1',sans-serif;color:#05161a;margin-bottom:10px;white-space:nowrap;">예약 요청하기</div>
+        <div style="text-align:center;font:400 12px/1 'Gothic A1',sans-serif;color:#7e8d9a;margin-bottom:22px;white-space:nowrap;">아직 결제되지 않습니다 · 관리인 승인 후 확정</div>
+        <div style="display:flex;flex-direction:column;gap:11px;padding-bottom:16px;border-bottom:1px solid rgba(120,170,190,.16);">
+          <div style="display:flex;justify-content:space-between;font:500 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;"><span style="white-space:nowrap;">₩890,000 × 2박</span><span style="white-space:nowrap;">₩1,780,000</span></div>
+          <div style="display:flex;justify-content:space-between;font:500 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;"><span style="white-space:nowrap;">보존 기금</span><span style="white-space:nowrap;">₩120,000</span></div>
+          <div style="display:flex;justify-content:space-between;font:500 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;"><span style="white-space:nowrap;">야간 개문 수수료</span><span style="white-space:nowrap;">₩64,000</span></div>
+          <div style="display:flex;justify-content:space-between;font:500 13px/1 'Gothic A1',sans-serif;color:#7ee3b3;"><span style="white-space:nowrap;">연식 할인 (4,000년↑)</span><span style="white-space:nowrap;">−₩356,000</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:16px;font:800 16px/1 'Gothic A1',sans-serif;color:#eef4f7;"><span style="white-space:nowrap;">총 합계</span><span style="white-space:nowrap;">₩1,608,000</span></div>
+      </div>
+      <div style="margin-top:14px;padding:18px;border-radius:12px;border:1px dashed rgba(255,210,63,.4);background:rgba(255,210,63,.05);">
+        <div style="display:flex;gap:11px;">
+          <div style="width:24px;height:26px;border-radius:12px 12px 3px 3px;background:#ffd23f;flex:none;"></div>
+          <div>
+            <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:5px;">희소 묘소</div>
+            <div style="font:400 12px/1.65 'Gothic A1',sans-serif;color:#8b98a6;">올해 남은 개방일은 4일뿐입니다. 지난 30일간 128명이 조회했습니다.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;height:220px;border-radius:12px;border:1px solid rgba(120,170,190,.16);background:#0d141c;background-image:linear-gradient(rgba(94,224,238,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(94,224,238,.06) 1px,transparent 1px);background-size:40px 40px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:14px;left:14px;padding:7px 11px;border-radius:7px;background:rgba(7,9,13,.9);border:1px solid rgba(120,170,190,.2);font:500 10px/1 'IBM Plex Mono',monospace;color:#8b98a6;white-space:nowrap;">MAP · 기자 묘역</div>
+        <div style="position:absolute;top:96px;left:150px;width:22px;height:22px;border-radius:999px;background:#5ee0ee;box-shadow:0 0 0 8px rgba(94,224,238,.16);"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ S3 마이페이지 ══════════ -->
+<section class="scr" id="s3" style="background:#07090d;">
+<div class="shd"><a class="sid" href="#s3">S3</a><span class="sname">마이페이지 (게스트)</span><span class="snote">좌측 내비 + 다가오는 여정 + 지난 여정/위시리스트. 여정 카드에 연식 태그.</span></div>
+<div class="card" style="display:flex;">
+  <div style="width:268px;flex:none;border-right:1px solid rgba(120,170,190,.12);background:#0a0f15;padding:28px 0;">
+    <div style="padding:0 24px 24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:22px;height:24px;border-radius:11px 11px 3px 3px;background:#5ee0ee;"></div>
+      <span style="font:400 15px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">NUBI MYOBI</span>
+    </div>
+    <div style="padding:20px 24px;margin:0 0 12px;border-top:1px solid rgba(120,170,190,.12);display:flex;align-items:center;gap:13px;">
+      <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+      <div style="min-width:0;">
+        <div style="font:700 14px/1.35 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">김누비</div>
+        <div style="font:500 11px/1.4 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">누적 12박 · 5개국</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;">
+      <div style="padding:13px 24px;border-left:3px solid #5ee0ee;background:rgba(94,224,238,.08);font:700 14px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">여정</div>
+      <div style="padding:13px 24px;border-left:3px solid transparent;font:500 14px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">위시리스트</div>
+      <div style="padding:13px 24px;border-left:3px solid transparent;font:500 14px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">내가 쓴 후기</div>
+      <div style="padding:13px 24px;border-left:3px solid transparent;font:500 14px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">메시지</div>
+      <div style="padding:13px 24px;border-left:3px solid transparent;font:500 14px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">결제 · 영수증</div>
+      <div style="padding:13px 24px;border-left:3px solid transparent;font:500 14px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">계정 설정</div>
+    </div>
+    <div style="margin:24px 24px 0;padding:18px;border-radius:12px;border:1px solid rgba(94,224,238,.26);background:linear-gradient(160deg,#0e1a20,#0a0f15);">
+      <div style="font:400 15px/1.3 'Bungee',sans-serif;color:#5ee0ee;margin-bottom:9px;">누비 등급<br>석실 3단</div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;margin-bottom:9px;"><div style="width:64%;height:6px;border-radius:3px;background:#5ee0ee;"></div></div>
+      <div style="font:400 11px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">3박 더 묵으면 4단 승급 · 야간 개문 수수료 면제</div>
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;padding:34px 36px 44px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;">
+      <h2 style="margin:0;font:800 26px/1.3 'Gothic A1',sans-serif;color:#f4f8fa;">다가오는 여정</h2>
+      <span style="font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;white-space:nowrap;">전체 예약 내역 →</span>
+    </div>
+
+    <div style="border-radius:14px;border:1px solid rgba(94,224,238,.3);background:linear-gradient(120deg,#0e1a24,#0d1420);padding:22px;display:flex;gap:22px;align-items:center;margin-bottom:16px;">
+      <div style="width:180px;height:126px;flex:none;border-radius:10px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:10px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 왕의 방</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;">
+          <span style="padding:5px 10px;border-radius:6px;background:#5ee0ee;font:800 10px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">D-3 · 확정</span>
+          <span style="padding:5px 10px;border-radius:6px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.4);font:700 10px/1 'IBM Plex Mono',monospace;color:#ffd23f;white-space:nowrap;">B.C. 2560</span>
+        </div>
+        <div style="font:800 19px/1.35 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:6px;">기자 대피라미드 · 왕의 방</div>
+        <div style="font:400 13px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">11월 3일 19:00 입실 – 11월 5일 06:30 퇴실 · 관리인 하템 · 산 사람 2명</div>
+      </div>
+      <div style="flex:none;display:flex;flex-direction:column;gap:9px;width:170px;">
+        <div style="padding:12px;border-radius:9px;background:#5ee0ee;text-align:center;font:800 13px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">입실 안내 보기</div>
+        <div style="padding:12px;border-radius:9px;border:1px solid rgba(120,170,190,.24);text-align:center;font:600 13px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">관리인에게 연락</div>
+        <div style="padding:12px;border-radius:9px;border:1px solid rgba(120,170,190,.16);text-align:center;font:500 13px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">예약 변경 · 취소</div>
+      </div>
+    </div>
+
+    <div style="border-radius:14px;border:1px solid rgba(120,170,190,.16);background:#101922;padding:20px 22px;display:flex;gap:20px;align-items:center;margin-bottom:34px;">
+      <div style="width:120px;height:84px;flex:none;border-radius:9px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:9px;font:500 9px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 병마용</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px;">
+          <span style="padding:4px 9px;border-radius:5px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.35);font:700 10px/1 'Gothic A1',sans-serif;color:#ffd23f;white-space:nowrap;">승인 대기</span>
+        </div>
+        <div style="font:700 16px/1.35 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:4px;">진시황릉 병마용 8열</div>
+        <div style="font:400 13px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">12월 21일 – 22일 · 관리인 승인까지 최대 24시간</div>
+      </div>
+      <div style="flex:none;font:600 13px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">요청 상세 →</div>
+    </div>
+
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;">
+      <h3 style="margin:0;font:800 20px/1.3 'Gothic A1',sans-serif;color:#eef4f7;">지난 여정 · 후기를 기다리는 묘소</h3>
+      <span style="font:600 12px/1 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">12박 중 3박 미작성</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <div style="border-radius:12px;border:1px solid rgba(120,170,190,.14);background:#101922;overflow:hidden;">
+        <div style="height:132px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);display:flex;align-items:flex-end;padding:10px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 종묘 회랑</div>
+        <div style="padding:16px 18px 18px;">
+          <div style="font:700 15px/1.35 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:5px;">종묘 정전 회랑 끝방</div>
+          <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#8b98a6;margin-bottom:14px;">2026. 9. 18 – 9. 19 · 1박</div>
+          <div style="padding:11px;border-radius:8px;background:#5ee0ee;text-align:center;font:800 12px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">후기 작성 (+₩5,000 적립)</div>
+        </div>
+      </div>
+      <div style="border-radius:12px;border:1px solid rgba(120,170,190,.14);background:#101922;overflow:hidden;">
+        <div style="height:132px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);display:flex;align-items:flex-end;padding:10px;font:500 10px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 카타콤 벽면</div>
+        <div style="padding:16px 18px 18px;">
+          <div style="font:700 15px/1.35 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:5px;">파리 카타콤 3구역</div>
+          <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#8b98a6;margin-bottom:14px;">2026. 7. 2 – 7. 4 · 2박</div>
+          <div style="padding:11px;border-radius:8px;border:1px solid rgba(120,170,190,.22);text-align:center;font:600 12px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">영수증 보기</div>
+        </div>
+      </div>
+      <div style="border-radius:12px;border:1px dashed rgba(120,170,190,.24);background:#0d141c;padding:24px;display:flex;flex-direction:column;justify-content:center;gap:12px;">
+        <div style="width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-bottom:28px solid #1c2b3a;"></div>
+        <div style="font:700 15px/1.4 'Gothic A1',sans-serif;color:#c3d2da;">위시리스트 8곳</div>
+        <div style="font:400 12px/1.7 'Gothic A1',sans-serif;color:#7e8d9a;">저장한 묘소 중 3곳이 이번 달 개방일을 열었습니다.</div>
+        <div style="font:600 12px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">위시리스트 열기 →</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ S4 호스트 페이지 ══════════ -->
+<section class="scr" id="s4" style="background:#07090d;">
+<div class="shd"><a class="sid" href="#s4">S4</a><span class="sname">호스트 대시보드 (관리인)</span><span class="snote">수익·예약 요청·개방일 캘린더·묘소 목록. 게스트 화면과 구분되도록 상단바를 어둡게.</span></div>
+<div class="card">
+  <div style="height:70px;padding:0 32px;display:flex;align-items:center;gap:24px;background:#080b10;border-bottom:1px solid rgba(94,224,238,.22);">
+    <div style="display:flex;align-items:center;gap:9px;flex:none;">
+      <div style="width:22px;height:24px;border-radius:11px 11px 3px 3px;background:#5ee0ee;"></div>
+      <span style="font:400 15px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">NUBI MYOBI</span>
+      <span style="padding:4px 9px;border-radius:5px;background:rgba(94,224,238,.14);border:1px solid rgba(94,224,238,.4);font:700 10px/1 'IBM Plex Mono',monospace;color:#5ee0ee;white-space:nowrap;">HOST</span>
+    </div>
+    <div style="display:flex;flex:none;gap:22px;margin-left:14px;font:600 13px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">
+      <span style="color:#eef4f7;">오늘</span><span>예약</span><span>내 묘소</span><span>개방일</span><span>수익</span><span>후기</span>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:14px;flex:none;">
+      <span style="font:600 12px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">관리인 하템</span>
+      <div style="width:30px;height:30px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);"></div>
+    </div>
+  </div>
+
+  <div style="padding:30px 32px 0;display:flex;align-items:baseline;justify-content:space-between;">
+    <div>
+      <h2 style="margin:0 0 6px;font:800 26px/1.3 'Gothic A1',sans-serif;color:#f4f8fa;">오늘 밤, 석실 2칸이 열립니다</h2>
+      <div style="font:400 13px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">2026년 11월 3일 화요일 · 일몰 17:42 · 야간 개문 담당 2명</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <div style="padding:11px 18px;border-radius:9px;border:1px solid rgba(120,170,190,.24);font:600 13px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">개방일 일괄 설정</div>
+      <div style="padding:11px 18px;border-radius:9px;background:#5ee0ee;font:800 13px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">새 묘소 등록</div>
+    </div>
+  </div>
+
+  <div style="padding:26px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+    <div style="padding:22px;border-radius:13px;border:1px solid rgba(94,224,238,.26);background:linear-gradient(150deg,#0e1a24,#0d1420);">
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#6d8494;margin-bottom:12px;white-space:nowrap;">이번 달 수익</div>
+      <div style="font:400 30px/1 'Bungee',sans-serif;color:#5ee0ee;margin-bottom:8px;white-space:nowrap;">₩4.1M</div>
+      <div style="font:500 12px/1 'Gothic A1',sans-serif;color:#7ee3b3;white-space:nowrap;">지난달 대비 +18%</div>
+    </div>
+    <div style="padding:22px;border-radius:13px;border:1px solid rgba(120,170,190,.16);background:#101922;">
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#6d8494;margin-bottom:12px;white-space:nowrap;">예약 요청</div>
+      <div style="font:400 30px/1 'Bungee',sans-serif;color:#ffd23f;margin-bottom:8px;white-space:nowrap;">7</div>
+      <div style="font:500 12px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">3건은 24시간 내 응답 필요</div>
+    </div>
+    <div style="padding:22px;border-radius:13px;border:1px solid rgba(120,170,190,.16);background:#101922;">
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#6d8494;margin-bottom:12px;white-space:nowrap;">개방률</div>
+      <div style="font:400 30px/1 'Bungee',sans-serif;color:#eef4f7;margin-bottom:8px;white-space:nowrap;">62%</div>
+      <div style="font:500 12px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">이번 달 31일 중 19일 개방</div>
+    </div>
+    <div style="padding:22px;border-radius:13px;border:1px solid rgba(120,170,190,.16);background:#101922;">
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#6d8494;margin-bottom:12px;white-space:nowrap;">평점</div>
+      <div style="font:400 30px/1 'Bungee',sans-serif;color:#ff5ea8;margin-bottom:8px;white-space:nowrap;">4.97</div>
+      <div style="font:500 12px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">후기 412개 · 무사 체크아웃 98%</div>
+    </div>
+  </div>
+
+  <div style="padding:0 32px 32px;display:flex;gap:20px;align-items:flex-start;">
+    <div style="flex:1;min-width:0;border-radius:14px;border:1px solid rgba(120,170,190,.16);background:#0d141c;overflow:hidden;">
+      <div style="padding:20px 22px;border-bottom:1px solid rgba(120,170,190,.14);display:flex;align-items:baseline;justify-content:space-between;">
+        <span style="font:800 16px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">예약 요청</span>
+        <span style="font:600 11px/1 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">응답률 100% 유지 중</span>
+      </div>
+      <div style="padding:18px 22px;border-bottom:1px dashed rgba(120,170,190,.16);display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">김누비 · 산 사람 2명</div>
+          <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">왕의 방 · 11월 3일 – 5일 · ₩1,608,000</div>
+        </div>
+        <div style="flex:none;display:flex;gap:8px;">
+          <div style="padding:9px 16px;border-radius:8px;background:#5ee0ee;font:800 12px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">승인</div>
+          <div style="padding:9px 16px;border-radius:8px;border:1px solid rgba(120,170,190,.24);font:600 12px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">거절</div>
+        </div>
+      </div>
+      <div style="padding:18px 22px;border-bottom:1px dashed rgba(120,170,190,.16);display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">이하람 · 산 사람 1명</div>
+          <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">대회랑 통로 침구 · 11월 9일 · ₩284,000</div>
+        </div>
+        <div style="flex:none;display:flex;gap:8px;">
+          <div style="padding:9px 16px;border-radius:8px;background:#5ee0ee;font:800 12px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">승인</div>
+          <div style="padding:9px 16px;border-radius:8px;border:1px solid rgba(120,170,190,.24);font:600 12px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">거절</div>
+        </div>
+      </div>
+      <div style="padding:18px 22px;display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">Marco R. · 산 사람 2명 <span style="font:600 11px/1 'Gothic A1',sans-serif;color:#ffd23f;">· 반려동물 동반 요청</span></div>
+          <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">왕의 방 · 11월 14일 – 15일 · ₩890,000</div>
+        </div>
+        <div style="flex:none;display:flex;gap:8px;">
+          <div style="padding:9px 16px;border-radius:8px;background:#5ee0ee;font:800 12px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">승인</div>
+          <div style="padding:9px 16px;border-radius:8px;border:1px solid rgba(120,170,190,.24);font:600 12px/1 'Gothic A1',sans-serif;color:#b6c5cf;white-space:nowrap;">거절</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:420px;flex:none;display:flex;flex-direction:column;gap:20px;">
+      <div style="border-radius:14px;border:1px solid rgba(120,170,190,.16);background:#0d141c;padding:22px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;">
+          <span style="font:800 16px/1 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">11월 개방일</span>
+          <span style="font:600 11px/1 'IBM Plex Mono',monospace;color:#5ee0ee;white-space:nowrap;">19일 개방 · 12일 휴관</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px;">
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">일</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">월</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">화</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">수</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">목</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">금</span>
+          <span style="text-align:center;font:600 10px/1 'IBM Plex Mono',monospace;color:#5b7180;">토</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#3f4c58;">1</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#3f4c58;">2</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">3</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">4</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">5</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">6</div>
+          <div style="height:34px;border-radius:7px;background:rgba(94,224,238,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;">7</div>
+          <div style="height:34px;border-radius:7px;background:rgba(94,224,238,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;">8</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">9</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">10</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">11</div>
+          <div style="height:34px;border-radius:7px;background:rgba(255,210,63,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#ffd23f;">12</div>
+          <div style="height:34px;border-radius:7px;background:rgba(94,224,238,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;">13</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">14</div>
+          <div style="height:34px;border-radius:7px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:700 12px/1 'IBM Plex Mono',monospace;color:#05161a;">15</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">16</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">17</div>
+          <div style="height:34px;border-radius:7px;background:rgba(94,224,238,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;">18</div>
+          <div style="height:34px;border-radius:7px;background:rgba(94,224,238,.16);display:flex;align-items:center;justify-content:center;font:600 12px/1 'IBM Plex Mono',monospace;color:#5ee0ee;">19</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">20</div>
+          <div style="height:34px;border-radius:7px;background:#111821;display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono',monospace;color:#8b98a6;">21</div>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:16px;">
+          <div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:3px;background:#5ee0ee;"></div><span style="font:500 11px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">예약 확정</span></div>
+          <div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:3px;background:rgba(94,224,238,.16);"></div><span style="font:500 11px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">개방 · 비어 있음</span></div>
+          <div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:3px;background:rgba(255,210,63,.2);"></div><span style="font:500 11px/1 'Gothic A1',sans-serif;color:#8b98a6;white-space:nowrap;">제례일 휴관</span></div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;border:1px solid rgba(120,170,190,.16);background:#0d141c;padding:22px;">
+        <div style="font:800 16px/1 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:16px;white-space:nowrap;">내 묘소 3곳</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:52px;height:40px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#16202b 0 8px,#101922 8px 16px);border:1px solid rgba(120,170,190,.14);"></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">왕의 방</div>
+              <div style="font:500 11px/1.4 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">₩890,000 / 1박 · 공개</div>
+            </div>
+            <span style="flex:none;padding:5px 10px;border-radius:5px;background:rgba(63,209,138,.14);font:700 10px/1 'Gothic A1',sans-serif;color:#7ee3b3;white-space:nowrap;">게시 중</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:52px;height:40px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#16202b 0 8px,#101922 8px 16px);border:1px solid rgba(120,170,190,.14);"></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">대회랑 통로 침구</div>
+              <div style="font:500 11px/1.4 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">₩284,000 / 1박 · 공개</div>
+            </div>
+            <span style="flex:none;padding:5px 10px;border-radius:5px;background:rgba(63,209,138,.14);font:700 10px/1 'Gothic A1',sans-serif;color:#7ee3b3;white-space:nowrap;">게시 중</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:52px;height:40px;flex:none;border-radius:7px;background:repeating-linear-gradient(135deg,#16202b 0 8px,#101922 8px 16px);border:1px solid rgba(120,170,190,.14);"></div>
+            <div style="flex:1;min-width:0;">
+              <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#eef4f7;white-space:nowrap;">환기구 다락</div>
+              <div style="font:500 11px/1.4 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">사진 3장 부족 · 심의 대기</div>
+            </div>
+            <span style="flex:none;padding:5px 10px;border-radius:5px;background:rgba(255,210,63,.14);font:700 10px/1 'Gothic A1',sans-serif;color:#ffd23f;white-space:nowrap;">작성 중</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ S5 리뷰 페이지 ══════════ -->
+<section class="scr" id="s5" style="background:#07090d;">
+<div class="shd"><a class="sid" href="#s5">S5</a><span class="sname">후기 페이지</span><span class="snote">평점 분해(정숙·연식 체감·접근성 등) + 필터 + 후기 리스트 + 작성 패널.</span></div>
+<div class="card">
+  <div style="height:76px;padding:0 36px;display:flex;align-items:center;gap:26px;border-bottom:1px solid rgba(120,170,190,.12);background:rgba(9,13,19,.92);">
+    <div style="display:flex;align-items:center;gap:10px;flex:none;">
+      <div style="width:24px;height:26px;border-radius:12px 12px 3px 3px;background:#5ee0ee;"></div>
+      <span style="font:400 17px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">NUBI MYOBI</span>
+    </div>
+    <div style="display:flex;flex:none;gap:8px;margin-left:14px;font:500 12px/1 'Gothic A1',sans-serif;color:#7e8d9a;white-space:nowrap;">
+      <span>묘소 찾기</span><span style="color:#3f4c58;">/</span><span>기자 대피라미드 · 왕의 방</span><span style="color:#3f4c58;">/</span><span style="color:#eef4f7;">후기</span>
+    </div>
+    <div style="margin-left:auto;flex:none;display:flex;align-items:center;gap:14px;">
+      <span style="font:600 13px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">묘소로 돌아가기</span>
+      <div style="width:32px;height:32px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);"></div>
+    </div>
+  </div>
+
+  <div style="padding:34px 36px 0;display:flex;align-items:flex-end;justify-content:space-between;gap:30px;">
+    <div>
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px;">
+        <span style="font:400 46px/1 'Bungee',sans-serif;color:#eef4f7;white-space:nowrap;">4.97</span>
+        <span style="font:800 20px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">☾☾☾☾☾</span>
+      </div>
+      <div style="font:400 14px/1.6 'Gothic A1',sans-serif;color:#8b98a6;">후기 412개 · 최근 12개월 98% 무사 체크아웃 · 응답률 100%</div>
+    </div>
+    <div style="display:flex;gap:10px;flex:none;">
+      <div style="padding:11px 18px;border-radius:9px;border:1px solid rgba(120,170,190,.24);font:600 13px/1 'Gothic A1',sans-serif;color:#dbe4ea;white-space:nowrap;">최신순</div>
+      <div style="padding:11px 18px;border-radius:9px;background:#5ee0ee;font:800 13px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">후기 작성</div>
+    </div>
+  </div>
+
+  <div style="padding:26px 36px 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px 32px;border-bottom:1px solid rgba(120,170,190,.14);">
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">정숙함</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">5.0</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:100%;height:6px;border-radius:3px;background:#5ee0ee;"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">연식 체감</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">5.0</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:100%;height:6px;border-radius:3px;background:#ffd23f;"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">관리인 응대</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">4.9</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:96%;height:6px;border-radius:3px;background:#5ee0ee;"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">청결 · 보존 상태</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">4.8</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:94%;height:6px;border-radius:3px;background:#5ee0ee;"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">접근성 (통로)</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">3.6</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:72%;height:6px;border-radius:3px;background:#ff5ea8;"></div></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">가격 대비 만족</span><span style="font:700 12px/1 'IBM Plex Mono',monospace;color:#eef4f7;">4.5</span></div>
+      <div style="height:6px;border-radius:3px;background:#1a2530;"><div style="width:90%;height:6px;border-radius:3px;background:#5ee0ee;"></div></div>
+    </div>
+  </div>
+
+  <div style="padding:24px 36px;display:flex;gap:9px;flex-wrap:wrap;border-bottom:1px solid rgba(120,170,190,.14);">
+    <span style="padding:9px 15px;border-radius:999px;background:#5ee0ee;color:#05161a;font:700 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">전체 412</span>
+    <span style="padding:9px 15px;border-radius:999px;border:1px solid rgba(120,170,190,.2);color:#b6c5cf;font:500 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">사진 있는 후기 96</span>
+    <span style="padding:9px 15px;border-radius:999px;border:1px solid rgba(120,170,190,.2);color:#b6c5cf;font:500 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">“조용함” 언급 184</span>
+    <span style="padding:9px 15px;border-radius:999px;border:1px solid rgba(120,170,190,.2);color:#b6c5cf;font:500 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">“통로 좁음” 언급 77</span>
+    <span style="padding:9px 15px;border-radius:999px;border:1px solid rgba(120,170,190,.2);color:#b6c5cf;font:500 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">“일출” 언급 61</span>
+    <span style="padding:9px 15px;border-radius:999px;border:1px solid rgba(255,94,168,.35);color:#ff8ec1;font:500 12px/1 'Gothic A1',sans-serif;white-space:nowrap;">낮은 평점 12</span>
+  </div>
+
+  <div style="padding:30px 36px 44px;display:flex;gap:40px;align-items:flex-start;">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:24px;">
+      <div style="padding-bottom:24px;border-bottom:1px solid rgba(120,170,190,.12);">
+        <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">이하람 · 서울</div>
+            <div style="font:500 11px/1.5 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">2026년 10월 · 2박 · 산 사람 2명</div>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;gap:10px;">
+            <span style="padding:5px 10px;border-radius:5px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.35);font:700 10px/1 'IBM Plex Mono',monospace;color:#ffd23f;white-space:nowrap;">B.C. 2560 투숙</span>
+            <span style="font:700 13px/1 'IBM Plex Mono',monospace;color:#eef4f7;white-space:nowrap;">☾ 5.0</span>
+          </div>
+        </div>
+        <p style="margin:0 0 14px;font:400 14px/1.85 'Gothic A1',sans-serif;color:#b6c5cf;text-wrap:pretty;">4,600년 된 방인데 벽이 아직 매끈합니다. 밤에는 정말 아무 소리도 안 나서 처음엔 귀가 이상했어요. 관리인 하템 님이 손전등 여분까지 챙겨주셨고, 통로는 듣던 대로 좁으니 배낭 하나로 오세요. 아침 일출 관람은 꼭 신청하시길.</p>
+        <div style="display:flex;gap:10px;margin-bottom:14px;">
+          <div style="width:120px;height:88px;border-radius:9px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:8px;font:500 9px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 석실</div>
+          <div style="width:120px;height:88px;border-radius:9px;background:repeating-linear-gradient(135deg,#16202b 0 9px,#101922 9px 18px);border:1px solid rgba(120,170,190,.14);display:flex;align-items:flex-end;padding:8px;font:500 9px/1 'IBM Plex Mono',monospace;color:#5b7180;white-space:nowrap;">IMG · 일출</div>
+        </div>
+        <div style="display:flex;gap:18px;font:600 12px/1 'Gothic A1',sans-serif;color:#7e8d9a;">
+          <span style="white-space:nowrap;">도움이 됐어요 · 41</span><span style="white-space:nowrap;">신고</span>
+        </div>
+        <div style="margin-top:16px;padding:16px 18px;border-radius:11px;background:#0f161e;border-left:2px solid #5ee0ee;">
+          <div style="font:700 12px/1 'Gothic A1',sans-serif;color:#5ee0ee;margin-bottom:8px;white-space:nowrap;">관리인 하템의 답글</div>
+          <p style="margin:0;font:400 13px/1.8 'Gothic A1',sans-serif;color:#8b98a6;">좋게 봐주셔서 감사합니다. 통로 안내판을 더 크게 바꿨습니다. 다음엔 무릎 보호대도 비치해두겠습니다.</p>
+        </div>
+      </div>
+
+      <div style="padding-bottom:24px;border-bottom:1px solid rgba(120,170,190,.12);">
+        <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">Marco R. · 밀라노</div>
+            <div style="font:500 11px/1.5 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">2026년 9월 · 1박 · 산 사람 1명</div>
+          </div>
+          <span style="flex:none;font:700 13px/1 'IBM Plex Mono',monospace;color:#eef4f7;white-space:nowrap;">☾ 3.5</span>
+        </div>
+        <p style="margin:0 0 14px;font:400 14px/1.85 'Gothic A1',sans-serif;color:#b6c5cf;text-wrap:pretty;">공간 자체는 훌륭합니다. 다만 통로 경사가 생각보다 심해서 무릎이 안 좋은 분께는 권하기 어렵습니다. 화장실이 지상에만 있어 새벽에 두 번 왕복했습니다 — 그게 이 방의 가장 큰 리스크입니다.</p>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <span style="padding:5px 10px;border-radius:5px;background:rgba(255,94,168,.1);font:600 11px/1 'Gothic A1',sans-serif;color:#ff8ec1;white-space:nowrap;">접근성 3.0</span>
+          <span style="padding:5px 10px;border-radius:5px;background:rgba(94,224,238,.1);font:600 11px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">정숙함 5.0</span>
+        </div>
+        <div style="display:flex;gap:18px;font:600 12px/1 'Gothic A1',sans-serif;color:#7e8d9a;"><span style="white-space:nowrap;">도움이 됐어요 · 88</span><span style="white-space:nowrap;">신고</span></div>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(160deg,#2b3a48,#151f29);border:1px solid rgba(120,170,190,.2);flex:none;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font:700 14px/1.4 'Gothic A1',sans-serif;color:#eef4f7;">정수아 · 부산</div>
+            <div style="font:500 11px/1.5 'IBM Plex Mono',monospace;color:#7e8d9a;white-space:nowrap;">2026년 8월 · 3박 · 산 사람 2명</div>
+          </div>
+          <span style="flex:none;font:700 13px/1 'IBM Plex Mono',monospace;color:#eef4f7;white-space:nowrap;">☾ 5.0</span>
+        </div>
+        <p style="margin:0;font:400 14px/1.85 'Gothic A1',sans-serif;color:#b6c5cf;text-wrap:pretty;">여름에도 17도. 에어컨 없이 이렇게 시원한 숙소는 처음입니다. 이웃분은 조용하셨고, 아침에 헌화 키트로 인사드리고 나왔습니다. 다음엔 병마용도 예약해볼 예정입니다.</p>
+      </div>
+    </div>
+
+    <div style="width:392px;flex:none;">
+      <div style="border-radius:16px;border:1px solid rgba(120,170,190,.2);background:#111821;padding:26px;">
+        <div style="font:800 18px/1.3 'Gothic A1',sans-serif;color:#eef4f7;margin-bottom:6px;">후기 작성</div>
+        <div style="font:400 12px/1.6 'Gothic A1',sans-serif;color:#7e8d9a;margin-bottom:22px;">종묘 정전 회랑 끝방 · 2026. 9. 18</div>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:22px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">정숙함</span><span style="font:800 15px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">☾☾☾☾☾</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">연식 체감</span><span style="font:800 15px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">☾☾☾☾<span style="color:#2a3844;">☾</span></span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">관리인 응대</span><span style="font:800 15px/1 'Gothic A1',sans-serif;color:#5ee0ee;white-space:nowrap;">☾☾☾☾☾</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font:600 13px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">접근성</span><span style="font:800 15px/1 'Gothic A1',sans-serif;color:#2a3844;white-space:nowrap;">☾☾☾☾☾</span></div>
+        </div>
+        <div style="height:132px;border-radius:11px;background:#0d141c;border:1px solid rgba(94,224,238,.3);padding:14px 15px;margin-bottom:12px;">
+          <span style="font:400 13px/1.7 'Gothic A1',sans-serif;color:#5b7180;">밤에 어땠는지, 이웃은 조용했는지 적어주세요. 다음 투숙객에게 큰 도움이 됩니다.</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:18px;">
+          <div style="width:64px;height:64px;border-radius:9px;border:1px dashed rgba(120,170,190,.3);display:flex;align-items:center;justify-content:center;font:600 20px/1 'IBM Plex Mono',monospace;color:#5b7180;">+</div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:5px;">
+            <span style="font:600 12px/1 'Gothic A1',sans-serif;color:#c3d2da;white-space:nowrap;">사진 추가 (최대 6장)</span>
+            <span style="font:400 11px/1.5 'Gothic A1',sans-serif;color:#7e8d9a;">부장품이 찍힌 사진은 자동으로 가려집니다.</span>
+          </div>
+        </div>
+        <div style="height:50px;border-radius:11px;background:#5ee0ee;display:flex;align-items:center;justify-content:center;font:800 14px/1 'Gothic A1',sans-serif;color:#05161a;white-space:nowrap;">후기 등록하고 ₩5,000 받기</div>
+      </div>
+      <div style="margin-top:14px;padding:18px;border-radius:12px;border:1px dashed rgba(120,170,190,.24);background:#0d141c;">
+        <div style="font:700 13px/1.4 'Gothic A1',sans-serif;color:#c3d2da;margin-bottom:7px;">후기 원칙</div>
+        <div style="font:400 12px/1.7 'Gothic A1',sans-serif;color:#7e8d9a;">실제 투숙객만 작성할 수 있고, 14일간 수정할 수 있습니다. 이웃(고인)에 대한 비방은 게시되지 않습니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+</x-dc>
+</body>
+</html>

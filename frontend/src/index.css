@@ -1501,6 +1501,143 @@ a.list-row:hover,
   flex-wrap: wrap;
 }
 
+/* ---- 분할형 인증 화면 (로그인) ---- */
+.auth-split {
+  display: flex;
+  min-height: calc(100vh - var(--header-h));
+}
+
+.auth-split-brand {
+  width: 44%;
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--soil), var(--void));
+  border-right: 1px solid var(--hair);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-split-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.auth-split-brand-bottom {
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.auth-split-form {
+  flex: 1;
+  min-width: 0;
+  padding: 72px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-split-form-inner {
+  width: 100%;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 26px;
+  border-bottom: 1px solid var(--hair);
+  margin-bottom: 30px;
+}
+
+.auth-tab {
+  padding: 0 2px 14px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ash-dim);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease;
+}
+
+.auth-tab.active {
+  color: var(--bone);
+  border-bottom-color: var(--blood-bright);
+}
+
+.auth-tab:not(.active):hover {
+  color: var(--ash);
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 52px;
+  border-radius: var(--r-md);
+  background: var(--stone);
+  border: 1px solid var(--hair);
+  padding: 0 16px;
+  margin-bottom: 20px;
+  transition: border-color 0.16s ease;
+}
+
+.input-box:focus-within {
+  border-color: var(--blood-bright);
+}
+
+.input-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 14px;
+  color: var(--bone);
+}
+
+.input-box input::placeholder {
+  color: var(--ash-dim);
+}
+
+.input-box input:focus {
+  outline: none;
+}
+
+.input-box-toggle {
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blood-bright);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.auth-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+.auth-check input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--blood-bright);
+  cursor: pointer;
+}
+
+.auth-check span {
+  font-size: 13px;
+  color: var(--ash);
+}
+
 /* ---- 마이페이지 ---- */
 .profile-head {
   display: flex;
@@ -1829,6 +1966,12 @@ table.table {
 
 /* --------------------------- 반응형 --------------------------- */
 @media (max-width: 1024px) {
+  .auth-split-brand {
+    display: none;
+  }
+  .auth-split-form {
+    padding: 56px 40px;
+  }
   .detail-layout {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1917,6 +2060,9 @@ table.table {
   }
   .auth-card {
     padding: 30px 22px;
+  }
+  .auth-split-form {
+    padding: 40px 22px;
   }
   .nav-link {
     padding: 8px 9px;

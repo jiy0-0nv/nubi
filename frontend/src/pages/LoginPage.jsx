@@ -3,6 +3,30 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROLE, useAuth } from '../context/AuthContext';
 import Alert from '../components/Alert';
 
+/* 좌측 브랜드 패널의 달·피라미드 실루엣 (순수 CSS 장식) */
+function BrandDecor() {
+  return (
+    <div className="auth-split-decor" aria-hidden="true">
+      <div style={{ position: 'absolute', top: 90, right: -40, width: 130, height: 130, borderRadius: 999, background: 'var(--yellow)', opacity: 0.9 }} />
+      <div style={{ position: 'absolute', top: 90, right: -6, width: 130, height: 130, borderRadius: 999, background: 'var(--void)' }} />
+      <div
+        style={{
+          position: 'absolute', bottom: -1, right: 40,
+          width: 0, height: 0,
+          borderLeft: '84px solid transparent', borderRight: '84px solid transparent', borderBottom: '108px solid rgba(94,224,238,.14)',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute', bottom: -1, right: 172,
+          width: 0, height: 0,
+          borderLeft: '52px solid transparent', borderRight: '52px solid transparent', borderBottom: '70px solid rgba(94,224,238,.08)',
+        }}
+      />
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------------
  * 로그인 화면.
  *
@@ -22,6 +46,8 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -56,62 +82,104 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-wrap">
-      <div className="auth-card">
-        <div className="auth-head">
-          <p className="eyebrow">Entry Record</p>
-          <h1>입주 기록</h1>
-          <p>이름을 남긴 자만이 이 문을 지날 수 있습니다.</p>
+    <div className="auth-split">
+      {/* ---------- 좌측 브랜드 패널 ---------- */}
+      <div className="auth-split-brand">
+        <BrandDecor />
+
+        <div className="auth-split-brand-bottom">
+          <p className="mono" style={{ fontSize: 11, letterSpacing: '0.2em', color: 'var(--green)', marginBottom: 16 }}>
+            WORLD&apos;S OLDEST GUESTHOUSES
+          </p>
+          <h2 style={{ fontSize: 32, lineHeight: 1.28, marginBottom: 14 }}>
+            4,600년 된 방이
+            <br />
+            당신을 기다립니다
+          </h2>
+          <p className="muted" style={{ fontSize: 14, lineHeight: 1.75 }}>
+            등록 묘소 1,204곳 · 41개국 · 최고 연식 6,600만 년
+          </p>
         </div>
+      </div>
 
-        <Alert>{error}</Alert>
-        {warning && (
-          <Alert tone="info">
-            {warning}{' '}
-            <Link to="/whoami" className="link">
-              권한 진단 열기
+      {/* ---------- 우측 폼 패널 ---------- */}
+      <div className="auth-split-form">
+        <div className="auth-split-form-inner">
+          <div className="auth-tabs">
+            <span className="auth-tab active">로그인</span>
+            <Link to="/signup" className="auth-tab">
+              회원가입
             </Link>
-          </Alert>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label htmlFor="email">이메일</label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="username"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-            />
           </div>
-          <div className="field">
-            <label htmlFor="password">비밀번호</label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
-            {submitting ? '확인하는 중…' : '입주하기'}
-          </button>
-        </form>
 
-        <div className="auth-foot">
-          <Link to="/signup" className="link">
-            입주 신청
-          </Link>
-          <span className="dim">·</span>
-          <Link to="/find-account" className="link">
-            기록을 잃어버렸습니다
-          </Link>
+          <Alert>{error}</Alert>
+          {warning && (
+            <Alert tone="info">
+              {warning}{' '}
+              <Link to="/whoami" className="link">
+                권한 진단 열기
+              </Link>
+            </Alert>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="email" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              이메일
+            </label>
+            <div className="input-box">
+              <input
+                id="email"
+                type="email"
+                autoComplete="username"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <label htmlFor="password" className="label" style={{ display: 'block', marginBottom: 9 }}>
+              비밀번호
+            </label>
+            <div className="input-box">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="input-box-toggle"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+              >
+                {showPassword ? '숨김' : '표시'}
+              </button>
+            </div>
+
+            <div className="row-between" style={{ marginBottom: 28 }}>
+              <label className="auth-check">
+                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+                <span>로그인 상태 유지</span>
+              </label>
+              <Link to="/find-account" className="link tiny">
+                비밀번호 찾기
+              </Link>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
+              {submitting ? '확인하는 중…' : '로그인하기'}
+            </button>
+          </form>
+
+          <p className="tiny dim" style={{ lineHeight: 1.7, marginTop: 26 }}>
+            계속하면 이용약관과 개인정보 처리방침에 동의하게 됩니다. 만 19세 이상만 가입할 수
+            있습니다.
+          </p>
         </div>
       </div>
     </div>
