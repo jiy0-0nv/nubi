@@ -91,7 +91,7 @@ export function calculateEstimatedTotal(checkinStr, checkoutStr, weekdayPrice, w
 
 const BOOKING_STATUS = {
   CONFIRMED: { label: '봉인 완료', tone: 'confirmed' },
-  COMPLETED: { label: '하산 완료', tone: 'completed' },
+  COMPLETED: { label: '퇴실 완료', tone: 'completed' },
   CANCELLED: { label: '파기됨', tone: 'cancelled' },
 };
 

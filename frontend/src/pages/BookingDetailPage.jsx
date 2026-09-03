@@ -103,11 +103,11 @@ export default function BookingDetailPage() {
 
       <div className="panel mb-24">
         <div className="price-line">
-          <span>입산</span>
+          <span>입실</span>
           <span>{formatDateTime(booking.checkInDate)}</span>
         </div>
         <div className="price-line">
-          <span>하산</span>
+          <span>퇴실</span>
           <span>{formatDateTime(booking.checkOutDate)}</span>
         </div>
         <div className="price-line">
@@ -139,7 +139,7 @@ export default function BookingDetailPage() {
                   rows={3}
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  placeholder="왜 오르지 못하게 되었습니까"
+                  placeholder="왜 입주하지 못하게 되었습니까"
                 />
               </div>
               <div className="row gap-8">
@@ -153,7 +153,7 @@ export default function BookingDetailPage() {
             </>
           ) : (
             <>
-              <p className="tiny muted mb-16">파기해도 예약 기록 자체는 산장에 남습니다.</p>
+              <p className="tiny muted mb-16">파기해도 예약 기록 자체는 무덤에 남습니다.</p>
               <button type="button" className="btn btn-danger" onClick={() => setCancelOpen(true)}>
                 예약 파기하기
               </button>

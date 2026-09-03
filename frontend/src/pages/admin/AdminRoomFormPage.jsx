@@ -57,7 +57,7 @@ export default function AdminRoomFormPage() {
     setError('');
 
     if (Number(form.weekendPrice) < Number(form.weekdayPrice)) {
-      // 막지는 않고 안내만 — 실제로 주말이 더 싼 산장도 있을 수 있으니까요.
+      // 막지는 않고 안내만 — 실제로 주말이 더 싼 무덤도 있을 수 있으니까요.
       // (여기서 return하지 않습니다)
     }
 
@@ -101,7 +101,7 @@ export default function AdminRoomFormPage() {
       <div className="admin-topbar">
         <div>
           <p className="eyebrow">{isEdit ? 'Edit' : 'New'}</p>
-          <h1>{isEdit ? '산장 정보 수정' : '새 산장 세우기'}</h1>
+          <h1>{isEdit ? '무덤 정보 수정' : '새 무덤 세우기'}</h1>
         </div>
         <Link to="/admin/rooms" className="btn btn-ghost">
           ← 목록으로
@@ -112,7 +112,7 @@ export default function AdminRoomFormPage() {
 
       <form onSubmit={handleSubmit} className="panel" style={{ maxWidth: 720 }}>
         <div className="field">
-          <label htmlFor="name">산장 이름</label>
+          <label htmlFor="name">무덤 이름</label>
           <input
             id="name"
             type="text"
@@ -120,7 +120,7 @@ export default function AdminRoomFormPage() {
             maxLength={100}
             value={form.name}
             onChange={update('name')}
-            placeholder="예) 능선 끝 세 번째 산장"
+            placeholder="예) 묘역 끝 세 번째 무덤"
           />
         </div>
 
@@ -131,7 +131,7 @@ export default function AdminRoomFormPage() {
             rows={4}
             value={form.description}
             onChange={update('description')}
-            placeholder="이 산장에 대해 손님이 알아야 할 것"
+            placeholder="이 무덤에 대해 손님이 알아야 할 것"
           />
         </div>
 
@@ -142,7 +142,7 @@ export default function AdminRoomFormPage() {
           </div>
           <div className="field">
             <label htmlFor="city">도시</label>
-            <input id="city" type="text" required value={form.city} onChange={update('city')} placeholder="원주" />
+            <input id="city" type="text" required value={form.city} onChange={update('city')} placeholder="파주" />
           </div>
         </div>
 
@@ -208,7 +208,7 @@ export default function AdminRoomFormPage() {
 
         <div className="row gap-8 mt-24">
           <button type="submit" className="btn btn-primary btn-lg" disabled={submitting}>
-            {submitting ? '저장하는 중…' : isEdit ? '수정 완료' : '산장 세우기'}
+            {submitting ? '저장하는 중…' : isEdit ? '수정 완료' : '무덤 세우기'}
           </button>
           <button type="button" className="btn btn-ghost" onClick={() => navigate('/admin/rooms')}>
             취소

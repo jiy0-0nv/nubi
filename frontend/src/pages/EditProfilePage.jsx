@@ -80,7 +80,7 @@ export default function EditProfilePage() {
           <span>{profile?.phone || '-'}</span>
         </div>
         <p className="tiny dim mt-16">
-          이름·이메일·연락처는 현재 서버에서 수정 API를 제공하지 않습니다. 변경이 필요하면 산장지기에게 문의하십시오.
+          이름·이메일·연락처는 현재 서버에서 수정 API를 제공하지 않습니다. 변경이 필요하면 묘지기에게 문의하십시오.
         </p>
       </div>
 
@@ -118,7 +118,7 @@ export default function EditProfilePage() {
       <div className="panel" style={{ borderColor: 'var(--hair-blood)' }}>
         <p className="eyebrow">위험 구역</p>
         <p className="tiny muted mb-16">
-          탈퇴하면 이 이름은 산에서 지워집니다. 남아 있는 예약과 증언도 함께 사라집니다.
+          탈퇴하면 이 이름은 이 땅에서 지워집니다. 남아 있는 예약과 증언도 함께 사라집니다.
         </p>
         {confirmWithdraw ? (
           <div className="row gap-8">

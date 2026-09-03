@@ -11,7 +11,7 @@ import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '..
 const TABS = [
   { key: '', label: '전체' },
   { key: 'CONFIRMED', label: '봉인 완료' },
-  { key: 'COMPLETED', label: '하산 완료' },
+  { key: 'COMPLETED', label: '퇴실 완료' },
   { key: 'CANCELLED', label: '파기됨' },
 ];
 
@@ -68,7 +68,7 @@ export default function BookingListPage() {
           description="다른 상태를 골라보거나 새로 예약해 보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              산장 둘러보기
+              무덤 둘러보기
             </Link>
           }
         />

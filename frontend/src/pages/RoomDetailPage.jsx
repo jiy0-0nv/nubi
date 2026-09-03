@@ -89,7 +89,7 @@ export default function RoomDetailPage() {
   const nights = calculateNights(checkin, checkout);
   const estimate = room ? calculateEstimatedTotal(checkin, checkout, room.weekdayPrice, room.weekendPrice) : 0;
 
-  if (loading) return <Spinner label="산장을 여는 중" />;
+  if (loading) return <Spinner label="무덤을 여는 중" />;
   if (error) {
     return (
       <div className="container page">
@@ -118,11 +118,11 @@ export default function RoomDetailPage() {
       return;
     }
     if (nights <= 0) {
-      setFormError('입산일과 하산일을 올바르게 선택해 주십시오.');
+      setFormError('입실일과 퇴실일을 올바르게 선택해 주십시오.');
       return;
     }
     if (guests > Number(room.maxGuests)) {
-      setFormError(`이 산장은 최대 ${room.maxGuests}명까지만 받습니다.`);
+      setFormError(`이 무덤은 최대 ${room.maxGuests}명까지만 받습니다.`);
       return;
     }
     const params = new URLSearchParams({ checkin, checkout, guests: String(guests) });
@@ -182,11 +182,11 @@ export default function RoomDetailPage() {
         <div>
           <div className="spec-list mb-24">
             <div className="spec">
-              <p className="spec-label">산장지기</p>
+              <p className="spec-label">묘지기</p>
               <p className="spec-value">{room.ownerName || '알 수 없음'}</p>
             </div>
             <div className="spec">
-              <p className="spec-label">입산 / 하산</p>
+              <p className="spec-label">입실 / 퇴실</p>
               <p className="spec-value">
                 {formatTime(room.checkinTime)} · {formatTime(room.checkoutTime)}
               </p>
@@ -201,7 +201,7 @@ export default function RoomDetailPage() {
             </div>
           </div>
 
-          <h2 className="serif">이 산장에 대하여</h2>
+          <h2 className="serif">이 무덤에 대하여</h2>
           <div className="rule mb-16" />
           <p className="muted" style={{ lineHeight: 1.9, whiteSpace: 'pre-wrap' }}>
             {room.description || '기록이 남아 있지 않습니다.'}
@@ -246,7 +246,7 @@ export default function RoomDetailPage() {
 
           <div className="field-row">
             <div className="field">
-              <label>입산일</label>
+              <label>입실일</label>
               <input
                 type="date"
                 min={today}
@@ -258,7 +258,7 @@ export default function RoomDetailPage() {
               />
             </div>
             <div className="field">
-              <label>하산일</label>
+              <label>퇴실일</label>
               <input
                 type="date"
                 min={addDays(checkin, 1)}
@@ -281,7 +281,7 @@ export default function RoomDetailPage() {
 
           <Alert>{formError}</Alert>
 
-          {!active && <Alert tone="info">지금은 이 산장에 들어갈 수 없습니다.</Alert>}
+          {!active && <Alert tone="info">지금은 이 무덤에 들어갈 수 없습니다.</Alert>}
           {isAdmin && <Alert tone="info">관리자 계정으로는 예약할 수 없습니다.</Alert>}
 
           <button
@@ -290,7 +290,7 @@ export default function RoomDetailPage() {
             disabled={!active || isAdmin}
             onClick={handleReserve}
           >
-            입산 예약하기
+            입실 예약하기
           </button>
 
           {nights > 0 && (

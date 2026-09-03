@@ -48,7 +48,7 @@ export default function ReservationPage() {
     setError('');
 
     if (nights <= 0) {
-      setError('날짜가 올바르지 않습니다. 산장 상세 화면에서 다시 선택해 주십시오.');
+      setError('날짜가 올바르지 않습니다. 무덤 상세 화면에서 다시 선택해 주십시오.');
       return;
     }
 
@@ -73,7 +73,7 @@ export default function ReservationPage() {
   if (!room) {
     return (
       <div className="container page">
-        <Alert>{error || '산장을 찾을 수 없습니다.'}</Alert>
+        <Alert>{error || '무덤을 찾을 수 없습니다.'}</Alert>
       </div>
     );
   }
@@ -81,7 +81,7 @@ export default function ReservationPage() {
   return (
     <div className="container page" style={{ maxWidth: 880 }}>
       <p className="eyebrow">Final Confirmation</p>
-      <h1>입산 서약</h1>
+      <h1>입주 서약</h1>
       <div className="rule mb-24" />
 
       <Alert>{error}</Alert>
@@ -96,12 +96,12 @@ export default function ReservationPage() {
 
         <div className="spec-list">
           <div className="spec">
-            <p className="spec-label">입산</p>
+            <p className="spec-label">입실</p>
             <p className="spec-value">{formatDate(checkin)}</p>
             <p className="tiny dim mt-8">{formatTime(room.checkinTime)} 이후</p>
           </div>
           <div className="spec">
-            <p className="spec-label">하산</p>
+            <p className="spec-label">퇴실</p>
             <p className="spec-value">{formatDate(checkout)}</p>
             <p className="tiny dim mt-8">{formatTime(room.checkoutTime)} 까지</p>
           </div>
@@ -157,8 +157,8 @@ export default function ReservationPage() {
             style={{ width: 16, height: 16, marginTop: 4, accentColor: 'var(--blood-bright)' }}
           />
           <span className="tiny muted">
-            해가 진 뒤에는 산장 밖으로 나가지 않겠습니다. 방 안에서 들리는 소리에 대답하지 않겠습니다.
-            이 예약의 모든 기록이 산장에 남는 것에 동의합니다.
+            해가 진 뒤에는 무덤 밖으로 나가지 않겠습니다. 방 안에서 들리는 소리에 대답하지 않겠습니다.
+            이 예약의 모든 기록이 무덤에 남는 것에 동의합니다.
           </span>
         </label>
 

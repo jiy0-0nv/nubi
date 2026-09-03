@@ -21,14 +21,14 @@ export default function Navbar() {
       <div className="container row" style={{ width: '100%' }}>
         <Link to="/" className="brand" aria-label="누비 홈으로">
           <span className="brand-mark">
-            누<em>비</em>
+            NU<em>BI</em>
           </span>
-          <span className="brand-sub">Nubi Mountain Lodge</span>
+          <span className="brand-sub">Nubi Broadcasting System</span>
         </Link>
 
         <nav className="nav">
           <NavLink to="/rooms" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
-            산장 둘러보기
+            무덤 둘러보기
           </NavLink>
 
           {isAuthenticated ? (
@@ -48,10 +48,10 @@ export default function Navbar() {
           ) : (
             <>
               <NavLink to="/login" className="nav-link">
-                입산 기록
+                입주 기록
               </NavLink>
               <Link to="/signup" className="btn btn-primary btn-sm">
-                입산 신청
+                입주 신청
               </Link>
             </>
           )}

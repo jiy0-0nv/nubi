@@ -39,7 +39,7 @@ export default function MyPage() {
         </div>
         <div style={{ flex: 1 }}>
           <p className="eyebrow" style={{ marginBottom: 6 }}>
-            입산자 기록
+            입주자 기록
           </p>
           <h1 style={{ fontSize: 26 }}>{me?.name || '이름 없음'}</h1>
           <p className="tiny dim mono mt-8">{me?.email}</p>
@@ -77,11 +77,11 @@ export default function MyPage() {
       {bookings.length === 0 ? (
         <EmptyState
           mark="†"
-          title="아직 오른 적이 없습니다"
-          description="능선 위의 산장을 둘러보십시오."
+          title="아직 든 적이 없습니다"
+          description="묘역의 무덤을 둘러보십시오."
           action={
             <Link to="/rooms" className="btn btn-primary">
-              산장 둘러보기
+              무덤 둘러보기
             </Link>
           }
         />

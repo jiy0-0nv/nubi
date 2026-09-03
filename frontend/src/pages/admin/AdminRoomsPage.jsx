@@ -65,11 +65,11 @@ export default function AdminRoomsPage() {
       <div className="admin-topbar">
         <div>
           <p className="eyebrow">Properties</p>
-          <h1>산장 관리</h1>
-          <p className="tiny dim mt-8">내가 소유한 산장만 보입니다. 다른 산장지기의 것은 서버가 차단합니다.</p>
+          <h1>무덤 관리</h1>
+          <p className="tiny dim mt-8">내가 소유한 무덤만 보입니다. 다른 묘지기의 것은 서버가 차단합니다.</p>
         </div>
         <Link to="/admin/rooms/new" className="btn btn-primary">
-          + 새 산장 세우기
+          + 새 무덤 세우기
         </Link>
       </div>
 
@@ -81,11 +81,11 @@ export default function AdminRoomsPage() {
       ) : rooms.length === 0 ? (
         <EmptyState
           mark="▣"
-          title="세워둔 산장이 없습니다"
-          description="첫 산장을 등록해 능선 위에 올려보십시오."
+          title="세워둔 무덤이 없습니다"
+          description="첫 무덤을 등록해 묘역에 올려보십시오."
           action={
             <Link to="/admin/rooms/new" className="btn btn-primary">
-              새 산장 세우기
+              새 무덤 세우기
             </Link>
           }
         />
@@ -95,7 +95,7 @@ export default function AdminRoomsPage() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>산장</th>
+                  <th>무덤</th>
                   <th>위치</th>
                   <th>요금 (평일/주말)</th>
                   <th>정원</th>

@@ -50,7 +50,7 @@ export default function SignupPage() {
       <div className="auth-card">
         <div className="auth-head">
           <p className="eyebrow">Application</p>
-          <h1>입산 신청</h1>
+          <h1>입주 신청</h1>
           <p>이 아래에 남긴 이름은 지워지지 않습니다.</p>
         </div>
 
@@ -115,7 +115,7 @@ export default function SignupPage() {
         <div className="auth-foot">
           <span className="dim">이미 기록이 있습니까?</span>
           <Link to="/login" className="link">
-            입산 기록으로
+            입주 기록으로
           </Link>
         </div>
       </div>

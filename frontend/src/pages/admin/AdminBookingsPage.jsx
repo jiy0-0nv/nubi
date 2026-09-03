@@ -11,7 +11,7 @@ import { bookingStatus, bookingTotal, formatCurrency, formatShortDate } from '..
 const TABS = [
   { key: '', label: '전체' },
   { key: 'CONFIRMED', label: '봉인 완료' },
-  { key: 'COMPLETED', label: '하산 완료' },
+  { key: 'COMPLETED', label: '퇴실 완료' },
   { key: 'CANCELLED', label: '파기됨' },
 ];
 
@@ -81,12 +81,12 @@ export default function AdminBookingsPage() {
         <div>
           <p className="eyebrow">Bookings</p>
           <h1>예약 관리</h1>
-          <p className="tiny dim mt-8">내 산장에 들어온 예약만 보입니다.</p>
+          <p className="tiny dim mt-8">내 무덤에 들어온 예약만 보입니다.</p>
         </div>
         <div className="field" style={{ marginBottom: 0, minWidth: 220 }}>
-          <label htmlFor="roomFilter">산장별 보기</label>
+          <label htmlFor="roomFilter">무덤별 보기</label>
           <select id="roomFilter" value={roomId} onChange={(e) => setParam({ room_id: e.target.value })}>
-            <option value="">전체 산장</option>
+            <option value="">전체 무덤</option>
             {rooms.map((room) => (
               <option key={room.id} value={room.id}>
                 {room.name}
@@ -123,7 +123,7 @@ export default function AdminBookingsPage() {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>산장</th>
+                  <th>무덤</th>
                   <th>예약자</th>
                   <th>일정</th>
                   <th>인원</th>

@@ -101,7 +101,7 @@ export default function FindAccountPage() {
                   기록을 찾았습니다 — <strong className="mono">{foundEmail}</strong>
                 </Alert>
                 <Link to="/login" className="btn btn-outline btn-block">
-                  이 계정으로 입산하기
+                  이 계정으로 입주하기
                 </Link>
               </div>
             )}
@@ -133,7 +133,7 @@ export default function FindAccountPage() {
 
         <div className="auth-foot">
           <Link to="/login" className="link">
-            ← 입산 기록으로 돌아가기
+            ← 입주 기록으로 돌아가기
           </Link>
         </div>
       </div>

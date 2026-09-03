@@ -13,9 +13,9 @@ export default function UserLayout() {
         <div className="container row-between">
           <div>
             <p className="serif" style={{ letterSpacing: '0.24em', fontSize: 15 }}>
-              누비 산장
+              누비 묘원
             </p>
-            <p className="tiny dim mt-8">함부로 오르지 말 것 · 산은 아직 기억하고 있다</p>
+            <p className="tiny dim mt-8">함부로 깨우지 말 것 · 땅은 아직 기억하고 있다</p>
           </div>
           <p className="mono dim">© {new Date().getFullYear()} NUBI</p>
         </div>

@@ -60,8 +60,8 @@ export default function LoginPage() {
       <div className="auth-card">
         <div className="auth-head">
           <p className="eyebrow">Entry Record</p>
-          <h1>입산 기록</h1>
-          <p>이름을 남긴 자만이 산을 오를 수 있습니다.</p>
+          <h1>입주 기록</h1>
+          <p>이름을 남긴 자만이 이 문을 지날 수 있습니다.</p>
         </div>
 
         <Alert>{error}</Alert>
@@ -100,13 +100,13 @@ export default function LoginPage() {
             />
           </div>
           <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={submitting}>
-            {submitting ? '확인하는 중…' : '입산하기'}
+            {submitting ? '확인하는 중…' : '입주하기'}
           </button>
         </form>
 
         <div className="auth-foot">
           <Link to="/signup" className="link">
-            입산 신청
+            입주 신청
           </Link>
           <span className="dim">·</span>
           <Link to="/find-account" className="link">
