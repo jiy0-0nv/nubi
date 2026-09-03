@@ -214,12 +214,8 @@ export default function RoomDetailPage() {
             </div>
             <div className="spec">
               <p className="spec-label">1박 요금</p>
-              <p className="spec-value">
-                {formatCurrency(room.weekdayPrice)} <span className="tiny dim">평일</span>
-              </p>
-              <p className="tiny dim mt-8">
-                {formatCurrency(room.weekendPrice)} <span className="dim">금·토</span>
-              </p>
+              <p className="spec-value">{formatCurrency(room.weekdayPrice)}</p>
+              <p className="tiny dim mt-8">~ {formatCurrency(room.weekendPrice)}</p>
             </div>
           </div>
 
@@ -276,9 +272,8 @@ export default function RoomDetailPage() {
           <p className="eyebrow">1박 요금</p>
           <p className="price" style={{ fontSize: 26, marginBottom: 4 }}>
             {formatCurrency(room.weekdayPrice)}
-            <small>평일</small>
           </p>
-          <p className="tiny dim mb-16">금·토 숙박은 {formatCurrency(room.weekendPrice)}</p>
+          <p className="tiny dim mb-16">~ {formatCurrency(room.weekendPrice)}</p>
 
           <div className="field-row">
             <div className="field">
