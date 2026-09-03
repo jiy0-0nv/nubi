@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { updateRole } from '../api/auth';
 
 /**
  * 사용자 영역 상단 헤더.
@@ -8,12 +10,27 @@ import { useAuth } from '../context/AuthContext';
  * 그때는 "호스트 화면" 진입 링크를 하나 노출해 줍니다.
  */
 export default function Navbar() {
-  const { isAuthenticated, isAdmin, profile, logout } = useAuth();
+  const { isAuthenticated, isAdmin, userId, profile, logout, reloadProfile } = useAuth();
   const navigate = useNavigate();
+  const [becomingHost, setBecomingHost] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/', { replace: true });
+  };
+
+  const handleBecomeHost = async () => {
+    if (!window.confirm('호스트로 등록하시겠습니까?')) return;
+    setBecomingHost(true);
+    try {
+      await updateRole(userId, 'ADMIN');
+      await reloadProfile();
+      navigate('/admin');
+    } catch (err) {
+      window.alert(err.message || '호스트 등록에 실패했습니다.');
+    } finally {
+      setBecomingHost(false);
+    }
   };
 
   return (
@@ -42,8 +59,18 @@ export default function Navbar() {
             <NavLink to="/admin" className="nav-link nav-link-strong">
               호스트 화면
             </NavLink>
+          ) : isAuthenticated ? (
+            <button
+              type="button"
+              className="nav-link nav-link-strong"
+              style={{ background: 'none', border: 0, cursor: 'pointer' }}
+              onClick={handleBecomeHost}
+              disabled={becomingHost}
+            >
+              {becomingHost ? '등록하는 중…' : '호스팅하기'}
+            </button>
           ) : (
-            <Link to={isAuthenticated ? '/whoami' : '/signup'} className="nav-link nav-link-strong">
+            <Link to="/signup" className="nav-link nav-link-strong">
               호스팅하기
             </Link>
           )}
@@ -58,12 +85,12 @@ export default function Navbar() {
               </Link>
               <button
                 type="button"
-                className="login-pill-avatar filled"
+                className="logout-btn"
                 onClick={handleLogout}
-                aria-label="나가기"
-                title="나가기"
+                aria-label="로그아웃"
+                title="로그아웃"
               >
-                {profile?.name ? profile.name[0] : '?'}
+                로그아웃
               </button>
             </div>
           ) : (

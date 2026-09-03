@@ -192,6 +192,21 @@ public class AdminRoomsController {
         adminRoomImagesService.deleteImage(ownerId, roomId, imageId);
     }
 
+    /** 드래그로 바꾼 사진 순서를 저장합니다. body: 새 순서대로 나열한 imageId 배열 */
+    @PatchMapping("/{roomId}/images/order")
+    public List<AdminRoomImageResponseDTO> reorderRoomImages(@PathVariable Long roomId,
+                                                               @RequestBody List<Long> orderedImageIds) {
+        Long ownerId = requireUserId();
+        return adminRoomImagesService.reorderImages(ownerId, roomId, orderedImageIds);
+    }
+
+    /** imageId를 대표 사진으로 지정합니다. */
+    @PatchMapping("/{roomId}/images/{imageId}/thumbnail")
+    public List<AdminRoomImageResponseDTO> setRoomImageThumbnail(@PathVariable Long roomId, @PathVariable Long imageId) {
+        Long ownerId = requireUserId();
+        return adminRoomImagesService.setThumbnail(ownerId, roomId, imageId);
+    }
+
     private Long getCurrentUserId() {
         Object userId = request.getAttribute(JwtAuthenticationFilter.USER_ID_ATTRIBUTE);
         return userId instanceof Long ? (Long) userId : null;

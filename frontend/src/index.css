@@ -446,8 +446,14 @@ p {
 
 .field-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr): 그리드 칸의 기본 최소 너비(auto)는 안의 콘텐츠 크기를 따라가서,
+     input[type=date]처럼 폭이 있는 요소가 들어오면 칸이 못 줄어들고 박스 밖으로 밀려납니다. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
+}
+
+.field-row .field {
+  min-width: 0;
 }
 
 /* 날짜/시간 입력의 기본 아이콘을 어두운 배경에 맞춰 시안 톤으로 */
@@ -802,6 +808,81 @@ a.list-row:hover,
 .nowrap { white-space: nowrap; }
 .gap-8 { gap: 8px; }
 
+/* 길게 이어지는 본문을 지정한 줄 수에서 잘라 보여줍니다. (예: 묘소 설명 미리보기) */
+.clamp-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp-lines, 10);
+  line-clamp: var(--clamp-lines, 10);
+  overflow: hidden;
+}
+
+/* ---- 모달 ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 11, 0.72);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 560px;
+  max-height: min(72vh, 640px);
+  display: flex;
+  flex-direction: column;
+  background: var(--stone);
+  border: 1px solid var(--hair-blood);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-blood);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hair);
+  flex-shrink: 0;
+}
+
+.modal-head h3 {
+  margin: 0;
+}
+
+.modal-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ash);
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease;
+}
+
+.modal-close:hover {
+  border-color: var(--hair-blood);
+  color: var(--bone);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  color: var(--ash);
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
+
 /* ======================= 10) 화면별 스타일 ======================= */
 
 /* ---- 상단 안내 바 ---- */
@@ -936,6 +1017,27 @@ a.list-row:hover,
   border-color: transparent;
 }
 
+.logout-btn {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, var(--blood-bright), var(--rust));
+  color: var(--void);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: filter 0.16s ease;
+}
+
+.logout-btn:hover {
+  filter: brightness(1.08);
+}
+
 /* ---- 랜딩 히어로 ---- */
 .landing-hero {
   position: relative;
@@ -963,7 +1065,7 @@ a.list-row:hover,
 .landing-hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 960px;
 }
 
 .landing-kicker {
@@ -1107,6 +1209,11 @@ a.list-row:hover,
   font-weight: 500;
   color: var(--bone);
   width: 100%;
+}
+
+/* 날짜 텍스트가 오른쪽 캘린더 아이콘과 겹치지 않도록 여유를 둡니다 */
+.search-pill-field input[type='date'] {
+  padding-right: 10px;
 }
 
 .search-pill-field input::placeholder {
@@ -1548,7 +1655,7 @@ a.list-row:hover,
   display: flex;
   gap: 26px;
   border-bottom: 1px solid var(--hair);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .auth-tab {
@@ -1905,12 +2012,24 @@ table.table {
   border-radius: var(--r-md);
   overflow: hidden;
   background: var(--grave);
+  cursor: grab;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.image-cell:active {
+  cursor: grabbing;
+}
+
+.image-cell.drag-over {
+  border-color: var(--blood-bright);
+  box-shadow: 0 0 0 2px rgba(94, 224, 238, 0.28) inset;
 }
 
 .image-cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 .image-cell .image-del {
@@ -1929,6 +2048,39 @@ table.table {
 .image-cell .image-del:hover {
   background: var(--blood);
   color: #fff;
+}
+
+.image-cell .image-thumb-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair-strong);
+  background: rgba(7, 9, 13, 0.82);
+  color: var(--ash);
+  cursor: pointer;
+}
+
+.image-cell .image-thumb-btn:hover:not(:disabled) {
+  border-color: var(--hair-blood);
+  color: var(--bone);
+}
+
+.image-cell .image-thumb-btn.active {
+  border-color: var(--hair-blood);
+  background: var(--blood-bright);
+  color: var(--void);
+  cursor: default;
+}
+
+.image-cell .image-del:disabled,
+.image-cell .image-thumb-btn:disabled:not(.active) {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dropzone {
