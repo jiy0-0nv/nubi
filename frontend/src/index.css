@@ -1548,7 +1548,7 @@ a.list-row:hover,
   display: flex;
   gap: 26px;
   border-bottom: 1px solid var(--hair);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .auth-tab {
