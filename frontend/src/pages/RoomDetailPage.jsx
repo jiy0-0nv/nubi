@@ -312,12 +312,11 @@ export default function RoomDetailPage() {
           <Alert>{formError}</Alert>
 
           {!active && <Alert tone="info">예약할 수 없는 날짜입니다.</Alert>}
-          {isAdmin && <Alert tone="info">관리자 계정으로는 예약할 수 없습니다.</Alert>}
 
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg"
-            disabled={!active || isAdmin}
+            disabled={!active}
             onClick={handleReserve}
           >
             입실 예약하기
