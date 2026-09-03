@@ -11,8 +11,8 @@ import StarRating from '../components/StarRating';
 import GuestStepper from '../components/GuestStepper';
 import {
   addDays,
-  calculateEstimatedTotal,
   calculateNights,
+  calculateStayBreakdown,
   formatCurrency,
   formatDate,
   formatTime,
@@ -104,7 +104,10 @@ export default function RoomDetailPage() {
   }, [room]);
 
   const nights = calculateNights(checkin, checkout);
-  const estimate = room ? calculateEstimatedTotal(checkin, checkout, room.weekdayPrice, room.weekendPrice) : 0;
+  const stay = room
+    ? calculateStayBreakdown(checkin, checkout, room.weekdayPrice, room.weekendPrice)
+    : { weekdayNights: 0, weekendNights: 0, weekdayTotal: 0, weekendTotal: 0, total: 0 };
+  const estimate = stay.total;
 
   if (loading) return <Spinner label="묘소를 여는 중" />;
   if (error) {
@@ -274,10 +277,10 @@ export default function RoomDetailPage() {
           <div className="row-between" style={{ alignItems: 'baseline', marginBottom: 6 }}>
             <p className="price" style={{ fontSize: 22 }}>
               {formatCurrency(room.weekdayPrice)}
-              <small>/ 1박</small>
+              <small>/ 평일 1박</small>
             </p>
           </div>
-          <p className="tiny dim mb-16">금·토 숙박은 {formatCurrency(room.weekendPrice)}</p>
+          <p className="tiny dim mb-16">~ {formatCurrency(room.weekendPrice)} (금/토)</p>
 
           <div className="booking-fields">
             <div className="booking-field">
@@ -329,16 +332,26 @@ export default function RoomDetailPage() {
           >
             입실 예약하기
           </button>
-          <p className="tiny dim text-center mt-8">최종 금액은 예약 확정 시 서버 계산 결과로 확정됩니다.</p>
+          <p className="tiny dim text-center mt-8">최종 금액은 예약 확정 시 확정됩니다.</p>
 
           {nights > 0 && (
             <div className="mt-24">
-              <div className="price-line">
-                <span>
-                  {formatCurrency(room.weekdayPrice)} × {nights}박
-                </span>
-                <span>{formatCurrency(estimate)}</span>
-              </div>
+              {stay.weekdayNights > 0 && (
+                <div className="price-line">
+                  <span>
+                    {formatCurrency(room.weekdayPrice)} × {stay.weekdayNights}박
+                  </span>
+                  <span>{formatCurrency(stay.weekdayTotal)}</span>
+                </div>
+              )}
+              {stay.weekendNights > 0 && (
+                <div className="price-line">
+                  <span>
+                    {formatCurrency(room.weekendPrice)} × {stay.weekendNights}박 (금·토)
+                  </span>
+                  <span>{formatCurrency(stay.weekendTotal)}</span>
+                </div>
+              )}
               <div className="price-line total">
                 <span>총 합계</span>
                 <span>{formatCurrency(estimate)}</span>

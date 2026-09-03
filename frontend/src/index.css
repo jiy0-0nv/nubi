@@ -1542,16 +1542,16 @@ a.list-row:hover,
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 9px 0;
+  padding: 3px 0;
   font-size: 13.5px;
   color: var(--ash);
-  border-bottom: 1px solid var(--hair);
+  /* border-bottom: 1px solid var(--hair); */
 }
 
 .price-line.total {
   border-bottom: 0;
-  /* border-top: 1px solid var(--hair-strong); */
-  margin-top: 6px;
+  border-top: 1px solid var(--hair-strong);
+  margin-top: 10px;
   padding-top: 14px;
   color: var(--bone);
   font-family: var(--font-display);
