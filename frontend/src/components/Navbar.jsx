@@ -39,7 +39,7 @@ export default function Navbar() {
         <Link to="/" className="row" style={{ gap: 10, flexShrink: 0 }} aria-label="누비 홈으로">
           <span className="brand-icon" aria-hidden="true" />
           <span className="brand-mark">
-            NUBI <emp> MYOBI</emp>
+            NUBI <span className="brand-mark-pink"> MYOBI</span>
           </span>
         </Link>
 
