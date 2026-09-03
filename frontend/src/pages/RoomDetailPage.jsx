@@ -14,7 +14,7 @@ import {
   calculateEstimatedTotal,
   calculateNights,
   formatCurrency,
-  formatDateTime,
+  formatDate,
   formatTime,
   isRoomActive,
   toDateInputValue,
@@ -260,7 +260,7 @@ export default function RoomDetailPage() {
               <div className="review" key={review.id}>
                 <div className="review-head">
                   <span className="review-name">{review.reviewerName || '익명'}</span>
-                  <span className="tiny dim">{formatDateTime(review.createdAt)}</span>
+                  <span className="tiny dim">{formatDate(review.createdAt)}</span>
                 </div>
                 <StarRating value={review.rating} size={13} />
                 <p className="muted mt-8" style={{ whiteSpace: 'pre-wrap' }}>

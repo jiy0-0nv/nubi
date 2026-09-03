@@ -5,7 +5,7 @@ import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import Badge from '../components/Badge';
 import StarRating from '../components/StarRating';
-import { bookingStatus, bookingTotal, formatCurrency, formatDateTime } from '../utils/format';
+import { bookingStatus, bookingTotal, formatCurrency, formatDate, formatDateTime } from '../utils/format';
 
 export default function BookingDetailPage() {
   const { bookingId } = useParams();
@@ -205,7 +205,7 @@ export default function BookingDetailPage() {
             {booking.review.content}
           </p>
           {booking.review.createdAt && (
-            <p className="tiny dim mt-16">{formatDateTime(booking.review.createdAt)}에 남김</p>
+            <p className="tiny dim mt-16">{formatDate(booking.review.createdAt)}에 남김</p>
           )}
         </div>
       )}
