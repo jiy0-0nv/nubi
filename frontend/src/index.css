@@ -1489,6 +1489,55 @@ a.list-row:hover,
   box-shadow: var(--shadow-blood);
 }
 
+/* ---- 예약 위젯의 입실/퇴실/인원 필드 그리드 ---- */
+.booking-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair-strong);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.booking-field {
+  background: var(--soil);
+  padding: 12px 14px;
+}
+
+.booking-field.full {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.booking-field-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ash-dim);
+  margin-bottom: 2px;
+}
+
+.booking-field input[type='date'] {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--bone);
+  width: 100%;
+}
+
+.booking-field input[type='date']:focus {
+  outline: none;
+}
+
 .price-line {
   display: flex;
   justify-content: space-between;
@@ -1501,7 +1550,7 @@ a.list-row:hover,
 
 .price-line.total {
   border-bottom: 0;
-  border-top: 1px solid var(--hair-strong);
+  /* border-top: 1px solid var(--hair-strong); */
   margin-top: 6px;
   padding-top: 14px;
   color: var(--bone);

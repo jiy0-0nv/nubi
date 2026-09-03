@@ -271,17 +271,21 @@ export default function RoomDetailPage() {
 
         {/* ---------- 예약 위젯 ---------- */}
         <aside className="booking-box">
-          <p className="eyebrow">1박 요금</p>
-          <p className="price" style={{ fontSize: 26, marginBottom: 4 }}>
-            {formatCurrency(room.weekdayPrice)}
-            <small>평일</small>
-          </p>
+          <div className="row-between" style={{ alignItems: 'baseline', marginBottom: 6 }}>
+            <p className="price" style={{ fontSize: 22 }}>
+              {formatCurrency(room.weekdayPrice)}
+              <small>/ 1박</small>
+            </p>
+          </div>
           <p className="tiny dim mb-16">금·토 숙박은 {formatCurrency(room.weekendPrice)}</p>
 
-          <div className="field-row">
-            <div className="field">
-              <label>입실일</label>
+          <div className="booking-fields">
+            <div className="booking-field">
+              <label className="booking-field-label" htmlFor="bf-checkin">
+                입실일
+              </label>
               <input
+                id="bf-checkin"
                 type="date"
                 min={today}
                 value={checkin}
@@ -291,20 +295,26 @@ export default function RoomDetailPage() {
                 }}
               />
             </div>
-            <div className="field">
-              <label>퇴실일</label>
+            <div className="booking-field">
+              <label className="booking-field-label" htmlFor="bf-checkout">
+                퇴실일
+              </label>
               <input
+                id="bf-checkout"
                 type="date"
                 min={addDays(checkin, 1)}
                 value={checkout}
                 onChange={(e) => setCheckout(e.target.value)}
               />
             </div>
-          </div>
-
-          <div className="field">
-            <label>인원</label>
-            <GuestStepper value={guests} onChange={setGuests} min={1} max={Math.max(1, Number(room.maxGuests) || 1)} />
+            <div className="booking-field full">
+              <div>
+                <p className="booking-field-label" style={{ marginBottom: 0 }}>
+                  인원
+                </p>
+              </div>
+              <GuestStepper value={guests} onChange={setGuests} min={1} max={Math.max(1, Number(room.maxGuests) || 1)} />
+            </div>
           </div>
 
           <Alert>{formError}</Alert>
@@ -319,18 +329,20 @@ export default function RoomDetailPage() {
           >
             입실 예약하기
           </button>
+          <p className="tiny dim text-center mt-8">최종 금액은 예약 확정 시 서버 계산 결과로 확정됩니다.</p>
 
           {nights > 0 && (
             <div className="mt-24">
               <div className="price-line">
-                <span>{nights}박 요금 (예상)</span>
+                <span>
+                  {formatCurrency(room.weekdayPrice)} × {nights}박
+                </span>
                 <span>{formatCurrency(estimate)}</span>
               </div>
               <div className="price-line total">
-                <span>합계</span>
+                <span>총 합계</span>
                 <span>{formatCurrency(estimate)}</span>
               </div>
-              <p className="tiny dim mt-8">최종 금액은 예약 확정 시 서버 계산 결과로 확정됩니다.</p>
             </div>
           )}
         </aside>
