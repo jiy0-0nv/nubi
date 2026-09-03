@@ -23,7 +23,7 @@ import {
 export default function RoomDetailPage() {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { has, toggle, reload: reloadBookmarks } = useBookmarks();
 
   const [room, setRoom] = useState(null);
@@ -69,7 +69,7 @@ export default function RoomDetailPage() {
    * 단건 확인 API로 실제 값을 물어보고, 캐시와 어긋나면 캐시를 다시 불러와 맞춥니다.
    */
   useEffect(() => {
-    if (!room || !isAuthenticated || isAdmin) return;
+    if (!room || !isAuthenticated) return;
     let ignore = false;
     getBookmarkStatus(room.id)
       .then((res) => {
@@ -82,7 +82,7 @@ export default function RoomDetailPage() {
     return () => {
       ignore = true;
     };
-  }, [room, isAuthenticated, isAdmin, has, reloadBookmarks]);
+  }, [room, isAuthenticated, has, reloadBookmarks]);
 
   // 클램프된 문단이 실제로 잘려나갔는지(=10줄을 넘겼는지)는 렌더된 실제 높이로만 알 수 있습니다.
   useLayoutEffect(() => {
@@ -187,11 +187,9 @@ export default function RoomDetailPage() {
           </span>
           {!active && <span className="badge badge-cancelled">폐쇄됨</span>}
         </div>
-        {!isAdmin && (
-          <button type="button" className="btn btn-outline btn-sm" onClick={handleBookmark}>
-            {bookmarked ? '♥ 표식 남김' : '♡ 표식 남기기'}
-          </button>
-        )}
+        <button type="button" className="btn btn-outline btn-sm" onClick={handleBookmark}>
+          {bookmarked ? '♥ 저장됨' : '♡ 저장하기'}
+        </button>
       </div>
 
       <div className="detail-layout">

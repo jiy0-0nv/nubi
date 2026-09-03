@@ -10,18 +10,18 @@ import { useAuth } from './AuthContext';
  * 같이 들어옵니다) 로그인 시 한 번 마이페이지를 읽어 id 집합을 만들어두고,
  * 이후 토글은 낙관적으로 반영한 뒤 실패하면 되돌립니다.
  *
- * 관리자(ADMIN)는 북마크를 쓸 일이 없으니 아예 불러오지 않습니다.
+ * 관리자(ADMIN)도 일반 계정과 동일하게 북마크를 쓸 수 있습니다.
  * ------------------------------------------------------------------ */
 
 const BookmarksContext = createContext(null);
 
 export function BookmarksProvider({ children }) {
-  const { isAuthenticated, isAdmin, roleResolved } = useAuth();
+  const { isAuthenticated, roleResolved } = useAuth();
   const [ids, setIds] = useState(() => new Set());
   const [pending, setPending] = useState(() => new Set());
 
   const reload = useCallback(async () => {
-    if (!isAuthenticated || isAdmin) {
+    if (!isAuthenticated) {
       setIds(new Set());
       return;
     }
@@ -32,7 +32,7 @@ export function BookmarksProvider({ children }) {
     } catch {
       /* 북마크는 부가 기능이라 실패해도 화면을 막지 않습니다. */
     }
-  }, [isAuthenticated, isAdmin]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!roleResolved) return;
