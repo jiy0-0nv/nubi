@@ -20,7 +20,7 @@ const CATEGORIES = [
 
 const PROMOS = [
   {
-    title: '시대별로 SEARCH',
+    title: '시대별로 둘러보기',
     desc: '신석기 고인돌부터 20세기 납골당까지, 연식으로 골라보세요.',
     color: 'var(--blood-bright)',
     from: 'rgba(94,224,238,.12)',
@@ -33,7 +33,7 @@ const PROMOS = [
   },
   {
     title: '소설 속 가상 묘소',
-    desc: '카르파티아의 관, 아발론의 왕묘. 실존하지 않으므로 환불 규정이 다릅니다.',
+    desc: '카르파티아의 관, 아발론의 왕묘. 환불 규정이 다를 수 있습니다.',
     color: 'var(--violet)',
     from: 'rgba(160,110,232,.12)',
   },

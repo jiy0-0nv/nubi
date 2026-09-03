@@ -1065,7 +1065,7 @@ a.list-row:hover,
 .landing-hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 960px;
 }
 
 .landing-kicker {
@@ -1209,6 +1209,11 @@ a.list-row:hover,
   font-weight: 500;
   color: var(--bone);
   width: 100%;
+}
+
+/* 날짜 텍스트가 오른쪽 캘린더 아이콘과 겹치지 않도록 여유를 둡니다 */
+.search-pill-field input[type='date'] {
+  padding-right: 10px;
 }
 
 .search-pill-field input::placeholder {
