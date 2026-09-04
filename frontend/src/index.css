@@ -1768,6 +1768,34 @@ a.list-row:hover,
   font-weight: 700;
 }
 
+/* ---- 찾아오는 길: 나라 실루엣 ---- */
+.country-shape {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  background: var(--stone-2);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-md);
+}
+
+.country-shape svg {
+  width: 68%;
+  height: 68%;
+  overflow: visible;
+}
+
+.country-shape svg path {
+  fill: var(--blood-bright);
+}
+
+.country-shape-pin {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--ash-dim);
+}
+
 /* ---- 후기 ---- */
 .review {
   padding: 20px 0;
