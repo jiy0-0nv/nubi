@@ -2,6 +2,9 @@
 
  > 모든 묘소를 누비자
 
+<img width="1773" height="769" alt="image" src="https://github.com/user-attachments/assets/b4d503ea-ade3-48ab-b725-a8754139ed8e" />
+
+
 ## 목차
 
 1. [프로젝트 소개](#프로젝트-소개)
