@@ -13,4 +13,6 @@ public interface AdminRoomImagesRepository extends JpaRepository<RoomImagesEntit
     Optional<RoomImagesEntity> findByIdAndRoom_Id(Long id, Long roomId);
 
     boolean existsByRoom_Id(Long roomId);
+
+    void deleteByRoom_Id(Long roomId);
 }
