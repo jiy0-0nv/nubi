@@ -7,7 +7,7 @@
  - 이재원
  - 장연주
  - 정지윤
- - ** special guest : 김진욱 **
+ - **special guest : 김진욱**
 
 
 ### 화이팅
