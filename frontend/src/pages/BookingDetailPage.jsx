@@ -173,7 +173,7 @@ export default function BookingDetailPage() {
       {canReview && (
         <div className="panel">
           <p className="eyebrow">리뷰 남기기</p>
-          <p className="tiny muted mb-16">무사히 내려오셨습니까. 그곳에서 본 것을 적어주십시오.</p>
+          <p className="tiny muted mb-16">방문 후기를 남겨주세요.</p>
           <form onSubmit={handleReview}>
             <div className="field">
               <label>평점</label>
@@ -186,7 +186,7 @@ export default function BookingDetailPage() {
                 rows={5}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="그 밤에 무슨 일이 있었습니까"
+                placeholder=""
               />
             </div>
             <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
