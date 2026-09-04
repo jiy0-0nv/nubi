@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import CursorThief from './CursorThief.jsx';
 import ScrollToTopButton from './ScrollToTopButton';
+import MusicBar from './MusicBar';
 
 /** 사용자 영역 공통 셸 (헤더 + 본문 + 푸터) */
 export default function UserLayout() {
@@ -33,6 +34,7 @@ export default function UserLayout() {
       */}
       <CursorThief idleDelay={10000} />
       <ScrollToTopButton />
+      <MusicBar />
     </>
   );
 }
