@@ -24,6 +24,9 @@ public final class RoomsSpecifications {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            // 폐쇄(INACTIVE)된 묘소는 검색/목록에 아예 나오지 않습니다.
+            predicates.add(cb.equal(root.get("status"), RoomsEntity.RoomStatus.ACTIVE));
+
             if (keywords != null && !keywords.isEmpty()) {
                 List<Predicate> keywordPredicates = new ArrayList<>();
                 for (String keyword : keywords) {

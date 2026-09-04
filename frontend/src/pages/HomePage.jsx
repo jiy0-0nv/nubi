@@ -181,9 +181,9 @@ export default function HomePage() {
               <span>등록 묘 1,204기 · 최고 연식 6,600만 년</span>
             </div> */}
             <h1 className="landing-title">
-              오늘 밤은 <span className="accent">4,600년</span>짜리
+              오늘 밤은 <span className="accent">4,600년</span> 된
               <br />
-              방에서 자보세요
+              묘소에서 자보세요
             </h1>
             <p className="landing-desc">
               피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.

@@ -77,8 +77,8 @@ export default function MyPage() {
       {bookings.length === 0 ? (
         <EmptyState
           mark="†"
-          title="아직 든 적이 없습니다"
-          description="묘역의 묘소를 둘러보십시오."
+          title="예약 내역이 없습니다."
+          description="다양한 묘소를 둘러보세요."
           action={
             <Link to="/rooms" className="btn btn-primary">
               SEARCH

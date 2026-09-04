@@ -1189,7 +1189,7 @@ a.list-row:hover,
   font-family: var(--font-accent);
   font-weight: 400;
   color: var(--blood-bright);
-  font-size: 0.9em;
+  font-size: 1.05em;
 }
 
 .landing-desc {
@@ -1783,7 +1783,7 @@ a.list-row:hover,
 }
 
 .auth-split-brand {
-  width: 44%;
+  width: 60%;
   flex: none;
   position: relative;
   overflow: hidden;
