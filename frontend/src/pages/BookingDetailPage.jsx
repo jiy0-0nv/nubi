@@ -146,7 +146,7 @@ export default function BookingDetailPage() {
                   rows={3}
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  placeholder="왜 입주하지 못하게 되었습니까"
+                  placeholder="왜 묵지 못하게 되었습니까"
                 />
               </div>
               <div className="row gap-8">
