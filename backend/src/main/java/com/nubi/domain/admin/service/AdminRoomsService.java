@@ -4,6 +4,7 @@ import com.nubi.domain.admin.dto.AdminRoomCreateRequestDTO;
 import com.nubi.domain.admin.dto.AdminRoomResponseDTO;
 import com.nubi.domain.admin.dto.AdminRoomUpdateRequestDTO;
 import com.nubi.domain.admin.repository.AdminBookingsRepository;
+import com.nubi.domain.admin.repository.AdminRoomImagesRepository;
 import com.nubi.domain.admin.repository.AdminRoomsRepository;
 import com.nubi.entity.BookingsEntity;
 import com.nubi.entity.RoomsEntity;
@@ -28,6 +29,7 @@ public class AdminRoomsService {
 
     private final AdminRoomsRepository adminRoomsRepository;
     private final AdminBookingsRepository adminBookingsRepository;
+    private final AdminRoomImagesRepository adminRoomImagesRepository;
     private final RoomImageStorageService roomImageStorageService;
 
     @PersistenceContext
@@ -129,6 +131,7 @@ public class AdminRoomsService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "room has existing bookings and cannot be deleted");
         }
 
+        adminRoomImagesRepository.deleteByRoom_Id(roomId);
         adminRoomsRepository.delete(room);
         roomImageStorageService.deleteRoomDirectory(roomId);
     }
