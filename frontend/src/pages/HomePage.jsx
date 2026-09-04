@@ -72,19 +72,19 @@ function CategoryIcon({ shape, color }) {
   return null;
 }
 
-/** 히어로 배경의 달·피라미드 실루엣 (순수 CSS 장식) */
+/**
+ * 히어로 배경의 달·해·피라미드 실루엣 (순수 CSS 장식).
+ * 달/해는 항상 둘 다 DOM에 떠 있고, index.css의 [data-theme='light'] 규칙이
+ * opacity/transform만 바꿔서 "달이 지고 해가 뜨는" 전환을 만듭니다.
+ */
 function HeroDecor() {
   return (
     <>
+      <div className="hero-moon-bright" aria-hidden="true" />
+      <div className="hero-moon-shadow" aria-hidden="true" />
+      <div className="hero-sun" aria-hidden="true" />
       <div
-        aria-hidden="true"
-        style={{ position: 'absolute', top: 40, right: 110, width: 108, height: 108, borderRadius: 999, background: 'var(--yellow)' }}
-      />
-      <div
-        aria-hidden="true"
-        style={{ position: 'absolute', top: 40, right: 76, width: 108, height: 108, borderRadius: 999, background: 'var(--void)' }}
-      />
-      <div
+        className="hero-mountain"
         aria-hidden="true"
         style={{
           position: 'absolute', bottom: 0, right: 170,
@@ -93,6 +93,7 @@ function HeroDecor() {
         }}
       />
       <div
+        className="hero-mountain"
         aria-hidden="true"
         style={{
           position: 'absolute', bottom: 0, right: 330,
@@ -101,6 +102,7 @@ function HeroDecor() {
         }}
       />
       <div
+        className="hero-mountain"
         aria-hidden="true"
         style={{
           position: 'absolute', bottom: 0, right: 90,
@@ -134,6 +136,18 @@ export default function HomePage() {
   const [keyword, setKeyword] = useState('');
   const [guests, setGuests] = useState(2);
 
+  const [isLightTheme, setIsLightTheme] = useState(
+    () => document.documentElement.dataset.theme === 'light'
+  );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncTheme = () => setIsLightTheme(root.dataset.theme === 'light');
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     let ignore = false;
     getRooms({ size: 8 })
@@ -163,11 +177,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ---------- 상단 안내 바 ---------- */}
-      {/* <div className="promo-bar">
-        <strong>만성절 특가 — 오래된 묘소 20% 할인</strong>
-        <span className="ticker">✦ NUBI 묘원 ✦ REST IN STAY ✦ NUBI 묘원 ✦ REST IN STAY ✦</span>
-      </div> */}
 
       {/* ---------- 히어로 ---------- */}
       <section className="landing-hero">
@@ -180,13 +189,23 @@ export default function HomePage() {
               <span className="landing-kicker-dot" />
               <span>등록 묘 1,204기 · 최고 연식 6,600만 년</span>
             </div> */}
-            <h1 className="landing-title">
-              오늘 밤은 <span className="accent">4,600년</span> 된
-              <br />
-              묘소에서 자보세요
-            </h1>
+            {isLightTheme ? (
+              <h1 className="landing-title">
+                오늘 낮은 <span className="accent">4,600년</span> 된
+                <br />
+                묘소에서 쉬어가세요
+              </h1>
+            ) : (
+              <h1 className="landing-title">
+                오늘 밤은 <span className="accent">4,600년</span> 된
+                <br />
+                묘소에서 자보세요
+              </h1>
+            )}
             <p className="landing-desc">
-              피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.
+              {isLightTheme
+                ? '피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 예약하고 여행하세요.'
+                : '피라미드부터 종묘 회랑, 고비 사막 화석층까지. 세계의 유명 묘소를 하룻밤 빌려드립니다.'}
             </p>
 
             <form className="search-pill" onSubmit={handleSearch}>

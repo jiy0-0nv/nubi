@@ -1142,6 +1142,66 @@ a.list-row:hover,
   z-index: 0;
 }
 
+/*
+ * 히어로 달/해 — 산 능선 위로 포물선을 그리며 뜨고 지는 트랜지션.
+ * offset-path(모션 패스)로 실제 곡선 궤적을 따라가게 하고, 두 경로 모두
+ * "제자리(0,0 = 원래 달 위치, 아치의 정점)"를 공유해서 자연스럽게 이어집니다.
+ *  - 달 : 정점(제자리)에서 시작해 오른쪽 아래(서쪽 능선)로 내려가며 진다.
+ *  - 해 : 왼쪽 아래(동쪽 능선)에서 시작해 정점(제자리)까지 떠오른다.
+ */
+.hero-moon-bright,
+.hero-moon-shadow,
+.hero-sun {
+  position: absolute;
+  top: 50px;
+  width: 108px;
+  height: 108px;
+  border-radius: 999px;
+  offset-anchor: 0 0;
+  offset-rotate: 0deg;
+  transition: offset-distance 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease;
+}
+
+.hero-moon-bright {
+  right: 110px;
+  background: var(--yellow);
+  offset-path: path('M 0 0 Q 210 10 420 200');
+  offset-distance: 0%;
+}
+
+.hero-moon-shadow {
+  right: 76px;
+  background: var(--void);
+  offset-path: path('M 0 0 Q 210 10 420 200');
+  offset-distance: 0%;
+  transition: offset-distance 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease, background-color 0.5s ease;
+}
+
+.hero-sun {
+  right: 93px;
+  background: var(--yellow);
+  offset-path: path('M -420 200 Q -210 96 0 0');
+  offset-distance: 0%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 라이트모드 — 달은 서쪽 능선 너머로 지고, 해는 정점까지 떠오른다 */
+:root[data-theme='light'] .hero-moon-bright,
+:root[data-theme='light'] .hero-moon-shadow {
+  opacity: 0;
+  offset-distance: 100%;
+}
+
+:root[data-theme='light'] .hero-sun {
+  opacity: 1;
+  offset-distance: 100%;
+}
+
+.hero-mountain {
+  transition: border-bottom-color 0.5s ease;
+}
+
 .landing-hero-inner {
   position: relative;
   z-index: 1;
