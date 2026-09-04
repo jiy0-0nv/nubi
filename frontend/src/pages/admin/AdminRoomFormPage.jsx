@@ -208,7 +208,7 @@ export default function AdminRoomFormPage() {
 
         <div className="row gap-8 mt-24">
           <button type="submit" className="btn btn-primary btn-lg" disabled={submitting}>
-            {submitting ? '저장하는 중…' : isEdit ? '수정 완료' : '묘소 세우기'}
+            {submitting ? '저장하는 중…' : isEdit ? '수정 완료' : '저장하기'}
           </button>
           <button type="button" className="btn btn-ghost" onClick={() => navigate('/admin/rooms')}>
             취소
