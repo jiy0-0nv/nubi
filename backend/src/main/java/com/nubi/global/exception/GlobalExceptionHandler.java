@@ -19,6 +19,14 @@ public class GlobalExceptionHandler {
                 .body(Map.of("errorCode", "NEED_SIGNUP"));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException e) {
+        String message = e.getMessage() != null ? e.getMessage() : "잘못된 요청입니다.";
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("errorCode", "INVALID_REQUEST", "message", message));
+    }
+
     @ExceptionHandler(PessimisticLockingFailureException.class)
     public ResponseEntity<Map<String, String>> handleLockConflict() {
         return ResponseEntity

@@ -1058,6 +1058,89 @@ a.list-row:hover,
   transform: translateY(-2px);
 }
 
+.music-bar {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding-right: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--hair-strong);
+  background: var(--stone);
+  box-shadow: var(--shadow);
+}
+
+.music-bar-toggle {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 0;
+  background: var(--blood-bright);
+  color: var(--on-accent);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter 0.16s ease;
+}
+
+.music-bar-toggle:hover {
+  filter: brightness(1.08);
+}
+
+.music-bar-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ash);
+  white-space: nowrap;
+}
+
+.music-bar-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.music-bar-bars i {
+  width: 3px;
+  height: 4px;
+  background: var(--blood-bright);
+  border-radius: 1px;
+  opacity: 0.35;
+  transition: opacity 0.16s ease;
+}
+
+.music-bar.playing .music-bar-bars i {
+  opacity: 1;
+  animation: music-bar-bounce 0.9s ease-in-out infinite;
+}
+
+.music-bar.playing .music-bar-bars i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.music-bar.playing .music-bar-bars i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes music-bar-bounce {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
 .login-pill {
   display: flex;
   align-items: center;
@@ -1140,6 +1223,66 @@ a.list-row:hover,
   inset: 0;
   pointer-events: none;
   z-index: 0;
+}
+
+/*
+ * 히어로 달/해 — 산 능선 위로 포물선을 그리며 뜨고 지는 트랜지션.
+ * offset-path(모션 패스)로 실제 곡선 궤적을 따라가게 하고, 두 경로 모두
+ * "제자리(0,0 = 원래 달 위치, 아치의 정점)"를 공유해서 자연스럽게 이어집니다.
+ *  - 달 : 정점(제자리)에서 시작해 오른쪽 아래(서쪽 능선)로 내려가며 진다.
+ *  - 해 : 왼쪽 아래(동쪽 능선)에서 시작해 정점(제자리)까지 떠오른다.
+ */
+.hero-moon-bright,
+.hero-moon-shadow,
+.hero-sun {
+  position: absolute;
+  top: 50px;
+  width: 108px;
+  height: 108px;
+  border-radius: 999px;
+  offset-anchor: 0 0;
+  offset-rotate: 0deg;
+  transition: offset-distance 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease;
+}
+
+.hero-moon-bright {
+  right: 110px;
+  background: var(--yellow);
+  offset-path: path('M 0 0 Q 210 10 420 200');
+  offset-distance: 0%;
+}
+
+.hero-moon-shadow {
+  right: 76px;
+  background: var(--void);
+  offset-path: path('M 0 0 Q 210 10 420 200');
+  offset-distance: 0%;
+  transition: offset-distance 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease, background-color 0.5s ease;
+}
+
+.hero-sun {
+  right: 93px;
+  background: var(--yellow);
+  offset-path: path('M -420 200 Q -210 96 0 0');
+  offset-distance: 0%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 라이트모드 — 달은 서쪽 능선 너머로 지고, 해는 정점까지 떠오른다 */
+:root[data-theme='light'] .hero-moon-bright,
+:root[data-theme='light'] .hero-moon-shadow {
+  opacity: 0;
+  offset-distance: 100%;
+}
+
+:root[data-theme='light'] .hero-sun {
+  opacity: 1;
+  offset-distance: 100%;
+}
+
+.hero-mountain {
+  transition: border-bottom-color 0.5s ease;
 }
 
 .landing-hero-inner {
@@ -1706,6 +1849,34 @@ a.list-row:hover,
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
+}
+
+/* ---- 찾아오는 길: 나라 실루엣 ---- */
+.country-shape {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  background: var(--stone-2);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-md);
+}
+
+.country-shape svg {
+  width: 68%;
+  height: 68%;
+  overflow: visible;
+}
+
+.country-shape svg path {
+  fill: var(--blood-bright);
+}
+
+.country-shape-pin {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--ash-dim);
 }
 
 /* ---- 후기 ---- */

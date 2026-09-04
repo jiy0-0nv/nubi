@@ -9,6 +9,7 @@ import Alert from '../components/Alert';
 import Modal from '../components/Modal';
 import StarRating from '../components/StarRating';
 import GuestStepper from '../components/GuestStepper';
+import CountryShape from '../components/CountryShape';
 import {
   addDays,
   calculateNights,
@@ -268,7 +269,10 @@ export default function RoomDetailPage() {
 
           <h2 className="serif">찾아오는 길</h2>
           <div className="rule mb-16" />
-          <p className="muted">{[room.country, room.city, room.street].filter(Boolean).join(' ')}</p>
+          <div className="row gap-16" style={{ alignItems: 'center' }}>
+            <CountryShape country={room.country} />
+            <p className="muted">{[room.country, room.city, room.street].filter(Boolean).join(' ')}</p>
+          </div>
 
           <div className="divider" />
 
@@ -352,7 +356,7 @@ export default function RoomDetailPage() {
           >
             입실 예약하기
           </button>
-          <p className="tiny dim text-center mt-8">최종 금액은 예약 확정 시 확정됩니다.</p>
+          <p className="tiny dim text-center mt-8">최종 금액은 예약 시 확정됩니다.</p>
 
           {nights > 0 && (
             <div className="mt-24">
