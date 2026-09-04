@@ -61,12 +61,12 @@ export default function AdminRoomsPage() {
   };
 
   const remove = async (room) => {
-    if (!window.confirm(`"${room.name}"을(를) 완전히 허물까요? 등록된 사진도 함께 사라집니다.`)) return;
+    if (!window.confirm(`"${room.name}"을(를) 완전히 삭제할까요? 등록된 사진도 함께 사라집니다.`)) return;
     setBusyId(room.id);
     setError('');
     try {
       await deleteAdminRoom(room.id);
-      setNotice(`"${room.name}"을(를) 허물었습니다.`);
+      setNotice(`"${room.name}"을(를) 삭제했습니다.`);
       load();
     } catch (err) {
       setError(err.message);

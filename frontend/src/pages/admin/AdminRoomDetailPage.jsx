@@ -35,7 +35,7 @@ export default function AdminRoomDetailPage() {
   useEffect(load, [load]);
 
   const remove = async () => {
-    if (!window.confirm(`"${room.name}"을(를) 완전히 허물까요?`)) return;
+    if (!window.confirm(`"${room.name}"을(를) 완전히 삭제할까요?`)) return;
     try {
       await deleteAdminRoom(roomId);
       navigate('/admin/rooms', { replace: true });
@@ -185,10 +185,10 @@ export default function AdminRoomDetailPage() {
       )}
 
       <div className="panel mt-40" style={{ borderColor: 'var(--hair-blood)' }}>
-        <p className="eyebrow">위험 구역</p>
-        <p className="tiny muted mb-16">허물면 이 묘소과 등록된 사진이 모두 사라집니다.</p>
+        <p className="eyebrow">이 묘소 삭제하기</p>
+        <p className="tiny muted mb-16">이 묘소를 삭제하면 모든 관련 정보가 영구적으로 삭제됩니다.</p>
         <button type="button" className="btn btn-danger" onClick={remove}>
-          이 묘소 허물기
+          동의하고 삭제하기
         </button>
       </div>
     </>
