@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getMypage } from '../api/mypage';
-import { useBookmarks } from '../context/BookmarksContext';
+import RoomCard from '../components/RoomCard';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import EmptyState from '../components/EmptyState';
-import { formatCurrency } from '../utils/format';
 
 export default function BookmarkListPage() {
-  const { toggle, reload } = useBookmarks();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,13 +18,22 @@ export default function BookmarkListPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleRemove = async (roomId) => {
-    await toggle(roomId);
-    setItems((prev) => prev.filter((item) => Number(item.roomId ?? item.id) !== Number(roomId)));
-    reload();
-  };
-
   if (loading) return <Spinner />;
+
+  // /rooms 목록과 같은 RoomCard를 그대로 쓰기 위해 북마크 항목을 room 모양으로 맞춥니다.
+  // (해제는 카드에 이미 있는 하트 버튼으로 — BookmarksContext가 낙관적으로 처리합니다.)
+  const rooms = items.map((item) => ({
+    id: item.roomId ?? item.id,
+    name: item.roomName ?? item.name,
+    thumbnailUrl: item.thumbnailUrl,
+    country: item.country,
+    city: item.city,
+    maxGuests: item.maxGuests,
+    ratingAverage: item.ratingAverage,
+    weekdayPrice: item.weekdayPrice,
+    weekendPrice: item.weekendPrice,
+    status: item.status,
+  }));
 
   return (
     <div className="container page">
@@ -36,7 +43,7 @@ export default function BookmarkListPage() {
 
       <Alert>{error}</Alert>
 
-      {items.length === 0 ? (
+      {rooms.length === 0 ? (
         <EmptyState
           mark="♡"
           title="아직 저장한 묘소가 없습니다."
@@ -48,23 +55,11 @@ export default function BookmarkListPage() {
           }
         />
       ) : (
-        items.map((item) => {
-          const roomId = item.roomId ?? item.id;
-          return (
-            <div className="list-row list-row-hoverable" key={roomId}>
-              <Link to={`/rooms/${roomId}`} style={{ flex: 1 }}>
-                <p className="list-row-title">{item.roomName || item.name}</p>
-                <p className="list-row-sub">
-                  {[item.country, item.city].filter(Boolean).join(' · ')}
-                  {item.weekdayPrice ? ` · ${formatCurrency(item.weekdayPrice)} / 1박` : ''}
-                </p>
-              </Link>
-              <button type="button" className="btn btn-danger btn-sm" onClick={() => handleRemove(roomId)}>
-                저장 해제하기
-              </button>
-            </div>
-          );
-        })
+        <div className="grid-4">
+          {rooms.map((room) => (
+            <RoomCard key={room.id} room={room} />
+          ))}
+        </div>
       )}
     </div>
   );
