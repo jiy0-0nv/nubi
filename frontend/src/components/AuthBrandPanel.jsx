@@ -2,18 +2,20 @@
 function BrandDecor() {
   return (
     <div className="auth-split-decor" aria-hidden="true">
-      <div style={{ position: 'absolute', top: 90, right: -40, width: 130, height: 130, borderRadius: 999, background: 'var(--yellow)', opacity: 0.9 }} />
-      <div style={{ position: 'absolute', top: 90, right: -6, width: 130, height: 130, borderRadius: 999, background: 'var(--void)' }} />
+      {/* 달이 오른쪽 끝에 잘리지 않도록 이 값만큼 전체 장식을 왼쪽으로 밀었습니다.
+          그믐달 방향은 메인 페이지(HomePage)의 달과 맞춰서 초승달 쪽이 왼쪽을 향하게 뒀습니다. */}
+      <div style={{ position: 'absolute', top: 90, right: 54, width: 130, height: 130, borderRadius: 999, background: 'var(--yellow)', opacity: 0.9 }} />
+      <div style={{ position: 'absolute', top: 90, right: 20, width: 130, height: 130, borderRadius: 999, background: 'var(--void)' }} />
       <div
         style={{
-          position: 'absolute', bottom: -1, right: 40,
+          position: 'absolute', bottom: -1, right: 100,
           width: 0, height: 0,
           borderLeft: '84px solid transparent', borderRight: '84px solid transparent', borderBottom: '108px solid rgba(94,224,238,.14)',
         }}
       />
       <div
         style={{
-          position: 'absolute', bottom: -1, right: 172,
+          position: 'absolute', bottom: -1, right: 232,
           width: 0, height: 0,
           borderLeft: '52px solid transparent', borderRight: '52px solid transparent', borderBottom: '70px solid rgba(94,224,238,.08)',
         }}
